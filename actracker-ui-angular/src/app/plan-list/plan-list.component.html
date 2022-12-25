@@ -1,0 +1,10 @@
+<div>
+  <ul>
+    <li *ngFor="let plan of plans">
+      <span>{{plan.name}}</span>
+      <button (click)="onPlanSelect(plan)">Select</button>
+      <a routerLink="/edit-plan/{{plan.id}}"><button>Edit</button></a>
+      <button (click)="onPlanDelete(plan)">Delete</button>
+    </li>
+  </ul>
+</div>

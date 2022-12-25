@@ -8,3 +8,4 @@ pluginManagement {
 rootProject.name = 'actracker-ui'
 
 include 'actracker-ui-main-springboot'
+include 'actracker-ui-angular'

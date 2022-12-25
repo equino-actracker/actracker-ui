@@ -49,7 +49,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 withKubeConfig([credentialsId: 'MadritKubeConfig', namespace: 'equino-int']) {
-                    sh './gradlew --no-daemon --stacktrace k8sResource k8sApply -Prelease.ignoreUncommittedChanges'
+                    sh './gradlew --no-daemon --stacktrace k8sResource k8sApply -Prelease.ignoreUncommittedChanges -Djkube.environment=INT'
                 }
             }
         }

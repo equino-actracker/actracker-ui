@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-websocket:3.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.0.0'
+    runtimeOnly project(':actracker-ui-angular')
 }

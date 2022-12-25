@@ -1,0 +1,9 @@
+<div>
+  <label>Comment: </label>
+  <input [(ngModel)]="activity.comment">
+  <label>Start time: </label>
+  <input type="datetime-local" [ngModel]="activity.startTime | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="activity.startTime=toDate($event)">
+  <label>End time: </label>
+  <input type="datetime-local" [ngModel]="activity.endTime | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="activity.endTime=toDate($event)">
+  <button (click)="save()">Save</button>
+</div>
