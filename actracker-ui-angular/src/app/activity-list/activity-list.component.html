@@ -1,0 +1,10 @@
+<div>
+  <ul>
+    <li *ngFor="let activity of activities">
+      <span>Start time: {{activity.startTime | date: 'medium'}}</span>
+      <span>End time: {{activity.endTime | date: 'medium'}}</span>
+      <a routerLink="/edit-activity/{{activity.id}}"><button>Edit</button></a>
+      <button (click)="onActivityDelete(activity)">Delete</button>
+    </li>
+  </ul>
+</div>

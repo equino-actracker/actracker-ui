@@ -1,0 +1,9 @@
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+        - name: equino-registry
+      containers:
+        - env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: INT

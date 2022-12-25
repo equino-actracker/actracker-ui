@@ -1,4 +1,5 @@
 export const environment = {
-  env: 'PROD',
-  production: true
+  environment: 'prod',
+  production: true,
+  backendBaseUrl: 'https://prod.equino.ovh/actracker-api'
 };

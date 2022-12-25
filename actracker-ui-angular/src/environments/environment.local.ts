@@ -1,4 +1,5 @@
 export const environment = {
-  env: 'LOCAL',
-  production: false
+  environment: 'local',
+  production: false,
+  backendBaseUrl: 'http://localhost:8080/actracker-api'
 };
