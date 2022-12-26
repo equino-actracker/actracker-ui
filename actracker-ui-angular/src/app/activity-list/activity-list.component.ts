@@ -22,12 +22,4 @@ export class ActivityListComponent implements OnInit {
       .subscribe(activitiesResult => this.activities = activitiesResult.activities);
   }
 
-  onActivityDelete(activity: Activity) {
-    const index: number = this.activities.indexOf(activity);
-    this.activityService.deleteActivity(activity.id!)
-      .subscribe(() => {
-        this.activities.splice(index, 1);
-      });
-  }
-
 }
