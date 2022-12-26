@@ -22,4 +22,11 @@ export class ActivityListComponent implements OnInit {
       .subscribe(activitiesResult => this.activities = activitiesResult.activities);
   }
 
+  addActivity(): void {
+    let newActivity: Activity = {
+      isSaved: false
+    }
+    this.activities.unshift(newActivity)
+  }
+
 }

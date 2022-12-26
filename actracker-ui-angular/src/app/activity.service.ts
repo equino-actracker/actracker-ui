@@ -19,9 +19,9 @@ export class ActivityService {
   ) { }
 
   getActivities(): Observable<ActivitiesResult> {
-    let getActivitiesUrl: string = `${environment.backendBaseUrl}/activity`;
+    let url: string = `${environment.backendBaseUrl}/activity`;
 
-    return this.http.get<ActivityPayload[]>(getActivitiesUrl)
+    return this.http.get<ActivityPayload[]>(url)
       .pipe(
         map(response => this.toActivitiesResult(response)),
         catchError(() => {
@@ -29,6 +29,42 @@ export class ActivityService {
           return [];
         })
       );
+  }
+
+  createActivity(activity: Activity): Observable<Activity> {
+    let url: string = `${environment.backendBaseUrl}/activity`;
+    let activityPayload = this.toActivityPayload(activity);
+
+    return this.http.post<ActivityPayload>(url, activityPayload)
+    .pipe(
+      map(response => this.toActivity(response)),
+      catchError(() => {
+        console.error('Error occurred during activity creation');
+        return []; // TODO [mc] What should I return here?
+      })
+    );
+  }
+
+  updateActivity(activity: Activity): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}`;
+    let activityPayload = this.toActivityPayload(activity);
+
+    return this.http.put(url, activityPayload).pipe(
+      map(response => this.toActivity(response)),
+      catchError(() => {
+        console.error('Error occurred during fetching activity');
+        return [];
+      })
+    )
+  }
+
+  toActivityPayload(activity: Activity): ActivityPayload {
+    let activityPayload: ActivityPayload = {
+      id: activity.id,
+      startTimestamp: activity.startTime?.getTime(),
+      endTimestamp: activity.endTime?.getTime(),
+    }
+    return activityPayload;
   }
 
   toActivitiesResult(activities: ActivityPayload[]): ActivitiesResult {
@@ -41,9 +77,11 @@ export class ActivityService {
   toActivity(activityPayload: ActivityPayload): Activity {
     let activity: Activity = {
       id: activityPayload.id,
+      isSaved: true,
     }
     activity.startTime = activityPayload.startTimestamp ? new Date(activityPayload.startTimestamp) : undefined;
     activity.endTime = activityPayload.endTimestamp ? new Date(activityPayload.endTimestamp) : undefined;
+
     return activity;
   }
 }
