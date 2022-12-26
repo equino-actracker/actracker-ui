@@ -8,11 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AuthHttpInterceptor } from './auth-http-interceptor';
 import { ActivityListComponent } from './activity-list/activity-list.component';
+import { ActivityComponent } from './activity/activity.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ActivityListComponent,
+    ActivityComponent,
   ],
   imports: [
     BrowserModule,

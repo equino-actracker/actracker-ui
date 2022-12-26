@@ -1,8 +1,9 @@
 <div>
+  <button (click)="addActivity()">Add</button>
   <ul>
     <li *ngFor="let activity of activities">
-      <span>Start time: {{activity.startTime | date: 'medium'}}</span>
-      <span>End time: {{activity.endTime | date: 'medium'}}</span>
+      <app-activity [activity]="activity" [editMode]="!activity.isSaved"></app-activity>
+      <button>Delete</button>
     </li>
   </ul>
 </div>
