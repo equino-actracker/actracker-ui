@@ -58,6 +58,16 @@ export class ActivityService {
     )
   }
 
+  deleteActivity(activity: Activity): Observable<any> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}`;
+    return this.http.delete(url).pipe(
+      catchError(() => {
+        console.error('Error occurred during deleting activity');
+        return [];
+      })
+    )
+  }
+
   toActivityPayload(activity: Activity): ActivityPayload {
     let activityPayload: ActivityPayload = {
       id: activity.id,

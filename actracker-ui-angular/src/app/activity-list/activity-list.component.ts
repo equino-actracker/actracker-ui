@@ -29,4 +29,12 @@ export class ActivityListComponent implements OnInit {
     this.activities.unshift(newActivity)
   }
 
+  deleteActivity(activity: Activity): void {
+    this.activityService.deleteActivity(activity)
+      .subscribe(() => {
+        let index = this.activities.findIndex(a => a.id === activity.id)
+        this.activities.splice(index, 1)
+      })
+  }
+
 }
