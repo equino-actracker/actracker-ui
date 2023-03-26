@@ -2,8 +2,8 @@
   <button (click)="addActivity()">Add</button>
   <ul>
     <li *ngFor="let activity of activities">
-      <app-activity [activity]="activity" [editMode]="!activity.isSaved"></app-activity>
-      <button>Delete</button>
+      <app-activity [activity]="activity" [editMode]="!activity.id"></app-activity>
+      <button (click)="deleteActivity(activity)">Delete</button>
     </li>
   </ul>
 </div>

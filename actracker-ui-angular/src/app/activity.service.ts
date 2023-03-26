@@ -58,6 +58,16 @@ export class ActivityService {
     )
   }
 
+  deleteActivity(activity: Activity): Observable<any> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}`;
+    return this.http.delete(url).pipe(
+      catchError(() => {
+        console.error('Error occurred during deleting activity');
+        return [];
+      })
+    )
+  }
+
   toActivityPayload(activity: Activity): ActivityPayload {
     let activityPayload: ActivityPayload = {
       id: activity.id,
@@ -77,10 +87,9 @@ export class ActivityService {
   toActivity(activityPayload: ActivityPayload): Activity {
     let activity: Activity = {
       id: activityPayload.id,
-      isSaved: true,
+      startTime: activityPayload.startTimestamp ? new Date(activityPayload.startTimestamp) : undefined,
+      endTime: activityPayload.endTimestamp ? new Date(activityPayload.endTimestamp) : undefined
     }
-    activity.startTime = activityPayload.startTimestamp ? new Date(activityPayload.startTimestamp) : undefined;
-    activity.endTime = activityPayload.endTimestamp ? new Date(activityPayload.endTimestamp) : undefined;
 
     return activity;
   }
