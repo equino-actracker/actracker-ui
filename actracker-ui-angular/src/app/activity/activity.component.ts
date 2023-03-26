@@ -12,7 +12,7 @@ import { Activity } from '../activity';
 export class ActivityComponent implements OnInit {
 
   @Input()
-  activity?: Activity;
+  activity!: Activity;
   @Input()
   editMode?: boolean;
 
@@ -29,10 +29,15 @@ export class ActivityComponent implements OnInit {
     }
     if(this.activity.id) {
       this.activityService.updateActivity(this.activity)
-        .subscribe(activity => this.activity = activity);
+        .subscribe(activity => {
+          this.activity.isSaved = true
+        });
     } else {
       this.activityService.createActivity(this.activity)
-        .subscribe(activity => this.activity = activity);
+        .subscribe(activity => {
+          this.activity.id = activity.id
+          this.activity.isSaved = true
+        });
     }
     this.editMode = false;
   }

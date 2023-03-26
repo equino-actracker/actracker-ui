@@ -30,11 +30,14 @@ export class ActivityListComponent implements OnInit {
   }
 
   deleteActivity(activity: Activity): void {
-    this.activityService.deleteActivity(activity)
-      .subscribe(() => {
-        let index = this.activities.findIndex(a => a.id === activity.id)
-        this.activities.splice(index, 1)
-      })
+    if(activity.isSaved) {
+      this.activityService.deleteActivity(activity)
+        .subscribe(() => {
+          this.activities = this.activities.filter(a => a !== activity)
+        })
+    } else {
+      this.activities = this.activities.filter(a => a !== activity)
+    }
   }
 
 }
