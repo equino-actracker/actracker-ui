@@ -23,14 +23,12 @@ export class ActivityListComponent implements OnInit {
   }
 
   addActivity(): void {
-    let newActivity: Activity = {
-      isSaved: false
-    }
+    let newActivity: Activity = {}
     this.activities.unshift(newActivity)
   }
 
   deleteActivity(activity: Activity): void {
-    if(activity.isSaved) {
+    if(activity.id) {
       this.activityService.deleteActivity(activity)
         .subscribe(() => {
           this.activities = this.activities.filter(a => a !== activity)

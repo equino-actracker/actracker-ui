@@ -87,10 +87,9 @@ export class ActivityService {
   toActivity(activityPayload: ActivityPayload): Activity {
     let activity: Activity = {
       id: activityPayload.id,
-      isSaved: true,
+      startTime: activityPayload.startTimestamp ? new Date(activityPayload.startTimestamp) : undefined,
+      endTime: activityPayload.endTimestamp ? new Date(activityPayload.endTimestamp) : undefined
     }
-    activity.startTime = activityPayload.startTimestamp ? new Date(activityPayload.startTimestamp) : undefined;
-    activity.endTime = activityPayload.endTimestamp ? new Date(activityPayload.endTimestamp) : undefined;
 
     return activity;
   }
