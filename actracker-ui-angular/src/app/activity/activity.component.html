@@ -1,6 +1,7 @@
 <div *ngIf="activity">
   <div *ngIf="!editMode">
     <span>Start: {{activity.startTime | date: 'medium'}} End: {{activity.endTime | date: 'medium'}}</span>
+    <span>Comment: {{activity.comment}}</span>
     <button (click)="edit()">Edit</button>
   </div>
   <div *ngIf="editMode">
@@ -8,6 +9,8 @@
     <input type="datetime-local" [ngModel]="activity.startTime | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="activity.startTime=toDate($event)">
     <label>End: </label>
     <input type="datetime-local" [ngModel]="activity.endTime | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="activity.endTime=toDate($event)">
+    <label>Comment: </label>
+    <input type="text" [(ngModel)]="activity.comment">
     <button (click)="save()">Save</button>
   </div>
 </div>
