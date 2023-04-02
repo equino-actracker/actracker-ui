@@ -10,6 +10,8 @@ import { AuthHttpInterceptor } from './auth-http-interceptor';
 import { ActivityListComponent } from './activity-list/activity-list.component';
 import { ActivityComponent } from './activity/activity.component';
 import { LoginComponent } from './login/login.component';
+import { TagListComponent } from './tag-list/tag-list.component';
+import { TagComponent } from './tag/tag.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { LoginComponent } from './login/login.component';
     ActivityListComponent,
     ActivityComponent,
     LoginComponent,
+    TagListComponent,
+    TagComponent,
   ],
   imports: [
     BrowserModule,

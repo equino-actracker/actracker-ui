@@ -52,7 +52,7 @@ export class ActivityService {
     return this.http.put(url, activityPayload).pipe(
       map(response => this.toActivity(response)),
       catchError(() => {
-        console.error('Error occurred during fetching activity');
+        console.error('Error occurred during updating activity');
         return [];
       })
     )
