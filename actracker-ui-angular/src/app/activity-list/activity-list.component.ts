@@ -23,7 +23,7 @@ export class ActivityListComponent implements OnInit {
   }
 
   addActivity(): void {
-    let newActivity: Activity = {}
+    let newActivity: Activity = {tags: []}
     this.activities.unshift(newActivity)
   }
 

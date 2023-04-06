@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivityService } from '../activity.service';
 
 import { Activity } from '../activity';
+import { Tag } from '../tag';
 
 @Component({
   selector: 'app-activity',
@@ -46,6 +47,15 @@ export class ActivityComponent implements OnInit {
 
   toDate(time: string): Date | undefined {
     return !!time ? new Date(time) : undefined;
+  }
+
+  addTag(): void {
+    let newTag: Tag = {}
+    this.activity.tags.unshift(newTag)
+  }
+
+  deleteTag(tag: Tag): void {
+    this.activity.tags = this.activity.tags.filter(t => t !== tag)
   }
 
 }

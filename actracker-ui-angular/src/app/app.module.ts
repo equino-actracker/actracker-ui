@@ -12,6 +12,7 @@ import { ActivityComponent } from './activity/activity.component';
 import { LoginComponent } from './login/login.component';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { TagComponent } from './tag/tag.component';
+import { ActivityTagsComponent } from './activity-tags/activity-tags.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { TagComponent } from './tag/tag.component';
     LoginComponent,
     TagListComponent,
     TagComponent,
+    ActivityTagsComponent,
   ],
   imports: [
     BrowserModule,
