@@ -49,9 +49,8 @@ export class ActivityComponent implements OnInit {
     return !!time ? new Date(time) : undefined;
   }
 
-  addTag(): void {
-    let newTag: Tag = {}
-    this.activity.tags.unshift(newTag)
+  addNewTag(tag: Tag): void {
+    this.activity.tags.unshift(tag);
   }
 
   deleteTag(tag: Tag): void {
