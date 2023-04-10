@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 
 import { Activity } from './activity';
 import { ActivitiesResult } from './activitiesResult';
+import { Tag } from './tag';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +74,8 @@ export class ActivityService {
       id: activity.id,
       startTimestamp: activity.startTime?.getTime(),
       endTimestamp: activity.endTime?.getTime(),
-      comment: activity.comment
+      comment: activity.comment,
+      tags: activity.tags.map(tag => tag.id!)
     }
     return activityPayload;
   }
@@ -90,7 +92,8 @@ export class ActivityService {
       id: activityPayload.id,
       startTime: activityPayload.startTimestamp ? new Date(activityPayload.startTimestamp) : undefined,
       endTime: activityPayload.endTimestamp ? new Date(activityPayload.endTimestamp) : undefined,
-      comment: activityPayload.comment
+      comment: activityPayload.comment,
+      tags: activityPayload.tags ? activityPayload.tags.map(tagId => <Tag>{id: tagId}) : []
     }
 
     return activity;
@@ -101,7 +104,8 @@ interface ActivityPayload {
   id?: string,
   startTimestamp?: number,
   endTimestamp?: number,
-  comment?: string
+  comment?: string,
+  tags?: string[]
 }
 
 interface ActivitiesResultPayload {
