@@ -14,14 +14,4 @@
     <button (click)="save()">Save</button>
   </div>
   <app-tags-selector [editMode]="editMode" [tags]="activity.tags" (onTagAdd)="addNewTag($event)" (onTagDelete)="deleteTag($event)"></app-tags-selector>
-<!--  <div>-->
-<!--    <ul>-->
-<!--      <label>Tags: </label>-->
-<!--      <li *ngFor="let tag of activity.tags">-->
-<!--        <input type="text" [(ngModel)]="tag.id">-->
-<!--        <button (click)="deleteTag(tag)">Delete</button>-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--    <button (click)="addTag()">Add tag</button>-->
-<!--  </div>-->
 </div>

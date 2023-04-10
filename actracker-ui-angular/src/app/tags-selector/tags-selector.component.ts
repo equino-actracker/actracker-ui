@@ -53,21 +53,6 @@ export class TagsSelectorComponent implements OnInit {
   clearSearchResults() {
     this.matchingTags = [];
   }
-//
-//   addTag(tag: Tag) {
-//     this.tags.unshift(tag);
-//     this.searchTags();
-//   }
-//
-//   tryAddTag() {
-//     if(this.matchingTags.length == 1) {
-//       this.addTag(this.matchingTags[0])
-//     }
-//   }
-//
-//   deleteTag(tag: Tag): void {
-//     this.tags = this.tags.filter(t => t !== tag)
-//   }
 
   addTag(tag: Tag) {
     this.onTagAdd.emit(tag);
