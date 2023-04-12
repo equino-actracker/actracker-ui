@@ -1,8 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable, Subject } from 'rxjs'
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators'
 
 import { TagService } from '../tag.service';
 
 import { Tag } from '../tag';
+import { TagsResult } from '../tagsResult'
 
 @Component({
   selector: 'app-tags-selector',
@@ -21,8 +24,10 @@ export class TagsSelectorComponent implements OnInit {
   @Output()
   public onTagAdd: EventEmitter<Tag> = new EventEmitter();
 
-  availableTags?: Tag[];
+  availableTags?: Tag[];  // TODO get rid of
   matchingTags: Tag[] = [];
+  tagSearchResult$!: Observable<TagsResult>;
+  private searchTerms = new Subject<string>();
 
   constructor(
     private tagService: TagService
@@ -33,6 +38,18 @@ export class TagsSelectorComponent implements OnInit {
         this.availableTags = tagsResult.tags;
         this.tags.forEach(tag => {tag.name=this.resolveName(tag)});
       });
+      this.tagSearchResult$ = this.searchTerms
+        .pipe(
+          debounceTime(500),
+//           distinctUntilChanged(),
+          switchMap((term: string) => this.tagService.searchTags(term, undefined, 5, this.tags))
+        );
+      this.tagSearchResult$.subscribe(
+        searchResult => {
+          let tagIds = this.tags.map(tag => tag.id);
+          this.matchingTags = searchResult.tags.filter(tag => !tagIds.includes(tag.id));
+        }
+      );
   }
 
   resolveName(tag: Tag): string {
@@ -41,13 +58,17 @@ export class TagsSelectorComponent implements OnInit {
     return name ? name : '';
   }
 
-  searchTags() {
-    if(!this.availableTags) {
-      [];
-    } else {
-      let tagIds = this.tags.map(t => t.id);
-      this.matchingTags = this.availableTags.filter(t => !tagIds.includes(t.id));
-    }
+//   searchTags() {
+//     if(!this.availableTags) {
+//       [];
+//     } else {
+//       let tagIds = this.tags.map(t => t.id);
+//       this.matchingTags = this.availableTags.filter(t => !tagIds.includes(t.id));
+//     }
+//   }
+
+  searchTags(term: string) {
+    this.searchTerms.next(term);
   }
 
   clearSearchResults() {
