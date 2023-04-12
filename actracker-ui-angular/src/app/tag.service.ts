@@ -18,6 +18,7 @@ export class TagService {
     private http: HttpClient,
   ) { }
 
+  // TODO delete, replace with searchTags
   getTags(): Observable<TagsResult> {
     let url: string = `${environment.backendBaseUrl}/tag`;
 
@@ -29,6 +30,36 @@ export class TagService {
           return [];
         })
       );
+  }
+
+  searchTags(term?: String, pageId?: String, pageSize?: number, excludedTags?: Tag[]): Observable<TagsResult> {
+    let url: string = `${environment.backendBaseUrl}/tag/matching`;
+    let requestParams = [];
+    if(!!term) {
+      requestParams.unshift(`term=${term}`)
+    }
+    if(!!pageId) {
+      requestParams.unshift(`pageId=${pageId}`)
+    }
+    if(!!pageSize) {
+      requestParams.unshift(`pageSize=${pageSize}`)
+    }
+    if(!!excludedTags) {
+      requestParams.unshift(`excludedTags=${excludedTags.map(tag => tag.id).join(',')}`)
+    }
+    if(requestParams.length > 0) {
+      url = `${url}?${requestParams.join('&')}`
+    }
+
+    return this.http.get<TagsSearchResultPayload>(url)
+    .pipe(
+      map(response => this.toTagsSearchResult(response)),
+      catchError(() => {
+        console.error('Error occurred during searching tags');
+        return []; // TODO [mc] What should I return here?
+      })
+    );
+
   }
 
   createTag(tag: Tag): Observable<Tag> {
@@ -83,6 +114,14 @@ export class TagService {
     return tagsResult;
   }
 
+  toTagsSearchResult(searchResult: TagsSearchResultPayload): TagsResult {
+    let tagsResult: TagsResult = {
+      nextPageId: searchResult.nextPageId,
+      tags: searchResult.results.map(this.toTag)
+    }
+    return tagsResult;
+  }
+
   toTag(tagPayload: TagPayload): Tag {
     let tag: Tag = {
       id: tagPayload.id,
@@ -100,6 +139,11 @@ interface TagPayload {
 
 interface TagsResultPayload {
   tags: TagPayload[]
+}
+
+interface TagsSearchResultPayload {
+  nextPageId: string,
+  results: TagPayload[]
 }
 
 

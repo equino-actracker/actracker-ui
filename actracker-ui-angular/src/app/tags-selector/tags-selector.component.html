@@ -3,8 +3,15 @@
     <ul>
       <li *ngFor="let tag of tags">{{ tag.name }}<button *ngIf="editMode" (click)="deleteTag(tag)">X</button></li>
     </ul>
-    <input *ngIf="editMode" type="text" placeholder="Search tags..." (focus)="searchTags()" (blur)="clearSearchResults()">
-    <ul>
+    <input *ngIf="editMode"
+           placeholder="Search tags..."
+           [(ngModel)]="searchTerm"
+           (input)="searchTags()"
+           (focus)="searchTags()"
+           (blur)="cancelSearch()"
+           (keyUp.enter)="tryAddTag()"
+    />
+    <ul *ngIf="showMatchingTags">
       <li *ngFor="let matchingTag of matchingTags"><a (mousedown)="addTag(matchingTag)">{{ matchingTag.name }}</a></li>
     </ul>
   </div>
