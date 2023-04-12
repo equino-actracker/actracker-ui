@@ -19,6 +19,9 @@ export class TagsSelectorComponent implements OnInit {
   @Input()
   editMode?: boolean;
 
+  searchTerm: string = '';
+  showMatchingTags: boolean = false;
+
   @Output()
   public onTagDelete: EventEmitter<Tag> = new EventEmitter();
   @Output()
@@ -46,8 +49,10 @@ export class TagsSelectorComponent implements OnInit {
         );
       this.tagSearchResult$.subscribe(
         searchResult => {
-          let tagIds = this.tags.map(tag => tag.id);
-          this.matchingTags = searchResult.tags.filter(tag => !tagIds.includes(tag.id));
+          if(this.showMatchingTags) {
+            let tagIds = this.tags.map(tag => tag.id);
+            this.matchingTags = searchResult.tags.filter(tag => !tagIds.includes(tag.id));
+          }
         }
       );
   }
@@ -58,21 +63,15 @@ export class TagsSelectorComponent implements OnInit {
     return name ? name : '';
   }
 
-//   searchTags() {
-//     if(!this.availableTags) {
-//       [];
-//     } else {
-//       let tagIds = this.tags.map(t => t.id);
-//       this.matchingTags = this.availableTags.filter(t => !tagIds.includes(t.id));
-//     }
-//   }
-
-  searchTags(term: string) {
-    this.searchTerms.next(term);
+  searchTags() {
+    this.showMatchingTags = true;
+    this.searchTerms.next(this.searchTerm);
   }
 
-  clearSearchResults() {
+  cancelSearch() {
+    this.showMatchingTags = false;
     this.matchingTags = [];
+    this.searchTerm = '';
   }
 
   addTag(tag: Tag) {
@@ -81,5 +80,14 @@ export class TagsSelectorComponent implements OnInit {
 
   deleteTag(tag: Tag) {
     this.onTagDelete.emit(tag);
+  }
+
+  tryAddTag() {
+    let exactlyMatchingTag: Tag | undefined = this.matchingTags.find(tag => tag.name == this.searchTerm)
+    if(exactlyMatchingTag) {
+      this.addTag(exactlyMatchingTag);
+      this.cancelSearch();
+      this.searchTags();
+    }
   }
 }
