@@ -11,20 +11,33 @@ import { Tag } from '../tag';
 })
 export class TagListComponent implements OnInit {
 
+  nextPageId?: string = undefined;
   tags: Tag[] = [];
+
+  addedTags: Tag[] = [];
 
   constructor(
     private tagService: TagService
   ) {}
 
   ngOnInit(): void {
-    this.tagService.getTags()
-      .subscribe(tagsResult => this.tags = tagsResult.tags);
+    this.fetchNextPage();
+  }
+
+  fetchNextPage(): void {
+    let pageId = this.nextPageId;
+    this.nextPageId = undefined;
+    this.tagService.searchTags(undefined, pageId, 10, this.addedTags)
+          .subscribe(tagsResult => {
+            this.tags = this.tags.concat(tagsResult.tags);
+            this.nextPageId = tagsResult.nextPageId;
+          });
   }
 
   addTag(): void {
     let newTag: Tag = {}
-    this.tags.unshift(newTag)
+    this.tags.unshift(newTag);
+    this.addedTags.unshift(newTag);
   }
 
   deleteTag(tag: Tag): void {
