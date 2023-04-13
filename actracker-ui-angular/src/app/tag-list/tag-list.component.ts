@@ -11,6 +11,8 @@ import { Tag } from '../tag';
 })
 export class TagListComponent implements OnInit {
 
+  // TODO add support for next page
+
   tags: Tag[] = [];
 
   constructor(
@@ -18,7 +20,7 @@ export class TagListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.tagService.getTags()
+    this.tagService.searchTags(undefined, undefined, 10, undefined)
       .subscribe(tagsResult => this.tags = tagsResult.tags);
   }
 

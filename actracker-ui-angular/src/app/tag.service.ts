@@ -18,20 +18,6 @@ export class TagService {
     private http: HttpClient,
   ) { }
 
-  // TODO delete, replace with searchTags
-  getTags(): Observable<TagsResult> {
-    let url: string = `${environment.backendBaseUrl}/tag`;
-
-    return this.http.get<TagPayload[]>(url)
-      .pipe(
-        map(response => this.toTagsResult(response)),
-        catchError(() => {
-          console.error('Error occurred during fetching tags');
-          return [];
-        })
-      );
-  }
-
   resolveTags(tagIds: string[]): Observable<TagsResult> {
     let jointTagIds = tagIds.join(',');
     let url: string = `${environment.backendBaseUrl}/tag?ids=${jointTagIds}`;
