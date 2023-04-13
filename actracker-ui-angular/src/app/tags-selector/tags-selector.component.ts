@@ -27,7 +27,6 @@ export class TagsSelectorComponent implements OnInit {
   @Output()
   public onTagAdd: EventEmitter<Tag> = new EventEmitter();
 
-  availableTags?: Tag[];  // TODO get rid of
   matchingTags: Tag[] = [];
   tagSearchResult$!: Observable<TagsResult>;
   private searchTerms = new Subject<string>();
@@ -37,9 +36,9 @@ export class TagsSelectorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      this.tagService.getTags().subscribe(tagsResult => {
-        this.availableTags = tagsResult.tags;
-        this.tags.forEach(tag => {tag.name=this.resolveName(tag)});
+      let tagIds = this.tags.map(tag => tag.id!);
+      this.tagService.resolveTags(tagIds).subscribe(tagsResult => {
+        this.tags.forEach(tag => {tag.name=this.resolveName(tag, tagsResult.tags)});
       });
       this.tagSearchResult$ = this.searchTerms
         .pipe(
@@ -57,8 +56,8 @@ export class TagsSelectorComponent implements OnInit {
       );
   }
 
-  resolveName(tag: Tag): string {
-    let matchingTag: Tag | undefined = this.availableTags?.find(availableTag => availableTag.id === tag.id);
+  resolveName(tag: Tag, resolvedTags: Tag[]): string {
+    let matchingTag: Tag | undefined = resolvedTags.find(resolvedTag => resolvedTag.id === tag.id);
     let name: string | undefined = matchingTag ? matchingTag.name : tag.id;
     return name ? name : '';
   }

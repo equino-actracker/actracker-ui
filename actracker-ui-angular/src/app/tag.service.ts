@@ -32,6 +32,20 @@ export class TagService {
       );
   }
 
+  resolveTags(tagIds: string[]): Observable<TagsResult> {
+    let jointTagIds = tagIds.join(',');
+    let url: string = `${environment.backendBaseUrl}/tag?ids=${jointTagIds}`;
+
+    return this.http.get<TagPayload[]>(url)
+      .pipe(
+        map(response => this.toTagsResult(response)),
+        catchError(() => {
+          console.error('Error occurred during fetching tags');
+          return [];
+        })
+      );
+  }
+
   searchTags(term?: String, pageId?: String, pageSize?: number, excludedTags?: Tag[]): Observable<TagsResult> {
     let url: string = `${environment.backendBaseUrl}/tag/matching`;
     let requestParams = [];
