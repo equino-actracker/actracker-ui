@@ -19,17 +19,33 @@ export class ActivityService {
     private http: HttpClient,
   ) { }
 
-  getActivities(): Observable<ActivitiesResult> {
-    let url: string = `${environment.backendBaseUrl}/activity`;
+  searchActivities(term?: String, pageId?: String, pageSize?: number, excludedActivities?: Activity[]): Observable<ActivitiesResult> {
+    let url: string = `${environment.backendBaseUrl}/activity/matching`;
+    let requestParams = [];
+    if(!!term) {
+      requestParams.unshift(`term=${term}`)
+    }
+    if(!!pageId) {
+      requestParams.unshift(`pageId=${pageId}`)
+    }
+    if(!!pageSize) {
+      requestParams.unshift(`pageSize=${pageSize}`)
+    }
+    if(!!excludedActivities) {
+      requestParams.unshift(`excludedActivities=${excludedActivities.map(activity => activity.id).join(',')}`)
+    }
+    if(requestParams.length > 0) {
+      url = `${url}?${requestParams.join('&')}`
+    }
 
-    return this.http.get<ActivityPayload[]>(url)
-      .pipe(
-        map(response => this.toActivitiesResult(response)),
-        catchError(() => {
-          console.error('Error occurred during fetching activities');
-          return [];
-        })
-      );
+    return this.http.get<ActivitiesSearchResultPayload>(url)
+    .pipe(
+      map(response => this.toActivitiesSearchResult(response)),
+      catchError(() => {
+        console.error('Error occurred during searching activities');
+        return []; // TODO [mc] What should I return here?
+      })
+    );
   }
 
   createActivity(activity: Activity): Observable<Activity> {
@@ -80,9 +96,10 @@ export class ActivityService {
     return activityPayload;
   }
 
-  toActivitiesResult(activities: ActivityPayload[]): ActivitiesResult {
+  toActivitiesSearchResult(searchResult: ActivitiesSearchResultPayload): ActivitiesResult {
     let activitiesResult: ActivitiesResult = {
-      activities: activities.map(this.toActivity)
+      nextPageId: searchResult.nextPageId,
+      activities: searchResult.results.map(this.toActivity)
     }
     return activitiesResult;
   }
@@ -110,4 +127,9 @@ interface ActivityPayload {
 
 interface ActivitiesResultPayload {
   activities: ActivityPayload[]
+}
+
+interface ActivitiesSearchResultPayload {
+  nextPageId: string,
+  results: ActivityPayload[]
 }

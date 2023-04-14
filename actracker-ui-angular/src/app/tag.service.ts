@@ -59,7 +59,6 @@ export class TagService {
         return []; // TODO [mc] What should I return here?
       })
     );
-
   }
 
   createTag(tag: Tag): Observable<Tag> {
