@@ -36,10 +36,6 @@ export class TagsSelectorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      let tagIds = this.tags.map(tag => tag.id!);
-      this.tagService.resolveTags(tagIds).subscribe(tagsResult => {
-        this.tags.forEach(tag => {tag.name=this.resolveName(tag, tagsResult.tags)});
-      });
       this.tagSearchResult$ = this.searchTerms
         .pipe(
           debounceTime(500),
@@ -54,12 +50,6 @@ export class TagsSelectorComponent implements OnInit {
           }
         }
       );
-  }
-
-  resolveName(tag: Tag, resolvedTags: Tag[]): string {
-    let matchingTag: Tag | undefined = resolvedTags.find(resolvedTag => resolvedTag.id === tag.id);
-    let name: string | undefined = matchingTag ? matchingTag.name : tag.id;
-    return name ? name : '';
   }
 
   searchTags() {

@@ -98,12 +98,34 @@ export class TagService {
     )
   }
 
+  resolveTagNames(tags: Tag[]) {
+    let tagIds = tags.map(tag => tag.id!);
+    tagIds = this.unique(tagIds);
+    this.resolveTags(tagIds).subscribe(tagsResult => {
+      tags.forEach(tag => {
+        let matchingTag: Tag | undefined = tagsResult.tags.find(result => result.id === tag.id);
+        let name: string | undefined = matchingTag ? matchingTag.name : tag.id;
+        tag.name = name ? name : '';
+      });
+    });
+  }
+
   toTagPayload(tag: Tag): TagPayload {
     let tagPayload: TagPayload = {
       id: tag.id,
       name: tag.name
     }
     return tagPayload;
+  }
+
+  unique(ids: string[]): string[] {
+    let uniqueIds: string[] = [];
+    ids.forEach(id => {
+      if(!uniqueIds.includes(id)) {
+        uniqueIds.unshift(id);
+      }
+    });
+    return uniqueIds;
   }
 
   toTagsResult(tags: TagPayload[]): TagsResult {
