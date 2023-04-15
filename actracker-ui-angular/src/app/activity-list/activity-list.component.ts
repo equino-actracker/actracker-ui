@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ActivityService } from '../activity.service';
+import { TagService } from '../tag.service';
 
 import { Activity } from '../activity';
 
@@ -17,7 +18,8 @@ export class ActivityListComponent implements OnInit {
   addedActivities: Activity[] = [];
 
   constructor(
-    private activityService: ActivityService
+    private activityService: ActivityService,
+    private tagService: TagService
   ) {}
 
   ngOnInit(): void {
@@ -29,9 +31,16 @@ export class ActivityListComponent implements OnInit {
     this.nextPageId = undefined;
     this.activityService.searchActivities(undefined, pageId, 10, this.addedActivities)
           .subscribe(activitiesResult => {
-            this.activities = this.activities.concat(activitiesResult.activities);
+            let foundActivities = activitiesResult.activities;
+            this.activities = this.activities.concat(foundActivities);
             this.nextPageId = activitiesResult.nextPageId;
+            this.resolveTagNames(foundActivities);
           });
+  }
+
+  resolveTagNames(activities: Activity[]) {
+    let allTags = activities.flatMap(activity => activity.tags);
+    this.tagService.resolveTagNames(allTags);
   }
 
   addActivity(): void {
