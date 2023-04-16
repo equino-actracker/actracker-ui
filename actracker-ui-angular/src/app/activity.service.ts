@@ -88,6 +88,7 @@ export class ActivityService {
   toActivityPayload(activity: Activity): ActivityPayload {
     let activityPayload: ActivityPayload = {
       id: activity.id,
+      title: activity.title,
       startTimestamp: activity.startTime?.getTime(),
       endTimestamp: activity.endTime?.getTime(),
       comment: activity.comment,
@@ -107,6 +108,7 @@ export class ActivityService {
   toActivity(activityPayload: ActivityPayload): Activity {
     let activity: Activity = {
       id: activityPayload.id,
+      title: activityPayload.title,
       startTime: activityPayload.startTimestamp ? new Date(activityPayload.startTimestamp) : undefined,
       endTime: activityPayload.endTimestamp ? new Date(activityPayload.endTimestamp) : undefined,
       comment: activityPayload.comment,
@@ -119,6 +121,7 @@ export class ActivityService {
 
 interface ActivityPayload {
   id?: string,
+  title?: string,
   startTimestamp?: number,
   endTimestamp?: number,
   comment?: string,
