@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { TagService } from '../tag.service';
+import { ActivityService } from '../activity.service';
 
 import { Tag } from '../tag';
+import { Activity } from '../activity';
 
 @Component({
   selector: 'app-tag-list',
@@ -16,8 +18,11 @@ export class TagListComponent implements OnInit {
 
   addedTags: Tag[] = [];
 
+  activityToSwitch?: Activity;
+
   constructor(
-    private tagService: TagService
+    private tagService: TagService,
+    private activityService: ActivityService
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +54,20 @@ export class TagListComponent implements OnInit {
     } else {
       this.tags = this.tags.filter(t => t !== tag)
     }
+  }
+
+  prepareActivityToSwitch(tag: Tag): void {
+    this.activityToSwitch = {
+      title: tag.name,
+      tags: [tag]
+    }
+  }
+
+  switchToActivity(activity: Activity): void {
+    this.activityService.switchToActivity(activity)
+      .subscribe(() => {
+        this.activityToSwitch = undefined;
+      });
   }
 
 }

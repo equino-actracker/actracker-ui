@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { ActivityService } from '../activity.service';
 
@@ -17,6 +17,9 @@ export class ActivityComponent implements OnInit {
   @Input()
   editMode?: boolean;
 
+  @Output()
+  public onActivitySave: EventEmitter<Activity> = new EventEmitter();
+
   constructor(
     private activityService: ActivityService
   ) {}
@@ -28,16 +31,7 @@ export class ActivityComponent implements OnInit {
     if(!this.activity) {
       return;
     }
-    if(this.activity.id) {
-      this.activityService.updateActivity(this.activity)
-        .subscribe(activity => {
-        });
-    } else {
-      this.activityService.createActivity(this.activity)
-        .subscribe(activity => {
-          this.activity.id = activity.id
-        });
-    }
+    this.onActivitySave.emit(this.activity);
     this.editMode = false;
   }
 

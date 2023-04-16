@@ -85,6 +85,18 @@ export class ActivityService {
     )
   }
 
+  switchToActivity(activity: Activity): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/switched`;
+    let activityPayload = this.toActivityPayload(activity);
+    return this.http.post(url, activityPayload).pipe(
+      map(response => this.toActivity(response)),
+      catchError(() => {
+        console.error("Error occurred during switching to activity");
+        return [];
+      })
+    );
+  }
+
   toActivityPayload(activity: Activity): ActivityPayload {
     let activityPayload: ActivityPayload = {
       id: activity.id,

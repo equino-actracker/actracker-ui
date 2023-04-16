@@ -60,4 +60,17 @@ export class ActivityListComponent implements OnInit {
     }
   }
 
+  saveActivity(activity: Activity): void {
+    if(activity.id) {
+      this.activityService.updateActivity(activity)
+        .subscribe(a => {
+        });
+    } else {
+      this.activityService.createActivity(activity)
+        .subscribe(a => {
+          activity.id = a.id
+        });
+    }
+  }
+
 }
