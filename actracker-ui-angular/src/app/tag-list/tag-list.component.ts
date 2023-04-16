@@ -63,4 +63,11 @@ export class TagListComponent implements OnInit {
     }
   }
 
+  switchToActivity(activity: Activity): void {
+    this.activityService.switchToActivity(activity)
+      .subscribe(() => {
+        this.activityToSwitch = undefined;
+      });
+  }
+
 }

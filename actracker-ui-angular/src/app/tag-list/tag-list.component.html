@@ -1,5 +1,10 @@
 <div>
-  <app-activity *ngIf="activityToSwitch" [activity]="activityToSwitch" [editMode]="true"></app-activity>
+  <app-activity
+    *ngIf="activityToSwitch"
+    [activity]="activityToSwitch"
+    [editMode]="true"
+    (onActivitySave)="switchToActivity($event)">
+  </app-activity>
   <button (click)="addTag()">Add</button>
   <ul>
     <li *ngFor="let tag of tags">
