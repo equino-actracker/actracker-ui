@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { TagComponent } from './tag/tag.component';
 import { TagsSelectorComponent } from './tags-selector/tags-selector.component';
+import { TagSetListComponent } from './tag-set-list/tag-set-list.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TagsSelectorComponent } from './tags-selector/tags-selector.component';
     TagListComponent,
     TagComponent,
     TagsSelectorComponent,
+    TagSetListComponent,
   ],
   imports: [
     BrowserModule,
