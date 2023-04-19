@@ -1,0 +1,21 @@
+<div>
+  <app-activity
+    *ngIf="activityToSwitch"
+    [activity]="activityToSwitch"
+    [editMode]="true"
+    (onActivitySave)="switchToActivity($event)">
+  </app-activity>
+  <button (click)="addTagSet()">Add</button>
+  <ul>
+    <li *ngFor="let tagSet of tagSets">
+      <app-tag-set
+        [tagSet]="tagSet"
+        [editMode]="!tagSet.id"
+        (onTagSetSave)="saveTagSet($event)">
+      </app-tag-set>
+      <button (click)="prepareActivityToSwitch(tagSet)">Switch to</button>
+      <button (click)="deleteTagSet(tagSet)">Delete</button>
+    </li>
+  </ul>
+  <button (click)="fetchNextPage()" *ngIf="!!nextPageId">More...</button>
+</div>

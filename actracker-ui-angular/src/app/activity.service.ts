@@ -140,10 +140,6 @@ interface ActivityPayload {
   tags?: string[]
 }
 
-interface ActivitiesResultPayload {
-  activities: ActivityPayload[]
-}
-
 interface ActivitiesSearchResultPayload {
   nextPageId: string,
   results: ActivityPayload[]

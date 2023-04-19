@@ -158,10 +158,6 @@ interface TagPayload {
   name?: string
 }
 
-interface TagsResultPayload {
-  tags: TagPayload[]
-}
-
 interface TagsSearchResultPayload {
   nextPageId: string,
   results: TagPayload[]

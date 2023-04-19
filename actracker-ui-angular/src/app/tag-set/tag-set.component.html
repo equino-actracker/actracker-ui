@@ -1,0 +1,12 @@
+<div *ngIf="tagSet">
+  <div *ngIf="!editMode">
+    <span>Name: {{tagSet.name}}</span>
+    <button (click)="edit()">Edit</button>
+  </div>
+  <div *ngIf="editMode">
+    <label>Name: </label>
+    <input type="text" [(ngModel)]="tagSet.name">
+    <button (click)="save()">Save</button>
+  </div>
+  <app-tags-selector [editMode]="editMode" [tags]="tagSet.tags" (onTagAdd)="addNewTag($event)" (onTagDelete)="deleteTag($event)"></app-tags-selector>
+</div>
