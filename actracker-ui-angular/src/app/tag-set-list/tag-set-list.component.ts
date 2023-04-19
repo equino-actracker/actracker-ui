@@ -54,4 +54,6 @@ export class TagSetListComponent implements OnInit {
   deleteTagSet(tagSet: TagSet): void {
   }
 
+  saveTagSet(tagSet: TagSet): void {
+  }
 }
