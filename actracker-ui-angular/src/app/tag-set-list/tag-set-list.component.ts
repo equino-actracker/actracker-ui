@@ -55,10 +55,18 @@ export class TagSetListComponent implements OnInit {
     this.addedTagSets.unshift(newTagSet);
   }
 
-  switchToActivity(activity: Activity): void {
+  prepareActivityToSwitch(tagSet: TagSet): void {
+    this.activityToSwitch = {
+      title: tagSet.name,
+      tags: tagSet.tags
+    }
   }
 
-  prepareActivityToSwitch(tagSet: TagSet): void {
+  switchToActivity(activity: Activity): void {
+    this.activityService.switchToActivity(activity)
+      .subscribe(() => {
+        this.activityToSwitch = undefined;
+      });
   }
 
   deleteTagSet(tagSet: TagSet): void {
