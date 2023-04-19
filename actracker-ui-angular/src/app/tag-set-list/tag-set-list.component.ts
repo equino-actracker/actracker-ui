@@ -37,12 +37,22 @@ export class TagSetListComponent implements OnInit {
     this.nextPageId = undefined;
     this.tagSetService.searchTagSets(undefined, pageId, 10, this.addedTagSets)
           .subscribe(tagSetsResult => {
+            let foundTagSets = tagSetsResult.tagSets;
             this.tagSets = this.tagSets.concat(tagSetsResult.tagSets);
             this.nextPageId = tagSetsResult.nextPageId;
+            this.resolveTagNames(foundTagSets);
           });
   }
 
+  resolveTagNames(tagSets: TagSet[]) {
+    let allTags = tagSets.flatMap(tagSet => tagSet.tags);
+    this.tagService.resolveTagNames(allTags);
+  }
+
   addTagSet(): void {
+    let newTagSet: TagSet = {tags: []};
+    this.tagSets.unshift(newTagSet);
+    this.addedTagSets.unshift(newTagSet);
   }
 
   switchToActivity(activity: Activity): void {
@@ -52,8 +62,26 @@ export class TagSetListComponent implements OnInit {
   }
 
   deleteTagSet(tagSet: TagSet): void {
+    if(tagSet.id) {
+      this.tagSetService.deleteTagSet(tagSet)
+        .subscribe(() => {
+          this.tagSets = this.tagSets.filter(tS => tS !== tagSet)
+        })
+    } else {
+      this.tagSets = this.tagSets.filter(tS => tS !== tagSet)
+    }
   }
 
   saveTagSet(tagSet: TagSet): void {
+    if(tagSet.id) {
+      this.tagSetService.updateTagSet(tagSet)
+        .subscribe(a => {
+        });
+    } else {
+      this.tagSetService.createTagSet(tagSet)
+        .subscribe(tS => {
+          tagSet.id = tS.id
+        });
+    }
   }
 }
