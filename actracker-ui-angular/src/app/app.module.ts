@@ -15,6 +15,8 @@ import { TagComponent } from './tag/tag.component';
 import { TagsSelectorComponent } from './tags-selector/tags-selector.component';
 import { TagSetListComponent } from './tag-set-list/tag-set-list.component';
 import { TagSetComponent } from './tag-set/tag-set.component';
+import { DashboardListComponent } from './dashboard-list/dashboard-list.component';
+import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { TagSetComponent } from './tag-set/tag-set.component';
     TagsSelectorComponent,
     TagSetListComponent,
     TagSetComponent,
+    DashboardListComponent,
+    DashboardViewComponent,
   ],
   imports: [
     BrowserModule,
