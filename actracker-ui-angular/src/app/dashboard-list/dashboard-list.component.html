@@ -1,0 +1,12 @@
+<div>
+<!--  <button (click)="addTagSet()">Add</button>-->
+  <ul>
+    <li *ngFor="let dashboard of dashboards">
+      <div>
+        <span>Name: {{dashboard.name}}</span>
+      </div>
+      <button (click)="deleteDashboard(dashboard)">Delete</button>
+    </li>
+  </ul>
+  <button (click)="fetchNextPage()" *ngIf="!!nextPageId">More...</button>
+</div>
