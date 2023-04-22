@@ -1,0 +1,14 @@
+<div *ngIf="dashboard">
+  <div *ngIf="!editMode">
+    <button (click)="editDashboard()">Edit</button>
+    <div>
+      <h2>{{ dashboard.name }}</h2>
+    </div>
+  </div>
+  <div *ngIf="editMode">
+    <button (click)="saveDashboard()">Save</button>
+    <div>
+      <input type="text" [(ngModel)]="dashboard.name">
+    </div>
+  </div>
+</div>
