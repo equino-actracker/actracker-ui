@@ -3,7 +3,7 @@
   <ul>
     <li *ngFor="let dashboard of dashboards">
       <div>
-        <span>Name: {{dashboard.name}}</span>
+        <a [routerLink]="['/dashboards/data']" [queryParams]="{id: dashboard.id}">{{dashboard.name}}</a>
       </div>
       <button (click)="deleteDashboard(dashboard)">Delete</button>
     </li>

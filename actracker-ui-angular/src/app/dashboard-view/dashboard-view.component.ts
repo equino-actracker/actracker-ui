@@ -22,7 +22,12 @@ export class DashboardViewComponent implements OnInit {
 
   ngOnInit(): void {
     let id: string | null = this.route.snapshot.queryParamMap.get('id');
-    if(!id) {
+    if(id) {
+      this.dashboardService.getDashboard(id)
+        .subscribe(d => {
+          this.dashboard = d;
+        });
+    } else {
       this.editMode = true;
       this.dashboard = {};
     }

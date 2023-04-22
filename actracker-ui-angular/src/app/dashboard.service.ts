@@ -38,13 +38,26 @@ export class DashboardService {
     }
 
     return this.http.get<DashboardsSearchResultPayload>(url)
-    .pipe(
-      map(response => this.toDashboardsSearchResult(response)),
-      catchError(() => {
-        console.error('Error occurred during searching dashboards');
-        return []; // TODO [mc] What should I return here?
-      })
-    );
+      .pipe(
+        map(response => this.toDashboardsSearchResult(response)),
+        catchError(() => {
+          console.error('Error occurred during searching dashboards');
+          return []; // TODO [mc] What should I return here?
+        })
+      );
+  }
+
+  getDashboard(dashboardId: string): Observable<Dashboard> {
+    let url: string = `${environment.backendBaseUrl}/dashboard/${dashboardId}`;
+
+    return this.http.get<DashboardPayload>(url)
+      .pipe(
+        map(response => this.toDashboard(response)),
+        catchError(() => {
+          console.error('Error occurred during fetching dashboard');
+          return []; // TODO [mc] What should I return here?
+        }
+      ))
   }
 
   createDashboard(dashboard: Dashboard): Observable<Dashboard> {
@@ -52,13 +65,13 @@ export class DashboardService {
     let dashboardPayload = this.toDashboardPayload(dashboard);
 
     return this.http.post<DashboardPayload>(url, dashboardPayload)
-    .pipe(
-      map(response => this.toDashboard(response)),
-      catchError(() => {
-        console.error('Error occurred during dashboard creation');
-        return []; // TODO [mc] What should I return here?
-      })
-    );
+      .pipe(
+        map(response => this.toDashboard(response)),
+        catchError(() => {
+          console.error('Error occurred during dashboard creation');
+          return []; // TODO [mc] What should I return here?
+        })
+      );
   }
 
   updateDashboard(dashboard: Dashboard): Observable<Dashboard> {
