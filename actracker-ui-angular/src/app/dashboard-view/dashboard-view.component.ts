@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { DashboardService } from '../dashboard.service';
 
-import { Dashboard } from '../dashboard';
+import { Dashboard, Chart } from '../dashboard';
 
 @Component({
   selector: 'app-dashboard-view',
@@ -49,6 +49,17 @@ export class DashboardViewComponent implements OnInit {
           this.dashboard!.id = d.id
           this.editMode = false;
         });
+    }
+  }
+
+  addChart(): void {
+    let newChart = {};
+    this.dashboard?.charts.unshift(newChart);
+  }
+
+  deleteChart(chart: Chart): void {
+    if(this.dashboard) {
+      this.dashboard.charts = this.dashboard.charts.filter(ch => ch !== chart)
     }
   }
 

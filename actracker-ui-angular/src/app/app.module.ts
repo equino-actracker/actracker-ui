@@ -17,6 +17,7 @@ import { TagSetListComponent } from './tag-set-list/tag-set-list.component';
 import { TagSetComponent } from './tag-set/tag-set.component';
 import { DashboardListComponent } from './dashboard-list/dashboard-list.component';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { DashboardViewComponent } from './dashboard-view/dashboard-view.componen
     TagSetComponent,
     DashboardListComponent,
     DashboardViewComponent,
+    ChartComponent,
   ],
   imports: [
     BrowserModule,
