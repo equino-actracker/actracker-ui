@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 
-import { Dashboard } from './dashboard';
+import { Dashboard, Chart } from './dashboard';
 import { DashboardsResult } from './dashboardsResult';
 
 @Injectable({
@@ -100,9 +100,16 @@ export class DashboardService {
   toDashboardPayload(dashboard: Dashboard): DashboardPayload {
     let dashboardPayload: DashboardPayload = {
       id: dashboard.id,
-      name: dashboard.name
+      name: dashboard.name,
+      charts: dashboard.charts.map(this.toChart)
     }
     return dashboardPayload;
+  }
+
+  toChartPayload(chart: Chart): ChartPayload {
+    return {
+      name: chart.name
+    };
   }
 
   toDashboardsSearchResult(searchResult: DashboardsSearchResultPayload): DashboardsResult {
@@ -117,18 +124,30 @@ export class DashboardService {
     let dashboard: Dashboard = {
       id: dashboardPayload.id,
       name: dashboardPayload.name,
+      charts: dashboardPayload.charts ? dashboardPayload.charts.map(this.toChart) : []
     }
 
     return dashboard;
+  }
+
+  toChart(chartPayload: ChartPayload): Chart {
+    return {
+      name: chartPayload.name
+    }
   }
 }
 
 interface DashboardPayload {
   id?: string,
-  name?: string
+  name?: string,
+  charts?: ChartPayload[]
 }
 
 interface DashboardsSearchResultPayload {
   nextPageId: string,
   results: DashboardPayload[]
+}
+
+interface ChartPayload {
+  name?: string
 }

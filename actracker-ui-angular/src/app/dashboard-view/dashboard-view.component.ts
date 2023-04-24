@@ -29,7 +29,7 @@ export class DashboardViewComponent implements OnInit {
         });
     } else {
       this.editMode = true;
-      this.dashboard = {};
+      this.dashboard = {charts: []};
     }
   }
 
