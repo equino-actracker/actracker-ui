@@ -11,4 +11,12 @@
       <input type="text" [(ngModel)]="dashboard.name">
     </div>
   </div>
+  <h3>Charts</h3>
+  <button *ngIf="editMode" (click)="addChart()">Add chart</button>
+  <ul *ngFor="let chart of dashboard.charts">
+    <li>
+      <app-chart [editMode]="editMode" [chart]="chart"></app-chart>
+      <button *ngIf="editMode" (click)="deleteChart(chart)">Delete</button>
+    </li>
+  </ul>
 </div>

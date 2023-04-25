@@ -1,0 +1,9 @@
+<div>
+  <div *ngIf="!editMode">
+    <span>Name: {{chart.name}}</span>
+  </div>
+  <div *ngIf="editMode">
+    <label>Name: </label>
+    <input type="text" [(ngModel)]="chart.name">
+  </div>
+</div>
