@@ -101,7 +101,7 @@ export class DashboardService {
     let dashboardPayload: DashboardPayload = {
       id: dashboard.id,
       name: dashboard.name,
-      charts: dashboard.charts.map(this.toChart)
+      charts: dashboard.charts.map(this.toChartPayload)
     }
     return dashboardPayload;
   }
@@ -124,16 +124,18 @@ export class DashboardService {
     let dashboard: Dashboard = {
       id: dashboardPayload.id,
       name: dashboardPayload.name,
-      charts: dashboardPayload.charts ? dashboardPayload.charts.map(this.toChart) : []
-    }
+//       charts: dashboardPayload.charts ? dashboardPayload.charts.map(this.toChart) : []
+      charts: dashboardPayload.charts ? dashboardPayload.charts.map(ch => <Chart>{name: ch.name}) : []
+    };
 
     return dashboard;
   }
 
   toChart(chartPayload: ChartPayload): Chart {
-    return {
+    let chart: Chart = {
       name: chartPayload.name
-    }
+    };
+    return chart;
   }
 }
 
