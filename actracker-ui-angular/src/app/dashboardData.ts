@@ -1,6 +1,7 @@
 
 
 export interface DashboardData {
+  name: string,
   charts: ChartData[]
 }
 

@@ -32,8 +32,8 @@ export class DashboardDataService {
   }
 
   toDashboardData(payload: DashboardDataPayload): DashboardData {
-    console.error(payload);
     let dashboardData: DashboardData = {
+      name: payload.name ? payload.name : '',
       charts: payload.charts ? payload.charts.map(chartDataPayload => this.toChartData(chartDataPayload)) : []
     };
 
@@ -61,6 +61,7 @@ export class DashboardDataService {
 }
 
 interface DashboardDataPayload {
+  name?: string,
   charts?: ChartDataPayload[]
 }
 
