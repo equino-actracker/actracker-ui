@@ -1,0 +1,19 @@
+<div>
+  <button (click)="saveDashboard()">Save</button>
+  <div>
+    <input type="text" [(ngModel)]="dashboard.name">
+  </div>
+</div>
+<h3>Charts</h3>
+<button (click)="addChart()">Add chart</button>
+<div>
+  <ul *ngFor="let chart of dashboard.charts">
+    <li>
+      <div>
+        <label>Name: </label>
+        <input type="text" [(ngModel)]="chart.name">
+      </div>
+      <button (click)="deleteChart(chart)">Delete</button>
+    </li>
+  </ul>
+</div>

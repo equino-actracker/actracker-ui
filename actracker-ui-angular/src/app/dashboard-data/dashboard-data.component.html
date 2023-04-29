@@ -1,0 +1,20 @@
+<div *ngIf="dashboardData">
+  <h3>{{ dashboardData.name }}</h3>
+  <div *ngFor="let chartData of dashboardData.charts">
+    <h4>{{ chartData.name }}</h4>
+    <table>
+      <tr>
+        <th></th>
+        <th *ngFor="let bucketData of chartData.buckets">{{ bucketData.name }}</th>
+      </tr>
+      <tr>
+        <th>Total</th>
+        <td *ngFor="let bucketData of chartData.buckets">{{ bucketData.value }}</td>
+      </tr>
+      <tr>
+        <th>Percentage</th>
+        <td *ngFor="let bucketData of chartData.buckets">{{ bucketData.percentage }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
