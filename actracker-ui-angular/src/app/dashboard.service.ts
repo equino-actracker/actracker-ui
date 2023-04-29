@@ -16,7 +16,7 @@ export class DashboardService {
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {}
 
   searchDashboards(term?: String, pageId?: String, pageSize?: number, excludedDashboards?: Dashboard[]): Observable<DashboardsResult> {
     let url: string = `${environment.backendBaseUrl}/dashboard/matching`;
