@@ -18,8 +18,20 @@ export class DashboardDataService {
         private http: HttpClient,
   ) {}
 
-  getDashboardData(dashboard: Dashboard): Observable<DashboardData> {
+  getDashboardData(dashboard: Dashboard, dateRangeStart?: Date, dateRangeEnd?: Date): Observable<DashboardData> {
     let url: string = `${environment.backendBaseUrl}/dashboard/${dashboard.id}/data`;
+
+    let requestParams = [];
+    if(!!dateRangeStart) {
+      requestParams.unshift(`rangeStartMillis=${dateRangeStart.getTime()}`)
+    }
+    if(!!dateRangeEnd) {
+      requestParams.unshift(`rangeEndMillis=${dateRangeEnd.getTime()}`)
+    }
+
+    if(requestParams.length > 0) {
+      url = `${url}?${requestParams.join('&')}`
+    }
 
     return this.http.get<DashboardDataPayload>(url)
       .pipe(
