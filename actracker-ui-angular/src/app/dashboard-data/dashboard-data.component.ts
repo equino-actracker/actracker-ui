@@ -17,13 +17,44 @@ export class DashboardDataComponent implements OnInit {
 
   dashboardData?: DashboardData;
 
+  dateRangeStart?: Date;
+  dateRangeEnd?: Date;
+
   constructor(
     private dashboardDataService: DashboardDataService
   ) {}
 
   ngOnInit(): void {
-    this.dashboardDataService.getDashboardData(this.dashboard)
+    this.reload();
+  }
+
+  reload(): void {
+    this.dashboardDataService.getDashboardData(this.dashboard, this.dateRangeStart, this.dateRangeEnd)
       .subscribe(data => this.dashboardData = data);
+  }
+
+  toEndOfDay(date?: string): Date | undefined {
+    return this.toDateWithTime(23,59,59,999,date);
+  }
+
+  toStartOfDay(date?: string): Date | undefined {
+    return this.toDateWithTime(0,0,0,0,date);
+  }
+
+  private toDateWithTime(
+                          hour: number,
+                          minute: number,
+                          second: number,
+                          millis: number,
+                          date?: string,
+  ): Date | undefined {
+
+    if(!date) {
+      return undefined;
+    }
+    let dateEndOfDay = new Date(date);
+    dateEndOfDay.setHours(hour,minute,second,millis);
+    return dateEndOfDay;
   }
 
 }
