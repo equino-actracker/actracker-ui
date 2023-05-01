@@ -19,7 +19,7 @@ export class TagService {
   ) { }
 
   resolveTags(tagIds: string[]): Observable<TagsResult> {
-    let jointTagIds = tagIds.join(',');
+    let jointTagIds = this.unique(tagIds).join(',');
     let url: string = `${environment.backendBaseUrl}/tag?ids=${jointTagIds}`;
 
     return this.http.get<TagPayload[]>(url)
