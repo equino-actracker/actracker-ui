@@ -104,8 +104,8 @@ export class TagService {
     this.resolveTags(tagIds).subscribe(tagsResult => {
       tags.forEach(tag => {
         let matchingTag: Tag | undefined = tagsResult.tags.find(result => result.id === tag.id);
-        let name: string | undefined = matchingTag ? matchingTag.name : tag.id;
-        tag.name = name ? name : '';
+        let name: string | undefined = matchingTag?.name ?? tag.id;
+        tag.name = name ?? '';
       });
     });
   }
