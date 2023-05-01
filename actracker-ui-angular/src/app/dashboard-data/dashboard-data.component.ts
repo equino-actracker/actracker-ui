@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { DashboardDataService } from '../dashboard-data.service';
+import { TagService } from '../tag.service';
 
 import { Dashboard } from '../dashboard';
-import { DashboardData } from '../dashboardData';
+import { DashboardData, BucketData } from '../dashboardData';
+import { Tag } from '../tag';
 
 @Component({
   selector: 'app-dashboard-data',
@@ -21,7 +23,8 @@ export class DashboardDataComponent implements OnInit {
   dateRangeEnd?: Date;
 
   constructor(
-    private dashboardDataService: DashboardDataService
+    private dashboardDataService: DashboardDataService,
+    private tagService: TagService
   ) {}
 
   ngOnInit(): void {
@@ -30,7 +33,24 @@ export class DashboardDataComponent implements OnInit {
 
   reload(): void {
     this.dashboardDataService.getDashboardData(this.dashboard, this.dateRangeStart, this.dateRangeEnd)
-      .subscribe(data => this.dashboardData = data);
+      .subscribe(data => {
+        this.dashboardData = data;
+        this.resolveBucketNames();
+      });
+  }
+
+  private resolveBucketNames(): void {
+    let buckets: BucketData[] = this.dashboardData!.charts
+      .flatMap(ch => ch.buckets);
+    let bucketNames: string[] = buckets
+      .flatMap(b => b.name);
+    this.tagService.resolveTags(bucketNames)
+      .subscribe(tagsResult => {
+        buckets.forEach(bucket => {
+          let matchingTag: Tag | undefined = tagsResult.tags.find(tag => tag.id == bucket.name);
+          bucket.name = matchingTag?.name?? bucket.name;
+        });
+      });
   }
 
   toEndOfDay(date?: string): Date | undefined {

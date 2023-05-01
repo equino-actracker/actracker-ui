@@ -22,10 +22,6 @@
         <th *ngFor="let bucketData of chartData.buckets">{{ bucketData.name }}</th>
       </tr>
       <tr>
-        <th>Total</th>
-        <td *ngFor="let bucketData of chartData.buckets">{{ bucketData.value }}</td>
-      </tr>
-      <tr>
         <th>Percentage</th>
         <td *ngFor="let bucketData of chartData.buckets">{{ bucketData.percentage }}</td>
       </tr>
