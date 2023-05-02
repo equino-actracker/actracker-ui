@@ -66,8 +66,8 @@ export class DashboardDataService {
     let bucketData: BucketData = {
       name: payload.name ? payload.name : '',
       type: payload.type ? payload.type : '',
-      value: payload.value ? payload.value : 0,
-      percentage: payload.percentage ? payload.percentage : 0,
+      value: payload.value,
+      percentage: payload.percentage,
       buckets: payload.buckets?.map(bucket => <BucketData>this.toBucketData(bucket))
     };
 
