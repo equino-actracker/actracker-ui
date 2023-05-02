@@ -13,5 +13,7 @@ export interface ChartData {
 export interface BucketData {
   name: string,
   value: number,
-  percentage: number
+  type: string,
+  percentage: number,
+  buckets?: BucketData[]
 }

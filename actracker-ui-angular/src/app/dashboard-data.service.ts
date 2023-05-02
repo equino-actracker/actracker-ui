@@ -36,8 +36,9 @@ export class DashboardDataService {
     return this.http.get<DashboardDataPayload>(url)
       .pipe(
         map(response => this.toDashboardData(response)),
-        catchError(() => {
+        catchError((error) => {
           console.error('Error occurred during fetching dashboard data');
+          console.error(error);
           return []; // TODO [mc] What should I return here?
         }
       ))
@@ -55,7 +56,7 @@ export class DashboardDataService {
   toChartData(payload: ChartDataPayload): ChartData {
     let chartData: ChartData = {
       name: payload.name ? payload.name : '',
-      buckets: payload.buckets ? payload.buckets.map(this.toBucketData) : []
+      buckets: payload.buckets ? payload.buckets.map(bucket => <BucketData>this.toBucketData(bucket)) : []
     };
 
     return chartData;
@@ -64,8 +65,10 @@ export class DashboardDataService {
   toBucketData(payload: BucketDataPayload): BucketData {
     let bucketData: BucketData = {
       name: payload.name ? payload.name : '',
+      type: payload.type ? payload.type : '',
       value: payload.value ? payload.value : 0,
       percentage: payload.percentage ? payload.percentage : 0,
+      buckets: payload.buckets?.map(bucket => <BucketData>this.toBucketData(bucket))
     };
 
     return bucketData;
@@ -85,6 +88,8 @@ interface ChartDataPayload {
 interface BucketDataPayload {
   name?: string,
   value?: number,
-  percentage?: number
+  type?: string,
+  percentage?: number,
+  buckets?: BucketDataPayload[]
 }
 

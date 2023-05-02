@@ -34,6 +34,7 @@ export class DashboardDataComponent implements OnInit {
   reload(): void {
     this.dashboardDataService.getDashboardData(this.dashboard, this.dateRangeStart, this.dateRangeEnd)
       .subscribe(data => {
+        console.error(data);
         this.dashboardData = data;
         this.resolveBucketNames();
       });
