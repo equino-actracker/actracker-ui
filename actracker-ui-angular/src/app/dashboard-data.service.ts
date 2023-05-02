@@ -45,33 +45,27 @@ export class DashboardDataService {
   }
 
   toDashboardData(payload: DashboardDataPayload): DashboardData {
-    let dashboardData: DashboardData = {
-      name: payload.name ? payload.name : '',
-      charts: payload.charts ? payload.charts.map(chartDataPayload => this.toChartData(chartDataPayload)) : []
+    return {
+      name: payload.name ?? '',
+      charts: payload.charts?.map(chartDataPayload => this.toChartData(chartDataPayload)) ?? []
     };
-
-    return dashboardData;
   }
 
   toChartData(payload: ChartDataPayload): ChartData {
-    let chartData: ChartData = {
-      name: payload.name ? payload.name : '',
-      buckets: payload.buckets ? payload.buckets.map(bucket => <BucketData>this.toBucketData(bucket)) : []
+    return {
+      name: payload.name ?? '',
+      buckets: payload.buckets?.map(bucket => <BucketData>this.toBucketData(bucket)) ?? []
     };
-
-    return chartData;
   }
 
   toBucketData(payload: BucketDataPayload): BucketData {
-    let bucketData: BucketData = {
-      name: payload.name ? payload.name : '',
-      type: payload.type ? payload.type : '',
+    return {
+      name: payload.name ?? '',
+      type: payload.type ?? '',
       value: payload.value,
       percentage: payload.percentage,
       buckets: payload.buckets?.map(bucket => <BucketData>this.toBucketData(bucket))
     };
-
-    return bucketData;
   }
 }
 

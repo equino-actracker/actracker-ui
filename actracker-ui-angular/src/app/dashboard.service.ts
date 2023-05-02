@@ -39,9 +39,10 @@ export class DashboardService {
 
     return this.http.get<DashboardsSearchResultPayload>(url)
       .pipe(
-        map(response => this.toDashboardsSearchResult(response)),
-        catchError(() => {
+        map(response => this.toDashboardsSearchResult(<DashboardsSearchResultPayload>response)),
+        catchError((error) => {
           console.error('Error occurred during searching dashboards');
+          console.error(error);
           return []; // TODO [mc] What should I return here?
         })
       );
@@ -53,8 +54,9 @@ export class DashboardService {
     return this.http.get<DashboardPayload>(url)
       .pipe(
         map(response => this.toDashboard(response)),
-        catchError(() => {
+        catchError((error) => {
           console.error('Error occurred during fetching dashboard');
+          console.error(error);
           return []; // TODO [mc] What should I return here?
         }
       ))
@@ -67,8 +69,9 @@ export class DashboardService {
     return this.http.post<DashboardPayload>(url, dashboardPayload)
       .pipe(
         map(response => this.toDashboard(response)),
-        catchError(() => {
+        catchError((error) => {
           console.error('Error occurred during dashboard creation');
+          console.error(error);
           return []; // TODO [mc] What should I return here?
         })
       );
@@ -79,9 +82,10 @@ export class DashboardService {
     let dashboardPayload = this.toDashboardPayload(dashboard);
 
     return this.http.put(url, dashboardPayload).pipe(
-      map(response => this.toDashboard(response)),
-      catchError(() => {
+      map(response => this.toDashboard(<DashboardPayload>response)),
+      catchError((error) => {
         console.error('Error occurred during updating dashboard');
+        console.error(error);
         return [];
       })
     )
@@ -90,20 +94,20 @@ export class DashboardService {
   deleteDashboard(dashboard: Dashboard): Observable<any> {
     let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}`;
     return this.http.delete(url).pipe(
-      catchError(() => {
+      catchError((error) => {
         console.error('Error occurred during deleting dashboard');
+        console.error(error);
         return [];
       })
     )
   }
 
   toDashboardPayload(dashboard: Dashboard): DashboardPayload {
-    let dashboardPayload: DashboardPayload = {
+    return {
       id: dashboard.id,
       name: dashboard.name,
       charts: dashboard.charts.map(this.toChartPayload)
     }
-    return dashboardPayload;
   }
 
   toChartPayload(chart: Chart): ChartPayload {
@@ -114,30 +118,25 @@ export class DashboardService {
   }
 
   toDashboardsSearchResult(searchResult: DashboardsSearchResultPayload): DashboardsResult {
-    let dashboardsResult: DashboardsResult = {
+    return {
       nextPageId: searchResult.nextPageId,
-      dashboards: searchResult.results.map(this.toDashboard)
+      dashboards: searchResult.results.map(result => <Dashboard>this.toDashboard(result))
     }
-    return dashboardsResult;
   }
 
   toDashboard(dashboardPayload: DashboardPayload): Dashboard {
-    let dashboard: Dashboard = {
+    return {
       id: dashboardPayload.id,
       name: dashboardPayload.name,
-//       charts: dashboardPayload.charts ? dashboardPayload.charts.map(this.toChart) : []
-      charts: dashboardPayload.charts ? dashboardPayload.charts.map(ch => <Chart>{name: ch.name, groupBy: ch.groupBy ?? 'TAG'}) : []
+      charts: dashboardPayload.charts?.map(chart => <Chart>this.toChart(chart)) ?? []
     };
-
-    return dashboard;
   }
 
   toChart(chartPayload: ChartPayload): Chart {
-    let chart: Chart = {
+    return {
       name: chartPayload.name,
       groupBy: chartPayload.groupBy ?? 'TAG'
     };
-    return chart;
   }
 }
 
