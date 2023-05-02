@@ -34,7 +34,6 @@ export class DashboardDataComponent implements OnInit {
   reload(): void {
     this.dashboardDataService.getDashboardData(this.dashboard, this.dateRangeStart, this.dateRangeEnd)
       .subscribe(data => {
-        console.error(data);
         this.dashboardData = data;
         this.resolveBucketNames();
       });
@@ -43,15 +42,39 @@ export class DashboardDataComponent implements OnInit {
   private resolveBucketNames(): void {
     let buckets: BucketData[] = this.dashboardData!.charts
       .flatMap(ch => ch.buckets);
-    let bucketNames: string[] = buckets
-      .flatMap(b => b.name);
-    this.tagService.resolveTags(bucketNames)
+    let tagBuckets = this.getBucketsOfType('TAG', buckets);
+    this.resolveTagBucketNames(tagBuckets);
+    let dayBuckets = this.getBucketsOfType('DAY', buckets);
+    this.resolveDayBucketNames(dayBuckets);
+  }
+
+  private getBucketsOfType(type: string, buckets?: BucketData[]): BucketData[] {
+    let matchingBuckets: BucketData[] = buckets?.filter(bucket => bucket.type == type) ?? [];
+    buckets?.forEach(bucket => {
+      let subBuckets: BucketData[] | undefined = bucket.buckets;
+      matchingBuckets = matchingBuckets.concat(this.getBucketsOfType(type, subBuckets));
+    });
+
+    return matchingBuckets;
+  }
+
+  private resolveTagBucketNames(tagBuckets: BucketData[]): void {
+    let tagBucketNames: string[] = tagBuckets.map(b => b.name);
+    this.tagService.resolveTags(tagBucketNames)
       .subscribe(tagsResult => {
-        buckets.forEach(bucket => {
+        tagBuckets.forEach(bucket => {
           let matchingTag: Tag | undefined = tagsResult.tags.find(tag => tag.id == bucket.name);
           bucket.name = matchingTag?.name?? bucket.name;
         });
       });
+  }
+
+  private resolveDayBucketNames(dayBuckets: BucketData[]): void {
+    dayBuckets.forEach(bucket => {
+      let epochMillis: number = +bucket.name;
+      let date: Date = new Date(epochMillis);
+      bucket.name = date.toLocaleString();
+    });
   }
 
   toEndOfDay(date?: string): Date | undefined {
