@@ -5,5 +5,6 @@ export interface Dashboard {
 }
 
 export interface Chart {
-  name?: string
+  name?: string,
+  groupBy: string
 }

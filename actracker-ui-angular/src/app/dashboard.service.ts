@@ -108,7 +108,8 @@ export class DashboardService {
 
   toChartPayload(chart: Chart): ChartPayload {
     return {
-      name: chart.name
+      name: chart.name,
+      groupBy: chart.groupBy
     };
   }
 
@@ -125,7 +126,7 @@ export class DashboardService {
       id: dashboardPayload.id,
       name: dashboardPayload.name,
 //       charts: dashboardPayload.charts ? dashboardPayload.charts.map(this.toChart) : []
-      charts: dashboardPayload.charts ? dashboardPayload.charts.map(ch => <Chart>{name: ch.name}) : []
+      charts: dashboardPayload.charts ? dashboardPayload.charts.map(ch => <Chart>{name: ch.name, groupBy: ch.groupBy ?? 'TAG'}) : []
     };
 
     return dashboard;
@@ -133,7 +134,8 @@ export class DashboardService {
 
   toChart(chartPayload: ChartPayload): Chart {
     let chart: Chart = {
-      name: chartPayload.name
+      name: chartPayload.name,
+      groupBy: chartPayload.groupBy ?? 'TAG'
     };
     return chart;
   }
@@ -151,5 +153,6 @@ interface DashboardsSearchResultPayload {
 }
 
 interface ChartPayload {
-  name?: string
+  name?: string,
+  groupBy?: string
 }

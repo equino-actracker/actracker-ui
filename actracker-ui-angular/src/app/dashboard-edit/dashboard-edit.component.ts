@@ -12,6 +12,11 @@ import { Dashboard, Chart } from '../dashboard';
 })
 export class DashboardEditComponent implements OnInit {
 
+  chartGroupByTypes = [
+    {id: "TAG", name: "Tag"},
+    {id: "DAY", name: "Day"},
+  ];
+
   @Input()
   dashboard!: Dashboard;
 
@@ -41,12 +46,17 @@ export class DashboardEditComponent implements OnInit {
   }
 
   addChart(): void {
-    let newChart = {};
+    let newChart = {groupBy: "TAG"};
     this.dashboard.charts.unshift(newChart);
   }
 
   deleteChart(chart: Chart): void {
     this.dashboard.charts = this.dashboard.charts.filter(ch => ch !== chart)
+  }
+
+  setGroupByType(chart: Chart, groupByTypeId: any): void {
+//     chart.groupBy = groupByTypeId;
+    console.error(groupByTypeId)
   }
 
 }
