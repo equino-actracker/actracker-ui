@@ -36,39 +36,36 @@ export class DashboardDataService {
     return this.http.get<DashboardDataPayload>(url)
       .pipe(
         map(response => this.toDashboardData(response)),
-        catchError(() => {
+        catchError((error) => {
           console.error('Error occurred during fetching dashboard data');
+          console.error(error);
           return []; // TODO [mc] What should I return here?
         }
       ))
   }
 
   toDashboardData(payload: DashboardDataPayload): DashboardData {
-    let dashboardData: DashboardData = {
-      name: payload.name ? payload.name : '',
-      charts: payload.charts ? payload.charts.map(chartDataPayload => this.toChartData(chartDataPayload)) : []
+    return {
+      name: payload.name ?? '',
+      charts: payload.charts?.map(chartDataPayload => this.toChartData(chartDataPayload)) ?? []
     };
-
-    return dashboardData;
   }
 
   toChartData(payload: ChartDataPayload): ChartData {
-    let chartData: ChartData = {
-      name: payload.name ? payload.name : '',
-      buckets: payload.buckets ? payload.buckets.map(this.toBucketData) : []
+    return {
+      name: payload.name ?? '',
+      buckets: payload.buckets?.map(bucket => <BucketData>this.toBucketData(bucket)) ?? []
     };
-
-    return chartData;
   }
 
   toBucketData(payload: BucketDataPayload): BucketData {
-    let bucketData: BucketData = {
-      name: payload.name ? payload.name : '',
-      value: payload.value ? payload.value : 0,
-      percentage: payload.percentage ? payload.percentage : 0,
+    return {
+      name: payload.name ?? '',
+      type: payload.type ?? '',
+      value: payload.value,
+      percentage: payload.percentage,
+      buckets: payload.buckets?.map(bucket => <BucketData>this.toBucketData(bucket))
     };
-
-    return bucketData;
   }
 }
 
@@ -85,6 +82,8 @@ interface ChartDataPayload {
 interface BucketDataPayload {
   name?: string,
   value?: number,
-  percentage?: number
+  type?: string,
+  percentage?: number,
+  buckets?: BucketDataPayload[]
 }
 

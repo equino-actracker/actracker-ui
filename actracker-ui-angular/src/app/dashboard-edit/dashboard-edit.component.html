@@ -12,6 +12,10 @@
       <div>
         <label>Name: </label>
         <input type="text" [(ngModel)]="chart.name">
+        <label>Group by: </label>
+        <select [(ngModel)]="chart.groupBy">
+          <option *ngFor="let groupByType of chartGroupByTypes" [ngValue]="groupByType.id">{{ groupByType.name }}</option>
+        </select>
       </div>
       <button (click)="deleteChart(chart)">Delete</button>
     </li>
