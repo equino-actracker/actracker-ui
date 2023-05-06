@@ -1,0 +1,11 @@
+<div>
+  <span>Date range: </span>
+  <input type="date"
+         [ngModel]="activityFilter.dateRangeStart | date: 'yyyy-MM-dd'"
+         (ngModelChange)="activityFilter.dateRangeStart=toStartOfDay($event)">
+  <span> - </span>
+  <input type="date"
+         [ngModel]="activityFilter.dateRangeEnd | date: 'yyyy-MM-dd'"
+         (ngModelChange)="activityFilter.dateRangeEnd=toEndOfDay($event)">
+</div>
+<button (click)="apply()">Apply filters</button>

@@ -4,6 +4,7 @@ import { ActivityService } from '../activity.service';
 import { TagService } from '../tag.service';
 
 import { Activity } from '../activity';
+import { ActivityFilter } from '../activityFilter';
 
 @Component({
   selector: 'app-activity-list',
@@ -16,6 +17,7 @@ export class ActivityListComponent implements OnInit {
   activities: Activity[] = [];
 
   addedActivities: Activity[] = [];
+  activityFilter: ActivityFilter = {};
 
   constructor(
     private activityService: ActivityService,
@@ -29,7 +31,7 @@ export class ActivityListComponent implements OnInit {
   fetchNextPage(): void {
     let pageId = this.nextPageId;
     this.nextPageId = undefined;
-    this.activityService.searchActivities(undefined, pageId, 10, this.addedActivities)
+    this.activityService.searchActivities(undefined, pageId, 10, this.addedActivities, this.activityFilter.dateRangeStart, this.activityFilter.dateRangeEnd)
           .subscribe(activitiesResult => {
             let foundActivities = activitiesResult.activities;
             this.activities = this.activities.concat(foundActivities);
@@ -71,6 +73,13 @@ export class ActivityListComponent implements OnInit {
           activity.id = a.id
         });
     }
+  }
+
+  reload() {
+    this.nextPageId = undefined;
+    this.activities = [];
+    this.addedActivities = [];
+    this.fetchNextPage();
   }
 
 }

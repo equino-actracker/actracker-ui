@@ -19,6 +19,7 @@ import { DashboardListComponent } from './dashboard-list/dashboard-list.componen
 import { DashboardDataComponent } from './dashboard-data/dashboard-data.component';
 import { DashboardEditComponent } from './dashboard-edit/dashboard-edit.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ActivityFilterComponent } from './activity-filter/activity-filter.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     DashboardDataComponent,
     DashboardEditComponent,
     DashboardComponent,
+    ActivityFilterComponent,
   ],
   imports: [
     BrowserModule,
