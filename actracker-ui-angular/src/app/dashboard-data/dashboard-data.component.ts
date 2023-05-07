@@ -32,7 +32,7 @@ export class DashboardDataComponent implements OnInit {
   }
 
   reload(): void {
-    this.dashboardDataService.getDashboardData(this.dashboard, this.activityFilter.dateRangeStart, this.activityFilter.dateRangeEnd)
+    this.dashboardDataService.getDashboardData(this.dashboard, this.activityFilter.dateRangeStart, this.activityFilter.dateRangeEnd, this.activityFilter.tags)
       .subscribe(data => {
         this.dashboardData = data;
         this.resolveBucketNames();

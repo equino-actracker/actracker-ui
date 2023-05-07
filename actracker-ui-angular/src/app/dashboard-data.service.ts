@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 
 import { Dashboard } from './dashboard';
 import { DashboardData, ChartData, BucketData } from './dashboardData';
+import { Tag } from './tag';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class DashboardDataService {
         private http: HttpClient,
   ) {}
 
-  getDashboardData(dashboard: Dashboard, dateRangeStart?: Date, dateRangeEnd?: Date): Observable<DashboardData> {
+  getDashboardData(dashboard: Dashboard, dateRangeStart?: Date, dateRangeEnd?: Date, tags?: Tag[]): Observable<DashboardData> {
     let url: string = `${environment.backendBaseUrl}/dashboard/${dashboard.id}/data`;
 
     let requestParams = [];
@@ -27,6 +28,9 @@ export class DashboardDataService {
     }
     if(!!dateRangeEnd) {
       requestParams.unshift(`rangeEndMillis=${dateRangeEnd.getTime()}`)
+    }
+    if(!!tags) {
+      requestParams.unshift(`requiredTags=${tags.map(tag => tag.id).join(',')}`)
     }
 
     if(requestParams.length > 0) {
