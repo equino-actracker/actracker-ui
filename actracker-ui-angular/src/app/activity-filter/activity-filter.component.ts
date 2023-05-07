@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { Tag } from '../tag';
 import { ActivityFilter } from '../activityFilter';
 
 @Component({
@@ -43,6 +44,14 @@ export class ActivityFilterComponent implements OnInit {
     let dateEndOfDay = new Date(date);
     dateEndOfDay.setHours(hour,minute,second,millis);
     return dateEndOfDay;
+  }
+
+  addNewTag(tag: Tag): void {
+    this.activityFilter.tags.unshift(tag);
+  }
+
+  deleteTag(tag: Tag): void {
+    this.activityFilter.tags = this.activityFilter.tags.filter(t => t !== tag)
   }
 
   apply(): void {

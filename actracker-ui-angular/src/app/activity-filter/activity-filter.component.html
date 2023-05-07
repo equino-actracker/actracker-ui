@@ -8,4 +8,7 @@
          [ngModel]="activityFilter.dateRangeEnd | date: 'yyyy-MM-dd'"
          (ngModelChange)="activityFilter.dateRangeEnd=toEndOfDay($event)">
 </div>
+<div>
+  <app-tags-selector [editMode]="true" [tags]="activityFilter.tags" (onTagAdd)="addNewTag($event)" (onTagDelete)="deleteTag($event)"></app-tags-selector>
+</div>
 <button (click)="apply()">Apply filters</button>

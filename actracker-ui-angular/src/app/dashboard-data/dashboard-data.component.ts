@@ -20,7 +20,7 @@ export class DashboardDataComponent implements OnInit {
 
   dashboardData?: DashboardData;
 
-  activityFilter: ActivityFilter = {};
+  activityFilter: ActivityFilter = {tags: []};
 
   constructor(
     private dashboardDataService: DashboardDataService,

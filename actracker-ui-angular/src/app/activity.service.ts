@@ -19,7 +19,7 @@ export class ActivityService {
     private http: HttpClient,
   ) { }
 
-  searchActivities(term?: String, pageId?: String, pageSize?: number, excludedActivities?: Activity[], dateRangeStart?: Date, dateRangeEnd?: Date): Observable<ActivitiesResult> {
+  searchActivities(term?: String, pageId?: String, pageSize?: number, excludedActivities?: Activity[], dateRangeStart?: Date, dateRangeEnd?: Date, tags?: Tag[]): Observable<ActivitiesResult> {
     let url: string = `${environment.backendBaseUrl}/activity/matching`;
     let requestParams = ['orderBy=START_TIME.DESC'];
     if(!!term) {
@@ -33,6 +33,9 @@ export class ActivityService {
     }
     if(!!excludedActivities) {
       requestParams.unshift(`excludedActivities=${excludedActivities.map(activity => activity.id).join(',')}`)
+    }
+    if(!!tags) {
+      requestParams.unshift(`requiredTags=${tags.map(tag => tag.id).join(',')}`)
     }
     if(!!dateRangeStart) {
       requestParams.unshift(`rangeStartMillis=${dateRangeStart.getTime()}`)

@@ -17,7 +17,7 @@ export class ActivityListComponent implements OnInit {
   activities: Activity[] = [];
 
   addedActivities: Activity[] = [];
-  activityFilter: ActivityFilter = {};
+  activityFilter: ActivityFilter = {tags: []};
 
   constructor(
     private activityService: ActivityService,
@@ -31,7 +31,7 @@ export class ActivityListComponent implements OnInit {
   fetchNextPage(): void {
     let pageId = this.nextPageId;
     this.nextPageId = undefined;
-    this.activityService.searchActivities(undefined, pageId, 10, this.addedActivities, this.activityFilter.dateRangeStart, this.activityFilter.dateRangeEnd)
+    this.activityService.searchActivities(undefined, pageId, 10, this.addedActivities, this.activityFilter.dateRangeStart, this.activityFilter.dateRangeEnd, this.activityFilter.tags)
           .subscribe(activitiesResult => {
             let foundActivities = activitiesResult.activities;
             this.activities = this.activities.concat(foundActivities);
