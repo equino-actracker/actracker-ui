@@ -2,15 +2,7 @@
   <h3>{{ dashboardData.name }}</h3>
 
   <h4>Filters</h4>
-
-  <div>
-    <span>Date range: </span>
-    <input type="date" [ngModel]="dateRangeStart | date: 'yyyy-MM-dd'"
-           (ngModelChange)="dateRangeStart=toStartOfDay($event)">
-    <span> - </span>
-    <input type="date" [ngModel]="dateRangeEnd | date: 'yyyy-MM-dd'" (ngModelChange)="dateRangeEnd=toEndOfDay($event)">
-  </div>
-  <button (click)="reload()">Apply filters</button>
+  <app-activity-filter [activityFilter]="activityFilter" (onFiltersApplied)="reload()"></app-activity-filter>
 
   <h4>Charts</h4>
 

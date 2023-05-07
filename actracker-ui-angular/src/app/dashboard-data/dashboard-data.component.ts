@@ -6,6 +6,7 @@ import { TagService } from '../tag.service';
 import { Dashboard } from '../dashboard';
 import { DashboardData, BucketData } from '../dashboardData';
 import { Tag } from '../tag';
+import { ActivityFilter } from '../activityFilter';
 
 @Component({
   selector: 'app-dashboard-data',
@@ -19,8 +20,7 @@ export class DashboardDataComponent implements OnInit {
 
   dashboardData?: DashboardData;
 
-  dateRangeStart?: Date;
-  dateRangeEnd?: Date;
+  activityFilter: ActivityFilter = {tags: []};
 
   constructor(
     private dashboardDataService: DashboardDataService,
@@ -32,7 +32,7 @@ export class DashboardDataComponent implements OnInit {
   }
 
   reload(): void {
-    this.dashboardDataService.getDashboardData(this.dashboard, this.dateRangeStart, this.dateRangeEnd)
+    this.dashboardDataService.getDashboardData(this.dashboard, this.activityFilter.dateRangeStart, this.activityFilter.dateRangeEnd)
       .subscribe(data => {
         this.dashboardData = data;
         this.resolveBucketNames();
@@ -75,30 +75,6 @@ export class DashboardDataComponent implements OnInit {
       let date: Date = new Date(epochMillis);
       bucket.name = date.toLocaleString();
     });
-  }
-
-  toEndOfDay(date?: string): Date | undefined {
-    return this.toDateWithTime(23,59,59,999,date);
-  }
-
-  toStartOfDay(date?: string): Date | undefined {
-    return this.toDateWithTime(0,0,0,0,date);
-  }
-
-  private toDateWithTime(
-                          hour: number,
-                          minute: number,
-                          second: number,
-                          millis: number,
-                          date?: string,
-  ): Date | undefined {
-
-    if(!date) {
-      return undefined;
-    }
-    let dateEndOfDay = new Date(date);
-    dateEndOfDay.setHours(hour,minute,second,millis);
-    return dateEndOfDay;
   }
 
 }
