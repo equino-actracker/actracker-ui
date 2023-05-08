@@ -64,7 +64,9 @@ export class DashboardDataService {
 
   toBucketData(payload: BucketDataPayload): BucketData {
     return {
-      name: payload.name ?? '',
+      id: payload.id,
+      rangeStart: payload.rangeStartMillis ? new Date(payload.rangeStartMillis) : undefined,
+      rangeEnd: payload.rangeEndMillis ? new Date(payload.rangeEndMillis) : undefined,
       type: payload.type ?? '',
       value: payload.value,
       percentage: payload.percentage,
@@ -84,7 +86,9 @@ interface ChartDataPayload {
 }
 
 interface BucketDataPayload {
-  name?: string,
+  id?: string,
+  rangeStartMillis?: number,
+  rangeEndMillis?: number,
   value?: number,
   type?: string,
   percentage?: number,

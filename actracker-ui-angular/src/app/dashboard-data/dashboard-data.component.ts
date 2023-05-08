@@ -59,21 +59,21 @@ export class DashboardDataComponent implements OnInit {
   }
 
   private resolveTagBucketNames(tagBuckets: BucketData[]): void {
-    let tagBucketNames: string[] = tagBuckets.map(b => b.name);
-    this.tagService.resolveTags(tagBucketNames)
+    let tagBucketIds: string[] = tagBuckets
+      .filter(b => !!b.id)
+      .map(b => b.id!);
+    this.tagService.resolveTags(tagBucketIds)
       .subscribe(tagsResult => {
         tagBuckets.forEach(bucket => {
-          let matchingTag: Tag | undefined = tagsResult.tags.find(tag => tag.id == bucket.name);
-          bucket.name = matchingTag?.name?? bucket.name;
+          let matchingTag: Tag | undefined = tagsResult.tags.find(tag => tag.id == bucket.id);
+          bucket.label = matchingTag?.name ?? bucket.id;
         });
       });
   }
 
   private resolveDayBucketNames(dayBuckets: BucketData[]): void {
     dayBuckets.forEach(bucket => {
-      let epochMillis: number = +bucket.name;
-      let date: Date = new Date(epochMillis);
-      bucket.name = date.toLocaleString();
+      bucket.label = `${bucket.rangeStart?.toLocaleString()} - ${bucket.rangeEnd?.toLocaleString()}`;
     });
   }
 
