@@ -11,7 +11,10 @@ export interface ChartData {
 }
 
 export interface BucketData {
-  name: string,
+  label?: string,
+  id?: string,
+  rangeStart?: Date,
+  rangeEnd?: Date,
   value?: number,
   type: string,
   percentage?: number,

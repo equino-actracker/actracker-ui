@@ -10,7 +10,7 @@
     <h4>{{ chartData.name }}</h4>
     <table>
       <tr>
-        <th style="border: 1px solid black" *ngFor="let bucketData of chartData.buckets">{{ bucketData.name }}</th>
+        <th style="border: 1px solid black" *ngFor="let bucketData of chartData.buckets">{{ bucketData.label }}</th>
       </tr>
       <tr>
         <td style="border: 1px solid black" *ngFor="let bucketData of chartData.buckets">{{ bucketData.percentage }}</td>
@@ -19,7 +19,7 @@
         <td style="border: 1px solid black" *ngFor="let bucketData of chartData.buckets">
           <table>
             <tr>
-              <th style="border: 1px solid black" *ngFor="let subBucket of bucketData.buckets">{{ subBucket.name }}</th>
+              <th style="border: 1px solid black" *ngFor="let subBucket of bucketData.buckets">{{ subBucket.label }}</th>
             </tr>
             <tr>
               <td style="border: 1px solid black" *ngFor="let subBucket of bucketData.buckets">{{ subBucket.percentage }}</td>
