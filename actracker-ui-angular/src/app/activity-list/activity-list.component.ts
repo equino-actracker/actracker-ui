@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { ActivityService } from '../activity.service';
 import { TagService } from '../tag.service';
 
 import { Activity } from '../activity';
+import { Tag } from '../tag';
 import { ActivityFilter } from '../activityFilter';
 
 @Component({
@@ -21,10 +23,21 @@ export class ActivityListComponent implements OnInit {
 
   constructor(
     private activityService: ActivityService,
-    private tagService: TagService
+    private tagService: TagService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    let tagsParam = this.route.snapshot.paramMap.get('tags');
+    let rangeStartParam = this.route.snapshot.paramMap.get('rangeStart');
+    let rangeEndParam = this.route.snapshot.paramMap.get('rangeEnd');
+
+    this.activityFilter.dateRangeStart = this.toDate(rangeStartParam);
+    this.activityFilter.dateRangeEnd = this.toDate(rangeEndParam);
+    this.activityFilter.tags = this.toTags(tagsParam);
+
+    this.tagService.resolveTagNames(this.activityFilter.tags)
+
     this.fetchNextPage();
   }
 
@@ -82,4 +95,13 @@ export class ActivityListComponent implements OnInit {
     this.fetchNextPage();
   }
 
+  private toTags(jointTagIds: string | null): Tag[] {
+    return !jointTagIds ? [] : jointTagIds
+      .split(',')
+      .map(tagId => <Tag>{id: tagId});
+  }
+
+  private toDate(timestamp: string | null): Date | undefined {
+    return !!timestamp ? new Date(+timestamp) : undefined;
+  }
 }
