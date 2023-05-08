@@ -12,7 +12,7 @@
            (keyUp.enter)="tryAddTag()"
     />
     <ul *ngIf="showMatchingTags">
-      <li *ngFor="let matchingTag of matchingTags"><a (mousedown)="addTag(matchingTag)">{{ matchingTag.name }}</a></li>
+      <li *ngFor="let matchingTag of matchingTags"><a style="cursor: pointer" (mousedown)="addTag(matchingTag)">{{ matchingTag.name }}</a></li>
     </ul>
   </div>
 </div>
