@@ -44,20 +44,24 @@ export class DashboardDataComponent implements OnInit {
   private resolveBucketNames(): void {
     let buckets: BucketData[] = this.dashboardData!.charts
       .flatMap(ch => ch.buckets);
-    let tagBuckets = this.getBucketsOfType('TAG', buckets);
+    let tagBuckets = this.getBucketsOfTypeRecursively('TAG', buckets);
     this.resolveTagBucketNames(tagBuckets);
-    let dayBuckets = this.getBucketsOfType('DAY', buckets);
+    let dayBuckets = this.getBucketsOfTypeRecursively('DAY', buckets);
     this.resolveDayBucketNames(dayBuckets);
   }
 
-  private getBucketsOfType(type: string, buckets?: BucketData[]): BucketData[] {
-    let matchingBuckets: BucketData[] = buckets?.filter(bucket => bucket.type == type) ?? [];
+  private getBucketsOfTypeRecursively(type: string, buckets?: BucketData[]): BucketData[] {
+    let matchingBuckets: BucketData[] = this.getBucketsOfType(type, buckets);
     buckets?.forEach(bucket => {
       let subBuckets: BucketData[] | undefined = bucket.buckets;
-      matchingBuckets = matchingBuckets.concat(this.getBucketsOfType(type, subBuckets));
+      matchingBuckets = matchingBuckets.concat(this.getBucketsOfTypeRecursively(type, subBuckets));
     });
 
     return matchingBuckets;
+  }
+
+  private getBucketsOfType(type: string, buckets?: BucketData[]): BucketData[] {
+    return buckets?.filter(bucket => bucket.type == type) ?? [];
   }
 
   private resolveTagBucketNames(tagBuckets: BucketData[]): void {
@@ -79,9 +83,9 @@ export class DashboardDataComponent implements OnInit {
     });
   }
 
-  drillDown(bucket: BucketData): void {
-    let tagBuckets: BucketData[] = this.getBucketsOfType('TAG', [bucket]);
-    let dailyBuckets: BucketData[] = this.getBucketsOfType('DAY', [bucket]);
+  drillDown(buckets: BucketData[]): void {
+    let tagBuckets: BucketData[] = this.getBucketsOfType('TAG', buckets);
+    let dailyBuckets: BucketData[] = this.getBucketsOfType('DAY', buckets);
 
     let tags: Tag[] = tagBuckets
       .filter(bucket => !!bucket.id)
