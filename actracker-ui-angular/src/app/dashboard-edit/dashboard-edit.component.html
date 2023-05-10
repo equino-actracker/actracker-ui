@@ -16,6 +16,12 @@
         <select [(ngModel)]="chart.groupBy">
           <option *ngFor="let groupByType of chartGroupByTypes" [ngValue]="groupByType.id">{{ groupByType.name }}</option>
         </select>
+        <app-tags-selector
+          [editMode]="true"
+          [tags]="chart.includedTags"
+          (onTagAdd)="addTagToChart(chart, $event)"
+          (onTagDelete)="deleteTagFromChart(chart, $event)"
+        ></app-tags-selector>
       </div>
       <button (click)="deleteChart(chart)">Delete</button>
     </li>

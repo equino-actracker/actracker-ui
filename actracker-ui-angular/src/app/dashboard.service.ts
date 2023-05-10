@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 
 import { Dashboard, Chart } from './dashboard';
 import { DashboardsResult } from './dashboardsResult';
+import { Tag } from './tag';
 
 @Injectable({
   providedIn: 'root'
@@ -113,7 +114,8 @@ export class DashboardService {
   toChartPayload(chart: Chart): ChartPayload {
     return {
       name: chart.name,
-      groupBy: chart.groupBy
+      groupBy: chart.groupBy,
+      includedTags: chart.includedTags.map(tag => tag.id!)
     };
   }
 
@@ -135,7 +137,8 @@ export class DashboardService {
   toChart(chartPayload: ChartPayload): Chart {
     return {
       name: chartPayload.name,
-      groupBy: chartPayload.groupBy ?? 'TAG'
+      groupBy: chartPayload.groupBy ?? 'TAG',
+      includedTags: chartPayload.includedTags?.map(tagId => <Tag>{id: tagId}) ?? []
     };
   }
 }
@@ -153,5 +156,6 @@ interface DashboardsSearchResultPayload {
 
 interface ChartPayload {
   name?: string,
-  groupBy?: string
+  groupBy?: string,
+  includedTags?: string[]
 }

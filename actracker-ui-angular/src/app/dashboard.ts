@@ -1,3 +1,5 @@
+import { Tag } from './tag';
+
 export interface Dashboard {
   id?: string,
   name?: string,
@@ -6,5 +8,6 @@ export interface Dashboard {
 
 export interface Chart {
   name?: string,
-  groupBy: string
+  groupBy: string,
+  includedTags: Tag[]
 }
