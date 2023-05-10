@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { DashboardService } from '../dashboard.service';
+import { TagService } from '../tag.service';
 
 import { Dashboard } from '../dashboard';
+import { Chart } from '../dashboard';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +19,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
+    private tagService: TagService,
     private route: ActivatedRoute
   ) { }
 
@@ -25,12 +28,18 @@ export class DashboardComponent implements OnInit {
     if(id) {
       this.dashboardService.getDashboard(id)
         .subscribe(d => {
+          this.resolveTagNames(d.charts);
           this.dashboard = d;
         });
     } else {
       this.editMode = true;
       this.dashboard = {charts: []};
     }
+  }
+
+  resolveTagNames(charts: Chart[]) {
+    let allTags = charts.flatMap(chart => chart.includedTags);
+    this.tagService.resolveTagNames(allTags);
   }
 
 }

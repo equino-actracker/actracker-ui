@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
 
 import { Dashboard, Chart } from '../dashboard';
+import { Tag } from '../tag';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class DashboardEditComponent implements OnInit {
   }
 
   addChart(): void {
-    let newChart = {groupBy: "TAG"};
+    let newChart = {groupBy: "TAG", includedTags: []};
     this.dashboard.charts.unshift(newChart);
   }
 
@@ -54,9 +55,12 @@ export class DashboardEditComponent implements OnInit {
     this.dashboard.charts = this.dashboard.charts.filter(ch => ch !== chart)
   }
 
-  setGroupByType(chart: Chart, groupByTypeId: any): void {
-//     chart.groupBy = groupByTypeId;
-    console.error(groupByTypeId)
+  addTagToChart(chart: Chart, tag: Tag): void {
+    chart.includedTags.unshift(tag);
+  }
+
+  deleteTagFromChart(chart: Chart, tag: Tag): void {
+    chart.includedTags = chart.includedTags.filter(t => t.id !== tag.id);
   }
 
 }
