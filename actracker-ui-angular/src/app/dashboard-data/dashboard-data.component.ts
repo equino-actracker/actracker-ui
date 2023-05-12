@@ -50,6 +50,8 @@ export class DashboardDataComponent implements OnInit {
     this.resolveTimeRangeBucketNames(dayBuckets);
     let weekBuckets = this.getBucketsOfTypeRecursively('WEEK', buckets);
     this.resolveTimeRangeBucketNames(weekBuckets);
+    let monthBuckets = this.getBucketsOfTypeRecursively('MONTH', buckets);
+    this.resolveTimeRangeBucketNames(monthBuckets);
   }
 
   private getBucketsOfTypeRecursively(type: string, buckets?: BucketData[]): BucketData[] {
@@ -89,6 +91,7 @@ export class DashboardDataComponent implements OnInit {
     let tagBuckets: BucketData[] = this.getBucketsOfType('TAG', buckets);
     let timeRangeBuckets: BucketData[] = this.getBucketsOfType('DAY', buckets);
     timeRangeBuckets = timeRangeBuckets.concat(this.getBucketsOfType('WEEK', buckets));
+    timeRangeBuckets = timeRangeBuckets.concat(this.getBucketsOfType('MONTH', buckets));
 
     let tags: Tag[] = tagBuckets
       .filter(bucket => !!bucket.id)
