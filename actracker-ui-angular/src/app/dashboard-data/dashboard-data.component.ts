@@ -47,7 +47,9 @@ export class DashboardDataComponent implements OnInit {
     let tagBuckets = this.getBucketsOfTypeRecursively('TAG', buckets);
     this.resolveTagBucketNames(tagBuckets);
     let dayBuckets = this.getBucketsOfTypeRecursively('DAY', buckets);
-    this.resolveDayBucketNames(dayBuckets);
+    this.resolveTimeRangeBucketNames(dayBuckets);
+    let weekBuckets = this.getBucketsOfTypeRecursively('WEEK', buckets);
+    this.resolveTimeRangeBucketNames(weekBuckets);
   }
 
   private getBucketsOfTypeRecursively(type: string, buckets?: BucketData[]): BucketData[] {
@@ -77,21 +79,22 @@ export class DashboardDataComponent implements OnInit {
       });
   }
 
-  private resolveDayBucketNames(dayBuckets: BucketData[]): void {
-    dayBuckets.forEach(bucket => {
+  private resolveTimeRangeBucketNames(timeRangeBuckets: BucketData[]): void {
+    timeRangeBuckets.forEach(bucket => {
       bucket.label = `${bucket.rangeStart?.toLocaleString()} - ${bucket.rangeEnd?.toLocaleString()}`;
     });
   }
 
   drillDown(buckets: BucketData[]): void {
     let tagBuckets: BucketData[] = this.getBucketsOfType('TAG', buckets);
-    let dailyBuckets: BucketData[] = this.getBucketsOfType('DAY', buckets);
+    let timeRangeBuckets: BucketData[] = this.getBucketsOfType('DAY', buckets);
+    timeRangeBuckets = timeRangeBuckets.concat(this.getBucketsOfType('WEEK', buckets));
 
     let tags: Tag[] = tagBuckets
       .filter(bucket => !!bucket.id)
       .map(bucket => <Tag>{id: bucket.id});
 
-    let rangeStarts: Date[] = dailyBuckets
+    let rangeStarts: Date[] = timeRangeBuckets
       .filter(bucket => !!bucket.rangeStart)
       .map(bucket => bucket.rangeStart!)
 
@@ -103,7 +106,7 @@ export class DashboardDataComponent implements OnInit {
       ? rangeStarts.reduce((date1, date2) => date1! > date2! ? date1 : date2)
       : undefined;
 
-    let rangeEnds: Date[] = dailyBuckets
+    let rangeEnds: Date[] = timeRangeBuckets
       .filter(bucket => !!bucket.rangeEnd)
       .map(bucket => bucket.rangeEnd!)
 

@@ -16,6 +16,7 @@ export class DashboardEditComponent implements OnInit {
   chartGroupByTypes = [
     {id: "TAG", name: "Tag"},
     {id: "DAY", name: "Day"},
+    {id: "WEEK", name: "Week"},
   ];
 
   @Input()
