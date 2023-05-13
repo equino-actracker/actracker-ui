@@ -17,6 +17,7 @@ export class DashboardEditComponent implements OnInit {
     {id: "TAG", name: "Tag"},
     {id: "DAY", name: "Day"},
     {id: "WEEK", name: "Week"},
+    {id: "WEEKEND", name: "Weekend"},
     {id: "MONTH", name: "Month"},
   ];
 
