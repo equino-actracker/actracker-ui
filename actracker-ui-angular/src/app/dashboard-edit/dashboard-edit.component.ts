@@ -55,7 +55,9 @@ export class DashboardEditComponent implements OnInit {
   }
 
   deleteChart(chart: Chart): void {
-    this.dashboard.charts = this.dashboard.charts.filter(ch => ch !== chart)
+    if(confirm('Delete chart?')) {
+      this.dashboard.charts = this.dashboard.charts.filter(ch => ch !== chart)
+    }
   }
 
   addTagToChart(chart: Chart, tag: Tag): void {

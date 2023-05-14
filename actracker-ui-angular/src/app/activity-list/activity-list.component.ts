@@ -65,13 +65,15 @@ export class ActivityListComponent implements OnInit {
   }
 
   deleteActivity(activity: Activity): void {
-    if(activity.id) {
-      this.activityService.deleteActivity(activity)
-        .subscribe(() => {
-          this.activities = this.activities.filter(a => a !== activity)
-        })
-    } else {
-      this.activities = this.activities.filter(a => a !== activity)
+    if(confirm('Delete activity?')) {
+      if(activity.id) {
+        this.activityService.deleteActivity(activity)
+          .subscribe(() => {
+            this.activities = this.activities.filter(a => a !== activity)
+          })
+      } else {
+        this.activities = this.activities.filter(a => a !== activity)
+      }
     }
   }
 

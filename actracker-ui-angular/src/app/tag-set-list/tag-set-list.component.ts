@@ -70,13 +70,15 @@ export class TagSetListComponent implements OnInit {
   }
 
   deleteTagSet(tagSet: TagSet): void {
-    if(tagSet.id) {
-      this.tagSetService.deleteTagSet(tagSet)
-        .subscribe(() => {
-          this.tagSets = this.tagSets.filter(tS => tS !== tagSet)
-        })
-    } else {
-      this.tagSets = this.tagSets.filter(tS => tS !== tagSet)
+    if(confirm('Delete tag set?')) {
+      if(tagSet.id) {
+        this.tagSetService.deleteTagSet(tagSet)
+          .subscribe(() => {
+            this.tagSets = this.tagSets.filter(tS => tS !== tagSet)
+          })
+      } else {
+        this.tagSets = this.tagSets.filter(tS => tS !== tagSet)
+      }
     }
   }
 

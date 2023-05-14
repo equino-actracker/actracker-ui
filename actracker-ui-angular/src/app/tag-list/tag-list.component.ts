@@ -46,13 +46,15 @@ export class TagListComponent implements OnInit {
   }
 
   deleteTag(tag: Tag): void {
-    if(tag.id) {
-      this.tagService.deleteTag(tag)
-        .subscribe(() => {
-          this.tags = this.tags.filter(t => t !== tag)
-        })
-    } else {
-      this.tags = this.tags.filter(t => t !== tag)
+    if(confirm('Delete tag?')) {
+      if(tag.id) {
+        this.tagService.deleteTag(tag)
+          .subscribe(() => {
+            this.tags = this.tags.filter(t => t !== tag)
+          })
+      } else {
+        this.tags = this.tags.filter(t => t !== tag)
+      }
     }
   }
 
