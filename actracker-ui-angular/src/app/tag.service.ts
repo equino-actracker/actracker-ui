@@ -25,7 +25,7 @@ export class TagService {
 
     return this.http.get<TagPayload[]>(url)
       .pipe(
-        map(response => this.toTagsResult(response)),
+        map(response => this.toTagsResult(<TagPayload[]>response)),
         catchError(() => {
           console.error('Error occurred during fetching tags');
           return [];
@@ -54,7 +54,7 @@ export class TagService {
 
     return this.http.get<TagsSearchResultPayload>(url)
     .pipe(
-      map(response => this.toTagsSearchResult(response)),
+      map(response => this.toTagsSearchResult(<TagsSearchResultPayload>response)),
       catchError(() => {
         console.error('Error occurred during searching tags');
         return []; // TODO [mc] What should I return here?
@@ -112,12 +112,11 @@ export class TagService {
   }
 
   toTagPayload(tag: Tag): TagPayload {
-    let tagPayload: TagPayload = {
+    return {
       id: tag.id,
       name: tag.name,
       metrics: tag.metrics.map(metric => <MetricPayload>this.toMetricPayload(metric))
     }
-    return tagPayload;
   }
 
   toMetricPayload(metric: Metric): MetricPayload {
@@ -138,28 +137,24 @@ export class TagService {
   }
 
   toTagsResult(tags: TagPayload[]): TagsResult {
-    let tagsResult: TagsResult = {
-      tags: tags.map(this.toTag)
+    return <TagsResult>{
+      tags: tags.map(tag => this.toTag(<TagPayload>tag))
     }
-    return tagsResult;
   }
 
   toTagsSearchResult(searchResult: TagsSearchResultPayload): TagsResult {
-    let tagsResult: TagsResult = {
+    return <TagsResult>{
       nextPageId: searchResult.nextPageId,
-      tags: searchResult.results.map(this.toTag)
+      tags: searchResult.results.map(tag => <Tag>this.toTag(tag))
     }
-    return tagsResult;
   }
 
   toTag(tagPayload: TagPayload): Tag {
-    let tag: Tag = {
+    return <Tag>{
       id: tagPayload.id,
       name: tagPayload.name,
-      metrics: tagPayload.metrics?.map(metric => <Metric>this.toMetric(metric)) ?? []
+      metrics: tagPayload.metrics?.map(metric => <Metric>this.toMetric(<MetricPayload>metric)) ?? []
     }
-
-    return tag;
   }
 
   toMetric(metricPayload: MetricPayload): Metric {
