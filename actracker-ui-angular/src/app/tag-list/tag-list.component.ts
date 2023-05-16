@@ -40,7 +40,7 @@ export class TagListComponent implements OnInit {
   }
 
   addTag(): void {
-    let newTag: Tag = {};
+    let newTag: Tag = {metrics: []};
     this.tags.unshift(newTag);
     this.addedTags.unshift(newTag);
   }

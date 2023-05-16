@@ -11,6 +11,10 @@ import { Tag } from '../tag';
 })
 export class TagComponent implements OnInit {
 
+  metricTypes = [
+    {id: "NUMERIC", name: "Numeric"},
+  ];
+
   @Input()
   tag!: Tag;
   @Input()
@@ -23,7 +27,7 @@ export class TagComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save() {
+  save(): void {
     if(!this.tag) {
       return;
     }
@@ -40,8 +44,13 @@ export class TagComponent implements OnInit {
     this.editMode = false;
   }
 
-  edit() {
+  edit(): void {
     this.editMode = true;
+  }
+
+  addMetric(): void {
+    let newMetric = {name: '', type: 'NUMERIC'};
+    this.tag.metrics.unshift(newMetric);
   }
 
 }
