@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
 import { Tag } from './tag';
+import { Metric } from './tag';
 import { TagsResult } from './tagsResult';
 
 @Injectable({
@@ -113,9 +114,17 @@ export class TagService {
   toTagPayload(tag: Tag): TagPayload {
     let tagPayload: TagPayload = {
       id: tag.id,
-      name: tag.name
+      name: tag.name,
+      metrics: tag.metrics.map(metric => <MetricPayload>this.toMetricPayload(metric))
     }
     return tagPayload;
+  }
+
+  toMetricPayload(metric: Metric): MetricPayload {
+    return <MetricPayload>{
+      name: metric.name,
+      type: metric.type
+    }
   }
 
   unique(ids: string[]): string[] {
@@ -146,16 +155,30 @@ export class TagService {
   toTag(tagPayload: TagPayload): Tag {
     let tag: Tag = {
       id: tagPayload.id,
-      name: tagPayload.name
+      name: tagPayload.name,
+      metrics: tagPayload.metrics?.map(metric => <Metric>this.toMetric(metric)) ?? []
     }
 
     return tag;
+  }
+
+  toMetric(metricPayload: MetricPayload): Metric {
+    return <Metric>{
+      name: metricPayload.name ?? '',
+      type: metricPayload.type ?? ''
+    };
   }
 }
 
 interface TagPayload {
   id?: string,
-  name?: string
+  name?: string,
+  metrics?: MetricPayload[]
+}
+
+interface MetricPayload {
+  name?: string,
+  type?: string
 }
 
 interface TagsSearchResultPayload {
