@@ -5,6 +5,7 @@ export interface Tag {
 }
 
 export interface Metric {
+  id?: string;
   name: string;
   type: string
 }

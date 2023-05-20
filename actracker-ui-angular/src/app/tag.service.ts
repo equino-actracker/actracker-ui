@@ -121,6 +121,7 @@ export class TagService {
 
   toMetricPayload(metric: Metric): MetricPayload {
     return <MetricPayload>{
+      id: metric.id,
       name: metric.name,
       type: metric.type
     }
@@ -159,6 +160,7 @@ export class TagService {
 
   toMetric(metricPayload: MetricPayload): Metric {
     return <Metric>{
+      id: metricPayload.id,
       name: metricPayload.name ?? '',
       type: metricPayload.type ?? ''
     };
@@ -172,6 +174,7 @@ interface TagPayload {
 }
 
 interface MetricPayload {
+  id?: string,
   name?: string,
   type?: string
 }
