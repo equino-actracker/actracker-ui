@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TagService } from '../tag.service';
 
 import { Tag } from '../tag';
+import { Metric } from '../tag';
 
 @Component({
   selector: 'app-tag',
@@ -51,6 +52,10 @@ export class TagComponent implements OnInit {
   addMetric(): void {
     let newMetric = {name: '', type: 'NUMERIC'};
     this.tag.metrics.unshift(newMetric);
+  }
+
+  deleteMetric(metric: Metric): void {
+    this.tag.metrics = this.tag.metrics.filter(m => m != metric);
   }
 
 }

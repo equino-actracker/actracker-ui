@@ -1,4 +1,5 @@
-<div *ngIf="tag">
+<div *ngIf="tag" style="border: 1px solid black">
+
   <div *ngIf="!editMode">
     <span>Name: {{tag.name}}</span>
     <h4>Metrics</h4>
@@ -7,6 +8,7 @@
     </ul>
     <button (click)="edit()">Edit</button>
   </div>
+
   <div *ngIf="editMode">
     <label>Name: </label>
     <input type="text" [(ngModel)]="tag.name">
@@ -22,8 +24,10 @@
         <select [(ngModel)]="metric.type">
           <option *ngFor="let metricType of metricTypes" [ngValue]="metricType.id">{{ metricType.name }}</option>
         </select>
+        <button (click)="deleteMetric(metric)">X</button>
       </li>
     </ul>
     <button (click)="save()">Save</button>
   </div>
+
 </div>
