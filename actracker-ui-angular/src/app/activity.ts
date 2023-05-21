@@ -11,7 +11,7 @@ export interface Activity {
 }
 
 export interface MetricValue {
-  id: string;
+  metricId: string;
   name?: string;
   value?: string;
 }

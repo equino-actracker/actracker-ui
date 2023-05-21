@@ -57,8 +57,8 @@ export class ActivityComponent implements OnInit {
       .filter(metric => !!metric?.id)
       .map(metric => metric.id!);
     this.activity.metricValues = this.activity.metricValues
-      .filter(metric => !!metric.id)
-      .filter(metric => !metricsToRemove.includes(metric.id));
+      .filter(metric => !!metric.metricId)
+      .filter(metric => !metricsToRemove.includes(metric.metricId));
   }
 
 }

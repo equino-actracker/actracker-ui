@@ -118,7 +118,7 @@ export class ActivityService {
       comment: activity.comment,
       tags: activity.tags.map(tag => tag.id!),
       metricValues: activity.metricValues
-        .filter(metricValue => !!metricValue.id)
+        .filter(metricValue => !!metricValue.metricId)
         .filter(metricValue => !!metricValue.value)
         .filter(metricValue => metricValue.value!.length > 0)
         .map(this.toMetricValuePayload)
@@ -128,7 +128,7 @@ export class ActivityService {
 
   toMetricValuePayload(metricValue: MetricValue): MetricValuePayload {
     return <MetricValuePayload>{
-      id: metricValue.id,
+      metricId: metricValue.metricId,
       value: metricValue.value
     };
   }
@@ -176,7 +176,7 @@ export class ActivityService {
 
   toMetricValue(metric: Metric) {
     return <MetricValue>{
-      id: metric.id,
+      metricId: metric.id,
       name: metric.name
     };
   }
@@ -193,7 +193,7 @@ interface ActivityPayload {
 }
 
 interface MetricValuePayload {
-  id?: string,
+  metricId?: string,
   value?: string
 }
 
