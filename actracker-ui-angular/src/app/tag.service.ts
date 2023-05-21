@@ -111,6 +111,15 @@ export class TagService {
     });
   }
 
+  updateTagDetails(tagsToUpdate: Tag[], foundTags: TagsResult): void {
+    tagsToUpdate.forEach(tag => {
+      let matchingTag: Tag | undefined = foundTags.tags.find(result => result.id === tag.id);
+      let name: string | undefined = matchingTag?.name ?? tag.id;
+      tag.name = name ?? '';
+      tag.metrics = matchingTag?.metrics ?? [];
+    });
+  }
+
   toTagPayload(tag: Tag): TagPayload {
     return {
       id: tag.id,

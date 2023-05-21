@@ -162,17 +162,12 @@ export class ActivityService {
       .filter(tag => !!tag.id)
       .map(tag => tag.id!);
     this.tagService.resolveTags(tagIds).subscribe(tagResults => {
-      activities.forEach(activity => this.updateTagDetails(activity, tagResults));
+      activities.forEach(activity => this.tagService.updateTagDetails(activity.tags, tagResults));
+      activities.forEach(activity => this.updateMetrics(activity));
     });
   }
 
-  private updateTagDetails(activity: Activity, foundTags: TagsResult): void {
-    activity.tags.forEach(tag => {
-      let matchingTag: Tag | undefined = foundTags.tags.find(result => result.id === tag.id);
-      let name: string | undefined = matchingTag?.name ?? tag.id;
-      tag.name = name ?? '';
-      tag.metrics = matchingTag?.metrics ?? [];
-    });
+  private updateMetrics(activity: Activity): void {
     activity.metricValues = activity.tags
       .flatMap(tag => tag.metrics)
       .filter(metric => !!metric?.id)

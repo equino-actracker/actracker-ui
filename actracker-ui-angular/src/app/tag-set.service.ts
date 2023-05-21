@@ -123,16 +123,7 @@ export class TagSetService {
       .filter(tag => !!tag.id)
       .map(tag => tag.id!);
     this.tagService.resolveTags(tagIds).subscribe(tagResults => {
-      tagSets.forEach(tagSet => this.updateTagDetails(tagSet, tagResults));
-    });
-  }
-
-  private updateTagDetails(tagSet: TagSet, foundTags: TagsResult): void {
-    tagSet.tags.forEach(tag => {
-      let matchingTag: Tag | undefined = foundTags.tags.find(result => result.id === tag.id);
-      let name: string | undefined = matchingTag?.name ?? tag.id;
-      tag.name = name ?? '';
-      tag.metrics = matchingTag?.metrics ?? [];
+      tagSets.forEach(tagSet => this.tagService.updateTagDetails(tagSet.tags, tagResults));
     });
   }
 }
