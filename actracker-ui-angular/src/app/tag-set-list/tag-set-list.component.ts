@@ -4,7 +4,7 @@ import { ActivityService } from '../activity.service';
 import { TagService } from '../tag.service';
 import { TagSetService } from '../tag-set.service';
 
-import { Activity } from '../activity';
+import { Activity, MetricValue } from '../activity';
 import { Tag } from '../tag';
 import { TagSet } from '../tagSet';
 
@@ -40,13 +40,7 @@ export class TagSetListComponent implements OnInit {
             let foundTagSets = tagSetsResult.tagSets;
             this.tagSets = this.tagSets.concat(tagSetsResult.tagSets);
             this.nextPageId = tagSetsResult.nextPageId;
-            this.resolveTagNames(foundTagSets);
           });
-  }
-
-  resolveTagNames(tagSets: TagSet[]) {
-    let allTags = tagSets.flatMap(tagSet => tagSet.tags);
-    this.tagService.resolveTagNames(allTags);
   }
 
   addTagSet(): void {
@@ -56,10 +50,14 @@ export class TagSetListComponent implements OnInit {
   }
 
   prepareActivityToSwitch(tagSet: TagSet): void {
+    var metricValues: MetricValue[] | undefined = tagSet.tags
+          .flatMap(tag => tag.metrics)
+          .filter(metric => !!metric?.id)
+          .map(metric => this.activityService.toMetricValue(metric));
     this.activityToSwitch = {
       title: tagSet.name,
       tags: tagSet.tags,
-      metricValues: []
+      metricValues: metricValues ?? []
     }
   }
 
