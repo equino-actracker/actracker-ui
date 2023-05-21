@@ -116,9 +116,21 @@ export class ActivityService {
       startTimestamp: activity.startTime?.getTime(),
       endTimestamp: activity.endTime?.getTime(),
       comment: activity.comment,
-      tags: activity.tags.map(tag => tag.id!)
+      tags: activity.tags.map(tag => tag.id!),
+      metricValues: activity.metricValues
+        .filter(metricValue => !!metricValue.id)
+        .filter(metricValue => !!metricValue.value)
+        .filter(metricValue => metricValue.value!.length > 0)
+        .map(this.toMetricValuePayload)
     }
     return activityPayload;
+  }
+
+  toMetricValuePayload(metricValue: MetricValue): MetricValuePayload {
+    return <MetricValuePayload>{
+      id: metricValue.id,
+      value: metricValue.value
+    };
   }
 
   toActivitiesSearchResult(searchResult: ActivitiesSearchResultPayload): ActivitiesResult {
@@ -181,7 +193,13 @@ interface ActivityPayload {
   startTimestamp?: number,
   endTimestamp?: number,
   comment?: string,
-  tags?: string[]
+  tags?: string[],
+  metricValues?: MetricValuePayload[]
+}
+
+interface MetricValuePayload {
+  id?: string,
+  value?: string
 }
 
 interface ActivitiesSearchResultPayload {
