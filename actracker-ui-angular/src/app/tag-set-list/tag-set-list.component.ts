@@ -58,7 +58,8 @@ export class TagSetListComponent implements OnInit {
   prepareActivityToSwitch(tagSet: TagSet): void {
     this.activityToSwitch = {
       title: tagSet.name,
-      tags: tagSet.tags
+      tags: tagSet.tags,
+      metricValues: []
     }
   }
 

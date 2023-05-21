@@ -6,5 +6,12 @@ export interface Activity {
   startTime?: Date;
   endTime?: Date;
   comment?: string;
-  tags: Tag[]
+  tags: Tag[];
+  metricValues: MetricValue[];
+}
+
+export interface MetricValue {
+  id: string;
+  name?: string;
+  value?: string;
 }

@@ -6,9 +6,11 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 
-import { Activity } from './activity';
+import { Activity, MetricValue } from './activity';
 import { ActivitiesResult } from './activitiesResult';
-import { Tag } from './tag';
+import { Tag, Metric } from './tag';
+import { TagService } from './tag.service';
+import { TagsResult } from './tagsResult';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,7 @@ export class ActivityService {
 
   constructor(
     private http: HttpClient,
+    private tagService: TagService,
   ) { }
 
   searchActivities(term?: String, pageId?: String, pageSize?: number, excludedActivities?: Activity[], dateRangeStart?: Date, dateRangeEnd?: Date, tags?: Tag[]): Observable<ActivitiesResult> {
@@ -123,6 +126,7 @@ export class ActivityService {
       nextPageId: searchResult.nextPageId,
       activities: searchResult.results.map(this.toActivity)
     }
+    this.resolveTagDetails(activitiesResult.activities);
     return activitiesResult;
   }
 
@@ -133,10 +137,41 @@ export class ActivityService {
       startTime: activityPayload.startTimestamp ? new Date(activityPayload.startTimestamp) : undefined,
       endTime: activityPayload.endTimestamp ? new Date(activityPayload.endTimestamp) : undefined,
       comment: activityPayload.comment,
-      tags: activityPayload.tags ? activityPayload.tags.map(tagId => <Tag>{id: tagId}) : []
+      tags: activityPayload.tags ? activityPayload.tags.map(tagId => <Tag>{id: tagId}) : [],
+      metricValues: []
     }
 
     return activity;
+  }
+
+  private resolveTagDetails(activities: Activity[]) {
+    var tags: Tag[] = activities.flatMap(activity => activity.tags);
+    var tagIds: string[] = tags
+      .filter(tag => !!tag.id)
+      .map(tag => tag.id!);
+    this.tagService.resolveTags(tagIds).subscribe(tagResults => {
+      activities.forEach(activity => this.updateTagDetails(activity, tagResults));
+    });
+  }
+
+  private updateTagDetails(activity: Activity, foundTags: TagsResult): void {
+    activity.tags.forEach(tag => {
+      let matchingTag: Tag | undefined = foundTags.tags.find(result => result.id === tag.id);
+      let name: string | undefined = matchingTag?.name ?? tag.id;
+      tag.name = name ?? '';
+      tag.metrics = matchingTag?.metrics ?? [];
+    });
+    activity.metricValues = activity.tags
+      .flatMap(tag => tag.metrics)
+      .filter(metric => !!metric?.id)
+      .map(metric => this.toMetricValue(metric));
+  }
+
+  toMetricValue(metric: Metric) {
+    return <MetricValue>{
+      id: metric.id,
+      name: metric.name
+    };
   }
 }
 
