@@ -43,6 +43,10 @@ export class ActivityComponent implements OnInit {
     return !!time ? new Date(time) : undefined;
   }
 
+  toNumber(value: string): number | undefined {
+    return !isNaN(+value) && !isNaN(parseFloat(value)) ? +value : undefined;
+  }
+
   addNewTag(tag: Tag): void {
     this.activity.tags.unshift(tag);
     var newMetrics: MetricValue[] = tag.metrics

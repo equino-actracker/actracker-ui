@@ -24,7 +24,7 @@
     <ul>
       <li *ngFor="let metricValue of activity.metricValues">
         <label>{{ metricValue.name }}</label>
-        <input *ngIf="editMode" type="text" [(ngModel)]="metricValue.value">
+        <input *ngIf="editMode" type="text" [ngModel]="metricValue.value" (ngModelChange)="metricValue.value=toNumber($event)">
         <span *ngIf="!editMode">{{ metricValue.value }}</span>
       </li>
     </ul>

@@ -125,7 +125,6 @@ export class ActivityService {
       metricValues: activity.metricValues
         .filter(metricValue => !!metricValue.metricId)
         .filter(metricValue => !!metricValue.value)
-        .filter(metricValue => metricValue.value!.length > 0)
         .map(this.toMetricValuePayload)
     }
     return activityPayload;
@@ -134,7 +133,7 @@ export class ActivityService {
   toMetricValuePayload(metricValue: MetricValue): MetricValuePayload {
     return <MetricValuePayload>{
       metricId: metricValue.metricId,
-      value: metricValue.value ? +metricValue.value : undefined
+      value: metricValue.value
     };
   }
 
