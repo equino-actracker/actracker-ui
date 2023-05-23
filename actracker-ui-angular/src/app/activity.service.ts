@@ -129,7 +129,7 @@ export class ActivityService {
   toMetricValuePayload(metricValue: MetricValue): MetricValuePayload {
     return <MetricValuePayload>{
       metricId: metricValue.metricId,
-      value: metricValue.value
+      value: metricValue.value ? +metricValue.value : undefined
     };
   }
 
@@ -194,7 +194,7 @@ interface ActivityPayload {
 
 interface MetricValuePayload {
   metricId?: string,
-  value?: string
+  value?: number
 }
 
 interface ActivitiesSearchResultPayload {
