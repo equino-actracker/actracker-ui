@@ -47,7 +47,7 @@ export class ActivityComponent implements OnInit {
     this.activity.tags.unshift(tag);
     var newMetrics: MetricValue[] = tag.metrics
       .filter(metric => !!metric?.id)
-      .map(metric => this.activityService.toMetricValue(metric));
+      .map(metric => this.activityService.metricToValue(metric));
     this.activity.metricValues = this.activity.metricValues.concat(newMetrics);
   }
 

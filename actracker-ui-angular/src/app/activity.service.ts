@@ -53,8 +53,9 @@ export class ActivityService {
     return this.http.get<ActivitiesSearchResultPayload>(url)
     .pipe(
       map(response => this.toActivitiesSearchResult(response)),
-      catchError(() => {
+      catchError((error) => {
         console.error('Error occurred during searching activities');
+        console.error(error);
         return []; // TODO [mc] What should I return here?
       })
     );
@@ -67,8 +68,9 @@ export class ActivityService {
     return this.http.post<ActivityPayload>(url, activityPayload)
     .pipe(
       map(response => this.toActivity(response)),
-      catchError(() => {
+      catchError((error) => {
         console.error('Error occurred during activity creation');
+        console.error(error);
         return []; // TODO [mc] What should I return here?
       })
     );
@@ -80,8 +82,9 @@ export class ActivityService {
 
     return this.http.put(url, activityPayload).pipe(
       map(response => this.toActivity(response)),
-      catchError(() => {
+      catchError((error) => {
         console.error('Error occurred during updating activity');
+        console.error(error);
         return [];
       })
     )
@@ -90,8 +93,9 @@ export class ActivityService {
   deleteActivity(activity: Activity): Observable<any> {
     let url = `${environment.backendBaseUrl}/activity/${activity.id}`;
     return this.http.delete(url).pipe(
-      catchError(() => {
+      catchError((error) => {
         console.error('Error occurred during deleting activity');
+        console.error(error);
         return [];
       })
     )
@@ -102,8 +106,9 @@ export class ActivityService {
     let activityPayload = this.toActivityPayload(activity);
     return this.http.post(url, activityPayload).pipe(
       map(response => this.toActivity(response)),
-      catchError(() => {
+      catchError((error) => {
         console.error("Error occurred during switching to activity");
+        console.error(error);
         return [];
       })
     );
@@ -136,7 +141,7 @@ export class ActivityService {
   toActivitiesSearchResult(searchResult: ActivitiesSearchResultPayload): ActivitiesResult {
     let activitiesResult: ActivitiesResult = {
       nextPageId: searchResult.nextPageId,
-      activities: searchResult.results.map(this.toActivity)
+      activities: searchResult.results.map(activityPayload => <Activity>this.toActivity(activityPayload))
     }
     this.resolveTagDetails(activitiesResult.activities);
     return activitiesResult;
@@ -150,10 +155,17 @@ export class ActivityService {
       endTime: activityPayload.endTimestamp ? new Date(activityPayload.endTimestamp) : undefined,
       comment: activityPayload.comment,
       tags: activityPayload.tags ? activityPayload.tags.map(tagId => <Tag>{id: tagId}) : [],
-      metricValues: []
+      metricValues: activityPayload.metricValues?.map(metricValuePayload => <MetricValue>this.toMetricValue(metricValuePayload)) ?? []
     }
 
     return activity;
+  }
+
+  toMetricValue(metricValuePayload: MetricValuePayload): MetricValue {
+    return <MetricValue>{
+      metricId: metricValuePayload.metricId,
+      value: metricValuePayload.value
+    };
   }
 
   private resolveTagDetails(activities: Activity[]) {
@@ -168,13 +180,23 @@ export class ActivityService {
   }
 
   private updateMetrics(activity: Activity): void {
-    activity.metricValues = activity.tags
+    var existingMetricValueIds = activity.metricValues
+      .filter(metricValue => !!metricValue.metricId)
+      .map(metricValue => metricValue.metricId);
+    activity.tags
       .flatMap(tag => tag.metrics)
       .filter(metric => !!metric?.id)
-      .map(metric => this.toMetricValue(metric));
+      .forEach(metric => {
+        if(!existingMetricValueIds.includes(metric.id!)) {
+          activity.metricValues.push(this.metricToValue(metric));
+        } else {
+          var existingMetricValue = activity.metricValues.find(metricValue => metricValue.metricId == metric.id);
+          existingMetricValue!.name = metric.name;
+        }
+      });
   }
 
-  toMetricValue(metric: Metric) {
+  metricToValue(metric: Metric) {
     return <MetricValue>{
       metricId: metric.id,
       name: metric.name
