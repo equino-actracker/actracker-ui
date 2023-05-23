@@ -6,8 +6,11 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 
+import { TagService } from './tag.service';
+
 import { TagSet } from './tagSet';
 import { TagSetsResult } from './tagSetsResult';
+import { TagsResult } from './tagsResult';
 import { Tag } from './tag';
 
 @Injectable({
@@ -17,6 +20,7 @@ export class TagSetService {
 
   constructor(
     private http: HttpClient,
+    private tagService: TagService,
   ) { }
 
   searchTagSets(term?: String, pageId?: String, pageSize?: number, excludedTagSets?: TagSet[]): Observable<TagSetsResult> {
@@ -99,6 +103,7 @@ export class TagSetService {
       nextPageId: searchResult.nextPageId,
       tagSets: searchResult.results.map(this.toTagSet)
     }
+    this.resolveTagDetails(tagSetsResult.tagSets);
     return tagSetsResult;
   }
 
@@ -110,6 +115,16 @@ export class TagSetService {
     }
 
     return tagSet;
+  }
+
+  private resolveTagDetails(tagSets: TagSet[]) {
+    var tags: Tag[] = tagSets.flatMap(tagSet => tagSet.tags);
+    var tagIds: string[] = tags
+      .filter(tag => !!tag.id)
+      .map(tag => tag.id!);
+    this.tagService.resolveTags(tagIds).subscribe(tagResults => {
+      tagSets.forEach(tagSet => this.tagService.updateTagDetails(tagSet.tags, tagResults));
+    });
   }
 }
 

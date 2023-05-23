@@ -49,17 +49,11 @@ export class ActivityListComponent implements OnInit {
             let foundActivities = activitiesResult.activities;
             this.activities = this.activities.concat(foundActivities);
             this.nextPageId = activitiesResult.nextPageId;
-            this.resolveTagNames(foundActivities);
           });
   }
 
-  resolveTagNames(activities: Activity[]) {
-    let allTags = activities.flatMap(activity => activity.tags);
-    this.tagService.resolveTagNames(allTags);
-  }
-
   addActivity(): void {
-    let newActivity: Activity = {tags: []};
+    let newActivity: Activity = {tags: [], metricValues: []};
     this.activities.unshift(newActivity);
     this.addedActivities.unshift(newActivity);
   }

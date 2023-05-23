@@ -4,7 +4,7 @@ import { TagService } from '../tag.service';
 import { ActivityService } from '../activity.service';
 
 import { Tag } from '../tag';
-import { Activity } from '../activity';
+import { Activity, MetricValue } from '../activity';
 
 @Component({
   selector: 'app-tag-list',
@@ -59,9 +59,13 @@ export class TagListComponent implements OnInit {
   }
 
   prepareActivityToSwitch(tag: Tag): void {
+    var metricValues: MetricValue[] | undefined = tag.metrics
+      .filter(metric => !!metric.id)
+      .map(metric => this.activityService.metricToValue(metric));
     this.activityToSwitch = {
       title: tag.name,
-      tags: [tag]
+      tags: [tag],
+      metricValues: metricValues ?? []
     }
   }
 

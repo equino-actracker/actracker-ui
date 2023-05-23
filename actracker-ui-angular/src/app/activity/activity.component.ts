@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { ActivityService } from '../activity.service';
 
-import { Activity } from '../activity';
+import { Activity, MetricValue } from '../activity';
 import { Tag } from '../tag';
 
 @Component({
@@ -43,12 +43,26 @@ export class ActivityComponent implements OnInit {
     return !!time ? new Date(time) : undefined;
   }
 
+  toNumber(value: string): number | undefined {
+    return !isNaN(+value) && !isNaN(parseFloat(value)) ? +value : undefined;
+  }
+
   addNewTag(tag: Tag): void {
     this.activity.tags.unshift(tag);
+    var newMetrics: MetricValue[] = tag.metrics
+      .filter(metric => !!metric?.id)
+      .map(metric => this.activityService.metricToValue(metric));
+    this.activity.metricValues = this.activity.metricValues.concat(newMetrics);
   }
 
   deleteTag(tag: Tag): void {
-    this.activity.tags = this.activity.tags.filter(t => t !== tag)
+    this.activity.tags = this.activity.tags.filter(t => t !== tag);
+    var metricsToRemove: string[] = tag.metrics
+      .filter(metric => !!metric?.id)
+      .map(metric => metric.id!);
+    this.activity.metricValues = this.activity.metricValues
+      .filter(metric => !!metric.metricId)
+      .filter(metric => !metricsToRemove.includes(metric.metricId));
   }
 
 }
