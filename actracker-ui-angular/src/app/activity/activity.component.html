@@ -1,4 +1,4 @@
-<div *ngIf="activity" style="border: 1px solid black">
+<div *ngIf="activity">
   <div *ngIf="!editMode">
     <span>{{ activity.title }}</span>
     <span>Start: {{activity.startTime | date: 'medium'}} End: {{activity.endTime | date: 'medium'}}</span>

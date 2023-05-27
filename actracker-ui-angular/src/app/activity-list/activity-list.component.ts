@@ -59,15 +59,15 @@ export class ActivityListComponent implements OnInit {
   }
 
   deleteActivity(activity: Activity): void {
-    if(confirm('Delete activity?')) {
-      if(activity.id) {
+    if(activity.id) {
+      if(confirm('Delete activity?')) {
         this.activityService.deleteActivity(activity)
           .subscribe(() => {
             this.activities = this.activities.filter(a => a !== activity)
           })
-      } else {
-        this.activities = this.activities.filter(a => a !== activity)
       }
+    } else {
+      this.activities = this.activities.filter(a => a !== activity)
     }
   }
 

@@ -1,7 +1,7 @@
 <div>
   <button [routerLink]="['/dashboards/data']">Add</button>
   <ul>
-    <li *ngFor="let dashboard of dashboards">
+    <li *ngFor="let dashboard of dashboards" style="border: 1px solid black">
       <div>
         <a [routerLink]="['/dashboards/data']" [queryParams]="{id: dashboard.id}">{{dashboard.name}}</a>
       </div>
