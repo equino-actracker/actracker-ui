@@ -7,7 +7,7 @@
   </app-activity>
   <button (click)="addTag()">Add</button>
   <ul>
-    <li *ngFor="let tag of tags">
+    <li *ngFor="let tag of tags" style="border: 1px solid black">
       <app-tag [tag]="tag" [editMode]="!tag.id"></app-tag>
       <button (click)="prepareActivityToSwitch(tag)">Switch to</button>
       <button (click)="deleteTag(tag)">Delete</button>

@@ -3,7 +3,7 @@
   <div>
     <button (click)="addActivity()">Add</button>
     <ul>
-      <li *ngFor="let activity of activities">
+      <li *ngFor="let activity of activities" style="border: 1px solid black">
         <app-activity
           [activity]="activity"
           [editMode]="!activity.id"

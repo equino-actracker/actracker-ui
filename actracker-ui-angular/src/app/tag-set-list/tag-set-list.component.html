@@ -7,7 +7,7 @@
   </app-activity>
   <button (click)="addTagSet()">Add</button>
   <ul>
-    <li *ngFor="let tagSet of tagSets">
+    <li *ngFor="let tagSet of tagSets" style="border: 1px solid black">
       <app-tag-set
         [tagSet]="tagSet"
         [editMode]="!tagSet.id"

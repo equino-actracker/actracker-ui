@@ -34,15 +34,15 @@ export class DashboardListComponent implements OnInit {
   }
 
   deleteDashboard(dashboard: Dashboard): void {
-    if(confirm('Delete dashboard?')) {
-      if(dashboard.id) {
+    if(dashboard.id) {
+      if(confirm('Delete dashboard?')) {
         this.dashboardService.deleteDashboard(dashboard)
           .subscribe(() => {
             this.dashboards = this.dashboards.filter(d => d !== dashboard)
           })
-      } else {
-        this.dashboards = this.dashboards.filter(d => d !== dashboard)
       }
+    } else {
+      this.dashboards = this.dashboards.filter(d => d !== dashboard)
     }
   }
 
