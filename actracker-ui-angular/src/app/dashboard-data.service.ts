@@ -67,7 +67,7 @@ export class DashboardDataService {
       id: payload.id,
       rangeStart: payload.rangeStartMillis ? new Date(payload.rangeStartMillis) : undefined,
       rangeEnd: payload.rangeEndMillis ? new Date(payload.rangeEndMillis) : undefined,
-      type: payload.type ?? '',
+      bucketType: payload.bucketType ?? '',
       value: payload.value,
       percentage: payload.percentage,
       buckets: payload.buckets?.map(bucket => <BucketData>this.toBucketData(bucket))
@@ -90,7 +90,7 @@ interface BucketDataPayload {
   rangeStartMillis?: number,
   rangeEndMillis?: number,
   value?: number,
-  type?: string,
+  bucketType?: string,
   percentage?: number,
   buckets?: BucketDataPayload[]
 }

@@ -12,6 +12,10 @@
       <div style="border: 1px solid black">
         <label>Name: </label>
         <input type="text" [(ngModel)]="chart.name">
+        <label>Analysis metric: </label>
+        <select [(ngModel)]="chart.metric">
+          <option *ngFor="let metric of chartMetrics" [ngValue]="metric.id">{{ metric.name }}</option>
+        </select>
         <label>Group by: </label>
         <select [(ngModel)]="chart.groupBy">
           <option *ngFor="let groupByType of chartGroupByTypes" [ngValue]="groupByType.id">{{ groupByType.name }}</option>

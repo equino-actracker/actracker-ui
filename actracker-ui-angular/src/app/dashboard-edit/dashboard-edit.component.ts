@@ -14,11 +14,15 @@ import { Tag } from '../tag';
 export class DashboardEditComponent implements OnInit {
 
   chartGroupByTypes = [
-    {id: "TAG", name: "Tag"},
+    {id: "SELF", name: "Self"},
     {id: "DAY", name: "Day"},
     {id: "WEEK", name: "Week"},
     {id: "WEEKEND", name: "Weekend"},
     {id: "MONTH", name: "Month"},
+  ];
+
+  chartMetrics = [
+    {id: "TAG_PERCENTAGE", name: "Tag percentage"},
   ];
 
   @Input()
@@ -50,7 +54,11 @@ export class DashboardEditComponent implements OnInit {
   }
 
   addChart(): void {
-    let newChart = {groupBy: "TAG", includedTags: []};
+    let newChart = {
+      groupBy: "",
+      includedTags: [],
+      metric: "",
+    };
     this.dashboard.charts.unshift(newChart);
   }
 
