@@ -115,6 +115,7 @@ export class DashboardService {
     return {
       name: chart.name,
       groupBy: chart.groupBy,
+      metric: chart.metric,
       includedTags: chart.includedTags.map(tag => tag.id!)
     };
   }
@@ -137,7 +138,8 @@ export class DashboardService {
   toChart(chartPayload: ChartPayload): Chart {
     return {
       name: chartPayload.name,
-      groupBy: chartPayload.groupBy ?? 'TAG',
+      groupBy: chartPayload.groupBy ?? '',
+      metric: chartPayload.metric ?? '',
       includedTags: chartPayload.includedTags?.map(tagId => <Tag>{id: tagId}) ?? []
     };
   }
@@ -157,5 +159,6 @@ interface DashboardsSearchResultPayload {
 interface ChartPayload {
   name?: string,
   groupBy?: string,
+  metric?: string,
   includedTags?: string[]
 }

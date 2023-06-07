@@ -16,7 +16,7 @@ export interface BucketData {
   rangeStart?: Date,
   rangeEnd?: Date,
   value?: number,
-  type: string,
+  bucketType: string,
   percentage?: number,
   buckets?: BucketData[]
 }

@@ -9,5 +9,6 @@ export interface Dashboard {
 export interface Chart {
   name?: string,
   groupBy: string,
+  metric: string,
   includedTags: Tag[]
 }

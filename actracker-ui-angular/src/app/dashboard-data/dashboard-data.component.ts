@@ -56,18 +56,18 @@ export class DashboardDataComponent implements OnInit {
     this.resolveTimeRangeBucketNames(monthBuckets);
   }
 
-  private getBucketsOfTypeRecursively(type: string, buckets?: BucketData[]): BucketData[] {
-    let matchingBuckets: BucketData[] = this.getBucketsOfType(type, buckets);
+  private getBucketsOfTypeRecursively(bucketType: string, buckets?: BucketData[]): BucketData[] {
+    let matchingBuckets: BucketData[] = this.getBucketsOfType(bucketType, buckets);
     buckets?.forEach(bucket => {
       let subBuckets: BucketData[] | undefined = bucket.buckets;
-      matchingBuckets = matchingBuckets.concat(this.getBucketsOfTypeRecursively(type, subBuckets));
+      matchingBuckets = matchingBuckets.concat(this.getBucketsOfType(bucketType, subBuckets));
     });
 
     return matchingBuckets;
   }
 
-  private getBucketsOfType(type: string, buckets?: BucketData[]): BucketData[] {
-    return buckets?.filter(bucket => bucket.type == type) ?? [];
+  private getBucketsOfType(bucketType: string, buckets?: BucketData[]): BucketData[] {
+    return buckets?.filter(bucket => bucket.bucketType == bucketType) ?? [];
   }
 
   private resolveTagBucketNames(tagBuckets: BucketData[]): void {
