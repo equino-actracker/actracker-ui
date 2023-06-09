@@ -13,7 +13,7 @@
         <th style="border: 1px solid black" *ngFor="let bucket of chartData.buckets"><a style="cursor: pointer" (click)="drillDown([bucket])">{{ bucket.label }}</a></th>
       </tr>
       <tr>
-        <td style="border: 1px solid black" *ngFor="let bucket of chartData.buckets"><a style="cursor: pointer" (click)="drillDown([bucket])">{{ bucket.percentage }}</a></td>
+        <td style="border: 1px solid black" *ngFor="let bucket of chartData.buckets"><a style="cursor: pointer" (click)="drillDown([bucket])">{{ bucket.value }}</a></td>
       </tr>
       <tr>
         <td style="border: 1px solid black" *ngFor="let bucket of chartData.buckets">
@@ -22,7 +22,7 @@
               <th style="border: 1px solid black" *ngFor="let subBucket of bucket.buckets"><a style="cursor: pointer" (click)="drillDown([bucket, subBucket])">{{ subBucket.label }}</a></th>
             </tr>
             <tr>
-              <td style="border: 1px solid black" *ngFor="let subBucket of bucket.buckets"><a style="cursor: pointer" (click)="drillDown([bucket, subBucket])">{{ subBucket.percentage }}</a></td>
+              <td style="border: 1px solid black" *ngFor="let subBucket of bucket.buckets"><a style="cursor: pointer" (click)="drillDown([bucket, subBucket])">{{ subBucket.value }}</a></td>
             </tr>
           </table>
         </td>
