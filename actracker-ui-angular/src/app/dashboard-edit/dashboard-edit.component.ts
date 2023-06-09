@@ -22,7 +22,8 @@ export class DashboardEditComponent implements OnInit {
   ];
 
   chartMetrics = [
-    {id: "TAG_PERCENTAGE", name: "Tag percentage"},
+    {id: "TAG_PERCENTAGE", name: "Tag duration percentage"},
+    {id: "METRIC_VALUE", name: "Tag metric value"},
   ];
 
   @Input()

@@ -46,6 +46,8 @@ export class DashboardDataComponent implements OnInit {
       .flatMap(ch => ch.buckets);
     let tagBuckets = this.getBucketsOfTypeRecursively('TAG', buckets);
     this.resolveTagBucketNames(tagBuckets);
+    let metricBuckets = this.getBucketsOfTypeRecursively('METRIC', buckets);
+    this.resolveMetricBucketNames(metricBuckets);
     let dayBuckets = this.getBucketsOfTypeRecursively('DAY', buckets);
     this.resolveTimeRangeBucketNames(dayBuckets);
     let weekBuckets = this.getBucketsOfTypeRecursively('WEEK', buckets);
@@ -68,6 +70,12 @@ export class DashboardDataComponent implements OnInit {
 
   private getBucketsOfType(bucketType: string, buckets?: BucketData[]): BucketData[] {
     return buckets?.filter(bucket => bucket.bucketType == bucketType) ?? [];
+  }
+
+  private resolveMetricBucketNames(metricBuckets: BucketData[]): void {
+    metricBuckets.forEach(bucket => {
+      bucket.label = bucket.id;
+    });
   }
 
   private resolveTagBucketNames(tagBuckets: BucketData[]): void {
