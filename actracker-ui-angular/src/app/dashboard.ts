@@ -1,9 +1,11 @@
 import { Tag } from './tag';
+import { Share } from './share';
 
 export interface Dashboard {
   id?: string,
   name?: string,
-  charts: Chart[]
+  charts: Chart[],
+  shares?: Share[]
 }
 
 export interface Chart {

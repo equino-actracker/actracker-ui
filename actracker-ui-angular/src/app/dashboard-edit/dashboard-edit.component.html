@@ -4,6 +4,14 @@
     <input type="text" [(ngModel)]="dashboard.name">
   </div>
 </div>
+<div *ngIf="dashboard.id!!">
+  <h3>Shares</h3>
+  <ul>
+    <li *ngFor="let share of dashboard.shares">{{ share.granteeName }}</li>
+  </ul>
+  <input type="text" [(ngModel)]="newShare" placeholder="User name">
+  <button (click)="share()">Share</button>
+</div>
 <h3>Charts</h3>
 <button (click)="addChart()">Add chart</button>
 <div>
@@ -18,7 +26,8 @@
         </select>
         <label>Group by: </label>
         <select [(ngModel)]="chart.groupBy">
-          <option *ngFor="let groupByType of chartGroupByTypes" [ngValue]="groupByType.id">{{ groupByType.name }}</option>
+          <option *ngFor="let groupByType of chartGroupByTypes" [ngValue]="groupByType.id">{{ groupByType.name }}
+          </option>
         </select>
         <app-tags-selector
           [editMode]="true"
