@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 import { Dashboard, Chart } from './dashboard';
 import { DashboardsResult } from './dashboardsResult';
 import { Tag } from './tag';
+import { Share } from './share';
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +93,21 @@ export class DashboardService {
     )
   }
 
+  shareDashboard(dashboard: Dashboard, share: Share): Observable<Dashboard> {
+    let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}/share`;
+    let sharePayload = this.toSharePayload(share);
+
+    return this.http.post(url, sharePayload)
+      .pipe(
+        map(response => this.toDashboard(response)),
+        catchError((error) => {
+          console.error("Error occurred during sharing dashboard");
+          console.error(error);
+          return []; // TODO [mc] What should I return here?
+        })
+      );
+  }
+
   deleteDashboard(dashboard: Dashboard): Observable<any> {
     let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}`;
     return this.http.delete(url).pipe(
@@ -120,6 +136,12 @@ export class DashboardService {
     };
   }
 
+  toSharePayload(share: Share): SharePayload {
+    return {
+      granteeName: share.granteeName
+    }
+  }
+
   toDashboardsSearchResult(searchResult: DashboardsSearchResultPayload): DashboardsResult {
     return {
       nextPageId: searchResult.nextPageId,
@@ -131,7 +153,8 @@ export class DashboardService {
     return {
       id: dashboardPayload.id,
       name: dashboardPayload.name,
-      charts: dashboardPayload.charts?.map(chart => <Chart>this.toChart(chart)) ?? []
+      charts: dashboardPayload.charts?.map(chart => <Chart>this.toChart(chart)) ?? [],
+      shares: dashboardPayload.shares?.map(share => <Share>this.toShare(share)) ?? []
     };
   }
 
@@ -143,12 +166,23 @@ export class DashboardService {
       includedTags: chartPayload.includedTags?.map(tagId => <Tag>{id: tagId}) ?? []
     };
   }
+
+  toShare(sharePayload: SharePayload): Share {
+    return {
+      granteeName: sharePayload.granteeName ?? ''
+    };
+  }
+}
+
+interface SharePayload {
+  granteeName?: string
 }
 
 interface DashboardPayload {
   id?: string,
   name?: string,
-  charts?: ChartPayload[]
+  charts?: ChartPayload[],
+  shares?: SharePayload[]
 }
 
 interface DashboardsSearchResultPayload {

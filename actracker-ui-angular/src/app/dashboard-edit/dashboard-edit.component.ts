@@ -4,6 +4,7 @@ import { DashboardService } from '../dashboard.service';
 
 import { Dashboard, Chart } from '../dashboard';
 import { Tag } from '../tag';
+import { Share } from '../share';
 
 
 @Component({
@@ -32,6 +33,8 @@ export class DashboardEditComponent implements OnInit {
 
   @Output()
   onDashboardSaved: EventEmitter<boolean> = new EventEmitter();
+
+  newShare: string = '';
 
   constructor(
     private dashboardService: DashboardService
@@ -76,6 +79,17 @@ export class DashboardEditComponent implements OnInit {
 
   deleteTagFromChart(chart: Chart, tag: Tag): void {
     chart.includedTags = chart.includedTags.filter(t => t.id !== tag.id);
+  }
+
+  share(): void {
+    if(this.dashboard.id && this.newShare!='') {
+      let share: Share = {granteeName: this.newShare}
+      this.dashboardService.shareDashboard(this.dashboard, share)
+        .subscribe(dashboard => {
+          this.dashboard.shares = dashboard.shares;
+          this.newShare = '';
+        });
+    }
   }
 
 }
