@@ -12,21 +12,31 @@
   <div *ngIf="editMode">
     <label>Name: </label>
     <input type="text" [(ngModel)]="tag.name">
-    <h4>Metrics</h4>
-    <button (click)="addMetric()">Add metric</button>
-    <ul>
-      <li *ngFor="let metric of tag.metrics">
-        <input
-          placeholder="Name"
-          [(ngModel)]="metric.name"
-        />
-        <label>Type: </label>
-        <select [(ngModel)]="metric.type">
-          <option *ngFor="let metricType of metricTypes" [ngValue]="metricType.id">{{ metricType.name }}</option>
-        </select>
-        <button (click)="deleteMetric(metric)">X</button>
-      </li>
-    </ul>
+    <div>
+      <h4>Metrics</h4>
+      <button (click)="addMetric()">Add metric</button>
+      <ul>
+        <li *ngFor="let metric of tag.metrics">
+          <input
+            placeholder="Name"
+            [(ngModel)]="metric.name"
+          />
+          <label>Type: </label>
+          <select [(ngModel)]="metric.type">
+            <option *ngFor="let metricType of metricTypes" [ngValue]="metricType.id">{{ metricType.name }}</option>
+          </select>
+          <button (click)="deleteMetric(metric)">X</button>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="tag.id!!">
+      <h4>Shares</h4>
+      <ul>
+        <li *ngFor="let share of tag.shares">{{ share.granteeName }}</li>
+      </ul>
+      <input type="text" [(ngModel)]="newShare" placeholder="User name">
+      <button (click)="share()">Share</button>
+    </div>
     <button (click)="save()">Save</button>
   </div>
 
