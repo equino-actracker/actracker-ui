@@ -4,6 +4,7 @@ import { TagService } from '../tag.service';
 
 import { Tag } from '../tag';
 import { Metric } from '../tag';
+import { Share } from '../share';
 
 @Component({
   selector: 'app-tag',
@@ -20,6 +21,8 @@ export class TagComponent implements OnInit {
   tag!: Tag;
   @Input()
   editMode?: boolean;
+
+  newShare: string = '';
 
   constructor(
     private tagService: TagService
@@ -56,6 +59,17 @@ export class TagComponent implements OnInit {
 
   deleteMetric(metric: Metric): void {
     this.tag.metrics = this.tag.metrics.filter(m => m != metric);
+  }
+
+  share(): void {
+    if(this.tag.id && this.newShare!='') {
+      let share: Share = {granteeName: this.newShare}
+      this.tagService.shareTag(this.tag, share)
+        .subscribe(tag => {
+          this.tag.shares = tag.shares;
+          this.newShare = '';
+        });
+    }
   }
 
 }

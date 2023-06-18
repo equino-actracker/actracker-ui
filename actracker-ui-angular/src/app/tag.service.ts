@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 import { Tag } from './tag';
 import { Metric } from './tag';
 import { TagsResult } from './tagsResult';
+import { Share } from './share';
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +90,21 @@ export class TagService {
     )
   }
 
+  shareTag(tag: Tag, share: Share): Observable<Tag> {
+    let url = `${environment.backendBaseUrl}/tag/${tag.id}/share`;
+    let sharePayload = this.toSharePayload(share);
+
+    return this.http.post(url, sharePayload)
+      .pipe(
+        map(response => this.toTag(response)),
+        catchError((error) => {
+          console.error("Error occurred during sharing tag");
+          console.error(error);
+          return []; // TODO [mc] What should I return here?
+        })
+      );
+  }
+
   deleteTag(tag: Tag): Observable<any> {
     let url = `${environment.backendBaseUrl}/tag/${tag.id}`;
     return this.http.delete(url).pipe(
@@ -163,7 +179,8 @@ export class TagService {
     return <Tag>{
       id: tagPayload.id,
       name: tagPayload.name,
-      metrics: tagPayload.metrics?.map(metric => <Metric>this.toMetric(<MetricPayload>metric)) ?? []
+      metrics: tagPayload.metrics?.map(metric => <Metric>this.toMetric(<MetricPayload>metric)) ?? [],
+      shares: tagPayload.shares?.map(share => <Share>this.toShare(share)) ?? []
     }
   }
 
@@ -174,12 +191,29 @@ export class TagService {
       type: metricPayload.type ?? ''
     };
   }
+
+  toSharePayload(share: Share): SharePayload {
+    return {
+      granteeName: share.granteeName
+    }
+  }
+
+  toShare(sharePayload: SharePayload): Share {
+    return {
+      granteeName: sharePayload.granteeName ?? ''
+    };
+  }
+}
+
+interface SharePayload {
+  granteeName?: string
 }
 
 interface TagPayload {
   id?: string,
   name?: string,
-  metrics?: MetricPayload[]
+  metrics?: MetricPayload[],
+  shares?: SharePayload[],
 }
 
 interface MetricPayload {
