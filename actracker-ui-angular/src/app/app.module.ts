@@ -20,6 +20,7 @@ import { DashboardDataComponent } from './dashboard-data/dashboard-data.componen
 import { DashboardEditComponent } from './dashboard-edit/dashboard-edit.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ActivityFilterComponent } from './activity-filter/activity-filter.component';
+import { TagSetCreateComponent } from './tag-set-create/tag-set-create.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ActivityFilterComponent } from './activity-filter/activity-filter.compo
     DashboardEditComponent,
     DashboardComponent,
     ActivityFilterComponent,
+    TagSetCreateComponent,
   ],
   imports: [
     BrowserModule,
