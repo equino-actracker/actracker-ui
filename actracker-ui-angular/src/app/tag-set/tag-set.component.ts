@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { TagSetService } from '../tag-set.service';
 
@@ -15,10 +15,9 @@ export class TagSetComponent implements OnInit {
   @Input()
   tagSet!: TagSet;
   @Input()
-  editMode?: boolean;
-
-  @Output()
-  public onTagSetSave: EventEmitter<TagSet> = new EventEmitter();
+  renameMode?: boolean;
+  @Input()
+  newName?: string;
 
   constructor(
     private tagSetService: TagSetService
@@ -27,24 +26,33 @@ export class TagSetComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save() {
-    if(!this.tagSet) {
-      return;
-    }
-    this.onTagSetSave.emit(this.tagSet);
-    this.editMode = false;
+  initRename() {
+    this.newName = this.tagSet.name;
+    this.renameMode = true;
   }
 
-  edit() {
-    this.editMode = true;
+  rename() {
+    this.tagSetService.renameTagSet(this.tagSet, this.newName!)
+      .subscribe(updatedTagSet =>
+        this.tagSet = updatedTagSet
+      );
+    this.renameMode = false;
   }
 
   addNewTag(tag: Tag): void {
-    this.tagSet.tags.unshift(tag);
+    this.tagSetService.addTagToSet(this.tagSet, tag)
+      .subscribe(updatedTagSet => {
+        this.tagSet = updatedTagSet
+        this.tagSetService.resolveTagDetails([this.tagSet])
+      });
   }
 
   deleteTag(tag: Tag): void {
-    this.tagSet.tags = this.tagSet.tags.filter(t => t !== tag)
+    this.tagSetService.removeTagFromSet(this.tagSet, tag)
+      .subscribe(updatedTagSet => {
+        this.tagSet = updatedTagSet
+        this.tagSetService.resolveTagDetails([this.tagSet])
+      });
   }
 
 }

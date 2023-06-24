@@ -89,6 +89,39 @@ export class TagSetService {
     )
   }
 
+  renameTagSet(tagSet: TagSet, newName: string): Observable<TagSet> {
+    let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}/renamed?name=${newName}`;
+    return this.http.patch(url, null).pipe(
+      map(response => this.toTagSet(response)),
+      catchError(() => {
+        console.error('Error occurred during renaming tag set');
+        return [];
+      })
+    )
+  }
+
+  addTagToSet(tagSet: TagSet, tag: Tag): Observable<TagSet> {
+    let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}/withTagAssigned?tagId=${tag.id}`;
+    return this.http.patch(url, null).pipe(
+      map(response => this.toTagSet(response)),
+      catchError(() => {
+        console.error('Error occurred during assigning tag to set');
+        return [];
+      })
+    )
+  }
+
+  removeTagFromSet(tagSet: TagSet, tag: Tag): Observable<TagSet> {
+    let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}/withTagRemoved?tagId=${tag.id}`;
+    return this.http.patch(url, null).pipe(
+      map(response => this.toTagSet(response)),
+      catchError(() => {
+        console.error('Error occurred during removing tag from set');
+        return [];
+      })
+    )
+  }
+
   toTagSetPayload(tagSet: TagSet): TagSetPayload {
     let tagSetPayload: TagSetPayload = {
       id: tagSet.id,
@@ -117,7 +150,7 @@ export class TagSetService {
     return tagSet;
   }
 
-  private resolveTagDetails(tagSets: TagSet[]) {
+  resolveTagDetails(tagSets: TagSet[]) {
     var tags: Tag[] = tagSets.flatMap(tagSet => tagSet.tags);
     var tagIds: string[] = tags
       .filter(tag => !!tag.id)

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ActivityService } from '../activity.service';
-import { TagService } from '../tag.service';
 import { TagSetService } from '../tag-set.service';
 
 import { Activity, MetricValue } from '../activity';
-import { Tag } from '../tag';
 import { TagSet } from '../tagSet';
 
 @Component({
@@ -21,10 +19,10 @@ export class TagSetListComponent implements OnInit {
   addedTagSets: TagSet[] = [];
 
   activityToSwitch?: Activity;
+  tagSetToAdd?: TagSet;
 
   constructor(
     private activityService: ActivityService,
-    private tagService: TagService,
     private tagSetService: TagSetService
   ) { }
 
@@ -43,13 +41,11 @@ export class TagSetListComponent implements OnInit {
           });
   }
 
-  addTagSet(): void {
-    let newTagSet: TagSet = {tags: []};
-    this.tagSets.unshift(newTagSet);
-    this.addedTagSets.unshift(newTagSet);
+  initTagSetAdd(): void {
+    this.tagSetToAdd = {tags:[]};
   }
 
-  prepareActivityToSwitch(tagSet: TagSet): void {
+  initActivitySwitch(tagSet: TagSet): void {
     var metricValues: MetricValue[] | undefined = tagSet.tags
           .flatMap(tag => tag.metrics)
           .filter(metric => !!metric?.id)
@@ -81,16 +77,9 @@ export class TagSetListComponent implements OnInit {
     }
   }
 
-  saveTagSet(tagSet: TagSet): void {
-    if(tagSet.id) {
-      this.tagSetService.updateTagSet(tagSet)
-        .subscribe(a => {
-        });
-    } else {
-      this.tagSetService.createTagSet(tagSet)
-        .subscribe(tS => {
-          tagSet.id = tS.id
-        });
-    }
+  addTagSet(tagSet: TagSet): void {
+    this.tagSets.unshift(tagSet);
+    this.addedTagSets.unshift(tagSet);
+    this.tagSetToAdd = undefined;
   }
 }
