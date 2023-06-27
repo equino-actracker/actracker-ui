@@ -3,6 +3,12 @@
   <div *ngIf="!editMode">
     <span>Name: {{tag.name}}</span>
     <h4>Metrics</h4>
+    <app-metric-list
+      [metrics]="tag.metrics"
+      (onMetricRename)="renameMetric($event)"
+      (onMetricAdd)="addMetric($event)"
+      (onMetricDelete)="deleteMetric($event)">
+    </app-metric-list>
     <ul>
       <li *ngFor="let metric of tag.metrics">{{ metric.name }}</li>
     </ul>
@@ -14,7 +20,13 @@
     <input type="text" [(ngModel)]="tag.name">
     <div>
       <h4>Metrics</h4>
-      <button (click)="addMetric()">Add metric</button>
+      <app-metric-list
+        [metrics]="tag.metrics"
+        (onMetricRename)="renameMetric($event)"
+        (onMetricAdd)="addMetric($event)"
+        (onMetricDelete)="deleteMetric($event)">
+      </app-metric-list>
+      <button>Add metric OLD</button>
       <ul>
         <li *ngFor="let metric of tag.metrics">
           <input

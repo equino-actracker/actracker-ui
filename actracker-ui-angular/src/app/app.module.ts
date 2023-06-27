@@ -21,6 +21,9 @@ import { DashboardEditComponent } from './dashboard-edit/dashboard-edit.componen
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ActivityFilterComponent } from './activity-filter/activity-filter.component';
 import { TagSetCreateComponent } from './tag-set-create/tag-set-create.component';
+import { MetricListComponent } from './metric-list/metric-list.component';
+import { MetricComponent } from './metric/metric.component';
+import { MetricCreateComponent } from './metric-create/metric-create.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,9 @@ import { TagSetCreateComponent } from './tag-set-create/tag-set-create.component
     DashboardComponent,
     ActivityFilterComponent,
     TagSetCreateComponent,
+    MetricListComponent,
+    MetricComponent,
+    MetricCreateComponent,
   ],
   imports: [
     BrowserModule,

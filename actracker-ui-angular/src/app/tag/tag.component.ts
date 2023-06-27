@@ -52,13 +52,28 @@ export class TagComponent implements OnInit {
     this.editMode = true;
   }
 
-  addMetric(): void {
-    let newMetric = {name: '', type: 'NUMERIC'};
-    this.tag.metrics.unshift(newMetric);
+  addMetric(metric: Metric): void {
+//     let newMetric = {name: '', type: 'NUMERIC'};
+//     this.tag.metrics.unshift(newMetric);
+    this.tagService.addMetric(this.tag, metric)
+      .subscribe(tag => {
+        this.tag = tag;
+      });
   }
 
   deleteMetric(metric: Metric): void {
-    this.tag.metrics = this.tag.metrics.filter(m => m != metric);
+//     this.tag.metrics = this.tag.metrics.filter(m => m != metric);
+    this.tagService.deleteMetric(this.tag, metric)
+      .subscribe(tag => {
+        this.tag = tag;
+      });
+  }
+
+  renameMetric(metric: Metric): void {
+    this.tagService.renameMetric(this.tag, metric, metric.name)
+      .subscribe(tag => {
+        this.tag = tag;
+      });
   }
 
   share(): void {
