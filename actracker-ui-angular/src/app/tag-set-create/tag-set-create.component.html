@@ -1,4 +1,4 @@
-<div *ngIf="tagSet">
+<div>
   <div>
     <label>Name: </label>
     <input type="text" [(ngModel)]="tagSet.name">
@@ -7,5 +7,5 @@
     <label>Tags:</label>
     <app-tags-selector [editMode]="true" [tags]="tagSet.tags" (onTagAdd)="addNewTag($event)" (onTagDelete)="deleteTag($event)"></app-tags-selector>
   </div>
-  <button (click)="save()">Create</button>
+  <button (click)="create()">Create</button>
 </div>

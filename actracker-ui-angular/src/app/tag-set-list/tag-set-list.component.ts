@@ -41,7 +41,7 @@ export class TagSetListComponent implements OnInit {
           });
   }
 
-  initTagSetAdd(): void {
+  initTagSetCreate(): void {
     this.tagSetToAdd = {tags:[]};
   }
 

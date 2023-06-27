@@ -16,7 +16,7 @@ export class TagSetCreateComponent implements OnInit {
   tagSet!: TagSet;
 
   @Output()
-  public onTagSetSave: EventEmitter<TagSet> = new EventEmitter();
+  public onTagSetCreated: EventEmitter<TagSet> = new EventEmitter();
 
   constructor(
     private tagSetService: TagSetService
@@ -25,11 +25,11 @@ export class TagSetCreateComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save() {
+  create() {
     this.tagSetService.createTagSet(this.tagSet)
       .subscribe(tS => {
         this.tagSet.id = tS.id
-        this.onTagSetSave.emit(this.tagSet);
+        this.onTagSetCreated.emit(this.tagSet);
       });
   }
 

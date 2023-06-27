@@ -24,6 +24,7 @@ import { TagSetCreateComponent } from './tag-set-create/tag-set-create.component
 import { MetricListComponent } from './metric-list/metric-list.component';
 import { MetricComponent } from './metric/metric.component';
 import { MetricCreateComponent } from './metric-create/metric-create.component';
+import { TagCreateComponent } from './tag-create/tag-create.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MetricCreateComponent } from './metric-create/metric-create.component';
     MetricListComponent,
     MetricComponent,
     MetricCreateComponent,
+    TagCreateComponent,
   ],
   imports: [
     BrowserModule,

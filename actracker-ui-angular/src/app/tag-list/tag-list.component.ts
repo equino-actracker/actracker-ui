@@ -19,6 +19,7 @@ export class TagListComponent implements OnInit {
   addedTags: Tag[] = [];
 
   activityToSwitch?: Activity;
+  tagToAdd?: Tag;
 
   constructor(
     private tagService: TagService,
@@ -39,10 +40,25 @@ export class TagListComponent implements OnInit {
           });
   }
 
-  addTag(): void {
-    let newTag: Tag = {metrics: []};
-    this.tags.unshift(newTag);
-    this.addedTags.unshift(newTag);
+  initTagCreate() {
+    this.tagToAdd = {metrics: []};
+  }
+
+  initActivitySwitch(tag: Tag): void {
+    var metricValues: MetricValue[] | undefined = tag.metrics
+      .filter(metric => !!metric.id)
+      .map(metric => this.activityService.metricToValue(metric));
+    this.activityToSwitch = {
+      title: tag.name,
+      tags: [tag],
+      metricValues: metricValues ?? []
+    }
+  }
+
+  addTag(tag: Tag): void {
+    this.tags.unshift(tag);
+    this.addedTags.unshift(tag);
+    this.tagToAdd = undefined;
   }
 
   deleteTag(tag: Tag): void {
@@ -55,17 +71,6 @@ export class TagListComponent implements OnInit {
       }
     } else {
       this.tags = this.tags.filter(t => t !== tag)
-    }
-  }
-
-  prepareActivityToSwitch(tag: Tag): void {
-    var metricValues: MetricValue[] | undefined = tag.metrics
-      .filter(metric => !!metric.id)
-      .map(metric => this.activityService.metricToValue(metric));
-    this.activityToSwitch = {
-      title: tag.name,
-      tags: [tag],
-      metricValues: metricValues ?? []
     }
   }
 

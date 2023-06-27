@@ -35,6 +35,7 @@ export class MetricComponent implements OnInit {
       name: this.newName!,
       type: this.metric.type
     };
+    this.renameMode = false;
     this.onMetricRename.emit(renamedMetric);
   }
 
