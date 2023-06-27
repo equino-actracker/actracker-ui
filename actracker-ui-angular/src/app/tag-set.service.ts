@@ -86,7 +86,7 @@ export class TagSetService {
         console.error('Error occurred during deleting tag set');
         return [];
       })
-    )
+    );
   }
 
   renameTagSet(tagSet: TagSet, newName: string): Observable<TagSet> {
@@ -97,7 +97,7 @@ export class TagSetService {
         console.error('Error occurred during renaming tag set');
         return [];
       })
-    )
+    );
   }
 
   addTagToSet(tagSet: TagSet, tag: Tag): Observable<TagSet> {
@@ -108,7 +108,7 @@ export class TagSetService {
         console.error('Error occurred during assigning tag to set');
         return [];
       })
-    )
+    );
   }
 
   removeTagFromSet(tagSet: TagSet, tag: Tag): Observable<TagSet> {

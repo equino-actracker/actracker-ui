@@ -5,12 +5,11 @@
     [editMode]="true"
     (onActivitySave)="switchToActivity($event)">
   </app-activity>
-  <!--  <button (click)="addTag()">Add</button>-->
   <button *ngIf="!tagToAdd" (click)="initTagCreate()">Add tag</button>
   <app-tag-create *ngIf="tagToAdd" [tag]="tagToAdd" (onTagCreated)="addTag($event)"></app-tag-create>
   <ul>
     <li *ngFor="let tag of tags" style="border: 1px solid black">
-      <app-tag [tag]="tag" [editMode]="!tag.id"></app-tag>
+      <app-tag [tag]="tag"></app-tag>
       <button (click)="initActivitySwitch(tag)">Switch to</button>
       <button (click)="deleteTag(tag)">Delete</button>
     </li>

@@ -13,14 +13,12 @@ import { Share } from '../share';
 })
 export class TagComponent implements OnInit {
 
-  metricTypes = [
-    {id: "NUMERIC", name: "Numeric"},
-  ];
-
   @Input()
   tag!: Tag;
   @Input()
-  editMode?: boolean;
+  renameMode?: boolean;
+  @Input()
+  newName?: string;
 
   newShare: string = '';
 
@@ -31,30 +29,20 @@ export class TagComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save(): void {
-    if(!this.tag) {
-      return;
-    }
-    if(this.tag.id) {
-      this.tagService.updateTag(this.tag)
-        .subscribe(tag => {
-        });
-    } else {
-      this.tagService.createTag(this.tag)
-        .subscribe(tag => {
-          this.tag.id = tag.id
-        });
-    }
-    this.editMode = false;
+  initRename() {
+    this.newName = this.tag.name;
+    this.renameMode = true;
   }
 
-  edit(): void {
-    this.editMode = true;
+  rename() {
+    this.tagService.renameTag(this.tag, this.newName!)
+      .subscribe(updatedTag =>
+        this.tag = updatedTag
+      );
+    this.renameMode = false;
   }
 
   addMetric(metric: Metric): void {
-//     let newMetric = {name: '', type: 'NUMERIC'};
-//     this.tag.metrics.unshift(newMetric);
     this.tagService.addMetric(this.tag, metric)
       .subscribe(tag => {
         this.tag = tag;
@@ -62,7 +50,6 @@ export class TagComponent implements OnInit {
   }
 
   deleteMetric(metric: Metric): void {
-//     this.tag.metrics = this.tag.metrics.filter(m => m != metric);
     this.tagService.deleteMetric(this.tag, metric)
       .subscribe(tag => {
         this.tag = tag;

@@ -90,6 +90,17 @@ export class TagService {
     )
   }
 
+  renameTag(tag: Tag, newName: string): Observable<Tag> {
+    let url = `${environment.backendBaseUrl}/tag/${tag.id}/renamed?name=${newName}`;
+    return this.http.patch(url, null).pipe(
+      map(response => this.toTag(response)),
+      catchError(() => {
+        console.error('Error occurred during renaming tag');
+        return [];
+      })
+    );
+  }
+
   shareTag(tag: Tag, share: Share): Observable<Tag> {
     let url = `${environment.backendBaseUrl}/tag/${tag.id}/share`;
     let sharePayload = this.toSharePayload(share);
