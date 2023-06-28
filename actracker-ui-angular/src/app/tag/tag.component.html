@@ -1,14 +1,14 @@
 <div>
+  <label>Name:</label>
+  <div *ngIf="!renameMode">
+    <span>{{tag.name}}</span>
+    <button (click)="initRename()">Edit</button>
+  </div>
+  <div *ngIf="renameMode">
+    <input type="text" [(ngModel)]="newName">
+    <button (click)="rename()">Save</button>
+  </div>
   <div>
-    <label>Name:</label>
-    <div *ngIf="!renameMode">
-      <span>{{tag.name}}</span>
-      <button (click)="initRename()">Edit</button>
-    </div>
-    <div *ngIf="renameMode">
-      <input type="text" [(ngModel)]="newName">
-      <button (click)="rename()">Save</button>
-    </div>
     <h4>Metrics</h4>
     <app-metric-list
       [metrics]="tag.metrics"
@@ -17,14 +17,19 @@
       (onMetricDelete)="deleteMetric($event)">
     </app-metric-list>
   </div>
+  <div>
+    <h4>Shares</h4>
+    <app-share-list *ngIf="tag.shares" [shares]="tag.shares" (onShareAdd)="addShare($event)"></app-share-list>
+  </div>
 
-<!--    <div *ngIf="tag.id!!">-->
-<!--      <h4>Shares</h4>-->
-<!--      <ul>-->
-<!--        <li *ngFor="let share of tag.shares">{{ share.granteeName }}</li>-->
-<!--      </ul>-->
-<!--      <input type="text" [(ngModel)]="newShare" placeholder="User name">-->
-<!--      <button (click)="share()">Share</button>-->
-<!--    </div>-->
+
+  <!--  <div>-->
+  <!--    <h4>Shares</h4>-->
+  <!--    <ul>-->
+  <!--      <li *ngFor="let share of tag.shares">{{ share.granteeName }}</li>-->
+  <!--    </ul>-->
+  <!--    <input type="text" [(ngModel)]="newShare" placeholder="User name">-->
+  <!--    <button (click)="share()">Share</button>-->
+  <!--  </div>-->
 
 </div>

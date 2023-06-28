@@ -63,6 +63,13 @@ export class TagComponent implements OnInit {
       });
   }
 
+  addShare(share: Share) {
+    this.tagService.shareTag(this.tag, share)
+      .subscribe(tag => {
+        this.tag = tag;
+      });
+  }
+
   share(): void {
     if(this.tag.id && this.newShare!='') {
       let share: Share = {granteeName: this.newShare}

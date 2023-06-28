@@ -25,6 +25,9 @@ import { MetricListComponent } from './metric-list/metric-list.component';
 import { MetricComponent } from './metric/metric.component';
 import { MetricCreateComponent } from './metric-create/metric-create.component';
 import { TagCreateComponent } from './tag-create/tag-create.component';
+import { ShareListComponent } from './share-list/share-list.component';
+import { ShareComponent } from './share/share.component';
+import { ShareCreateComponent } from './share-create/share-create.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,9 @@ import { TagCreateComponent } from './tag-create/tag-create.component';
     MetricComponent,
     MetricCreateComponent,
     TagCreateComponent,
+    ShareListComponent,
+    ShareComponent,
+    ShareCreateComponent,
   ],
   imports: [
     BrowserModule,
