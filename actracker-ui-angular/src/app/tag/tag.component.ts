@@ -13,16 +13,12 @@ import { Share } from '../share';
 })
 export class TagComponent implements OnInit {
 
-  metricTypes = [
-    {id: "NUMERIC", name: "Numeric"},
-  ];
-
   @Input()
   tag!: Tag;
   @Input()
-  editMode?: boolean;
-
-  newShare: string = '';
+  renameMode?: boolean;
+  @Input()
+  newName?: string;
 
   constructor(
     private tagService: TagService
@@ -31,45 +27,45 @@ export class TagComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save(): void {
-    if(!this.tag) {
-      return;
-    }
-    if(this.tag.id) {
-      this.tagService.updateTag(this.tag)
-        .subscribe(tag => {
-        });
-    } else {
-      this.tagService.createTag(this.tag)
-        .subscribe(tag => {
-          this.tag.id = tag.id
-        });
-    }
-    this.editMode = false;
+  initRename() {
+    this.newName = this.tag.name;
+    this.renameMode = true;
   }
 
-  edit(): void {
-    this.editMode = true;
+  rename() {
+    this.tagService.renameTag(this.tag, this.newName!)
+      .subscribe(updatedTag =>
+        this.tag = updatedTag
+      );
+    this.renameMode = false;
   }
 
-  addMetric(): void {
-    let newMetric = {name: '', type: 'NUMERIC'};
-    this.tag.metrics.unshift(newMetric);
+  addMetric(metric: Metric): void {
+    this.tagService.addMetric(this.tag, metric)
+      .subscribe(tag => {
+        this.tag = tag;
+      });
   }
 
   deleteMetric(metric: Metric): void {
-    this.tag.metrics = this.tag.metrics.filter(m => m != metric);
+    this.tagService.deleteMetric(this.tag, metric)
+      .subscribe(tag => {
+        this.tag = tag;
+      });
   }
 
-  share(): void {
-    if(this.tag.id && this.newShare!='') {
-      let share: Share = {granteeName: this.newShare}
-      this.tagService.shareTag(this.tag, share)
-        .subscribe(tag => {
-          this.tag.shares = tag.shares;
-          this.newShare = '';
-        });
-    }
+  renameMetric(metric: Metric): void {
+    this.tagService.renameMetric(this.tag, metric, metric.name)
+      .subscribe(tag => {
+        this.tag = tag;
+      });
+  }
+
+  addShare(share: Share) {
+    this.tagService.shareTag(this.tag, share)
+      .subscribe(tag => {
+        this.tag = tag;
+      });
   }
 
 }

@@ -1,0 +1,12 @@
+<div>
+  <label>Name: </label>
+  <input
+    placeholder="Name"
+    [(ngModel)]="metric.name"
+  />
+  <label>Type: </label>
+  <select [(ngModel)]="metric.type">
+    <option *ngFor="let metricType of metricTypes" [ngValue]="metricType.id">{{ metricType.name }}</option>
+  </select>
+  <button (click)="createMetric()">Create</button>
+</div>

@@ -1,0 +1,24 @@
+<div>
+  <div>
+    <label>Name: </label>
+    <input type="text" [(ngModel)]="tag.name">
+  </div>
+  <div>
+    <h4>Metrics</h4>
+    <app-metric-list
+      [metrics]="tag.metrics"
+      [immutable]="true"
+      (onMetricAdd)="addMetric($event)"
+      (onMetricDelete)="deleteMetric($event)">
+    </app-metric-list>
+  </div>
+  <div>
+<!--    <h4>Shares</h4>-->
+<!--    <ul>-->
+<!--      <li *ngFor="let share of tag.shares">{{ share.granteeName }}</li>-->
+<!--    </ul>-->
+<!--    <input type="text" [(ngModel)]="newShare" placeholder="User name">-->
+<!--    <button (click)="share()">Share</button>-->
+  </div>
+  <button (click)="create()">Create</button>
+</div>

@@ -90,6 +90,17 @@ export class TagService {
     )
   }
 
+  renameTag(tag: Tag, newName: string): Observable<Tag> {
+    let url = `${environment.backendBaseUrl}/tag/${tag.id}/renamed?name=${newName}`;
+    return this.http.patch(url, null).pipe(
+      map(response => this.toTag(response)),
+      catchError(() => {
+        console.error('Error occurred during renaming tag');
+        return [];
+      })
+    );
+  }
+
   shareTag(tag: Tag, share: Share): Observable<Tag> {
     let url = `${environment.backendBaseUrl}/tag/${tag.id}/share`;
     let sharePayload = this.toSharePayload(share);
@@ -112,7 +123,40 @@ export class TagService {
         console.error('Error occurred during deleting tag');
         return [];
       })
-    )
+    );
+  }
+
+  renameMetric(tag: Tag, metric: Metric, newName: string): Observable<Tag> {
+    let url = `${environment.backendBaseUrl}/tag/${tag.id}/metric/${metric.id}/renamed?name=${newName}`;
+    return this.http.patch(url, null).pipe(
+      map(response => this.toTag(response)),
+      catchError(() => {
+        console.error('Error occurred during renaming metric');
+        return [];
+      })
+    );
+  }
+
+  addMetric(tag: Tag, metric: Metric): Observable<Tag> {
+    let url = `${environment.backendBaseUrl}/tag/${tag.id}/metric`;
+    return this.http.post(url, metric).pipe(
+      map(response => this.toTag(response)),
+      catchError(() => {
+        console.error('Error occurred during adding metric');
+        return [];
+      })
+    );
+  }
+
+  deleteMetric(tag: Tag, metric: Metric): Observable<Tag> {
+    let url = `${environment.backendBaseUrl}/tag/${tag.id}/metric/${metric.id}`;
+    return this.http.delete(url).pipe(
+      map(response => this.toTag(response)),
+      catchError(() => {
+        console.error('Error occurred during deleting metric');
+        return [];
+      })
+    );
   }
 
   resolveTagNames(tags: Tag[]) {

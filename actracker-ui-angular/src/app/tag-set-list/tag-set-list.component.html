@@ -5,11 +5,11 @@
     [editMode]="true"
     (onActivitySave)="switchToActivity($event)">
   </app-activity>
-  <button *ngIf="!tagSetToAdd" (click)="initTagSetAdd()">Add</button>
+  <button *ngIf="!tagSetToAdd" (click)="initTagSetCreate()">Add tag set</button>
   <app-tag-set-create
     *ngIf="tagSetToAdd"
     [tagSet]="tagSetToAdd"
-    (onTagSetSave)="addTagSet($event)">
+    (onTagSetCreated)="addTagSet($event)">
   </app-tag-set-create>
   <ul>
     <li *ngFor="let tagSet of tagSets" style="border: 1px solid black">

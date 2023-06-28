@@ -1,0 +1,13 @@
+<div>
+  <button *ngIf="!shareToAdd" (click)="initShareCreate()">Share</button>
+  <app-share-create
+    *ngIf="shareToAdd"
+    [share]="shareToAdd"
+    (onShareAdd)="addShare($event)">
+  </app-share-create>
+  <ul>
+    <li *ngFor="let share of shares" style="border: 1px solid black">
+      <app-share [share]="share"></app-share>
+    </li>
+  </ul>
+</div>

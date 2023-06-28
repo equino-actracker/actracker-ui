@@ -21,6 +21,13 @@ import { DashboardEditComponent } from './dashboard-edit/dashboard-edit.componen
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ActivityFilterComponent } from './activity-filter/activity-filter.component';
 import { TagSetCreateComponent } from './tag-set-create/tag-set-create.component';
+import { MetricListComponent } from './metric-list/metric-list.component';
+import { MetricComponent } from './metric/metric.component';
+import { MetricCreateComponent } from './metric-create/metric-create.component';
+import { TagCreateComponent } from './tag-create/tag-create.component';
+import { ShareListComponent } from './share-list/share-list.component';
+import { ShareComponent } from './share/share.component';
+import { ShareCreateComponent } from './share-create/share-create.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +46,13 @@ import { TagSetCreateComponent } from './tag-set-create/tag-set-create.component
     DashboardComponent,
     ActivityFilterComponent,
     TagSetCreateComponent,
+    MetricListComponent,
+    MetricComponent,
+    MetricCreateComponent,
+    TagCreateComponent,
+    ShareListComponent,
+    ShareComponent,
+    ShareCreateComponent,
   ],
   imports: [
     BrowserModule,
