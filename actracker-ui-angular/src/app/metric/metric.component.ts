@@ -15,6 +15,8 @@ export class MetricComponent implements OnInit {
   renameMode?: boolean;
   @Input()
   newName?: string;
+  @Input()
+  immutable?: boolean;
 
   @Output()
   onMetricRename: EventEmitter<Metric> = new EventEmitter();
@@ -25,18 +27,22 @@ export class MetricComponent implements OnInit {
   }
 
   initRename(): void {
-    this.newName = this.metric.name;
-    this.renameMode = true;
+    if(!this.immutable) {
+      this.newName = this.metric.name;
+      this.renameMode = true;
+    }
   }
 
   rename(): void {
-    let renamedMetric: Metric = {
-      id: this.metric.id,
-      name: this.newName!,
-      type: this.metric.type
-    };
-    this.renameMode = false;
-    this.onMetricRename.emit(renamedMetric);
+    if(!this.immutable) {
+      let renamedMetric: Metric = {
+        id: this.metric.id,
+        name: this.newName!,
+        type: this.metric.type
+      };
+      this.renameMode = false;
+      this.onMetricRename.emit(renamedMetric);
+    }
   }
 
 }

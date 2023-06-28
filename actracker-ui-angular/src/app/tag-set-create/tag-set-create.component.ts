@@ -27,9 +27,8 @@ export class TagSetCreateComponent implements OnInit {
 
   create() {
     this.tagSetService.createTagSet(this.tagSet)
-      .subscribe(tS => {
-        this.tagSet.id = tS.id
-        this.onTagSetCreated.emit(this.tagSet);
+      .subscribe(tagSet => {
+        this.onTagSetCreated.emit(tagSet);
       });
   }
 

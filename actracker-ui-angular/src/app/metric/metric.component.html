@@ -2,7 +2,7 @@
   <label>Name:</label>
   <div *ngIf="!renameMode">
     <span>{{metric.name}}</span>
-    <button (click)="initRename()">Edit</button>
+    <button *ngIf="!immutable" (click)="initRename()">Edit</button>
   </div>
   <div *ngIf="renameMode">
     <input type="text" [(ngModel)]="newName">

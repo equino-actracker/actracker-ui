@@ -7,7 +7,7 @@
     <h4>Metrics</h4>
     <app-metric-list
       [metrics]="tag.metrics"
-      (onMetricRename)="renameMetric($event)"
+      [immutable]="true"
       (onMetricAdd)="addMetric($event)"
       (onMetricDelete)="deleteMetric($event)">
     </app-metric-list>

@@ -27,20 +27,12 @@ export class TagCreateComponent implements OnInit {
   create() {
     this.tagService.createTag(this.tag)
       .subscribe(tag => {
-        this.tag.id = tag.id
-        this.onTagCreated.emit(this.tag);
+        this.onTagCreated.emit(tag);
       });
   }
 
   addMetric(metric: Metric) {
     this.tag.metrics.unshift(metric);
-  }
-
-  renameMetric(metric: Metric) {
-    let metricToRename = this.tag.metrics.find(m => m === metric);
-    if(metricToRename) {
-      metricToRename.name = metric.name;
-    }
   }
 
   deleteMetric(metric: Metric) {

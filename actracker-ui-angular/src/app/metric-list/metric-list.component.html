@@ -7,7 +7,7 @@
   </app-metric-create>
   <ul>
     <li *ngFor="let metric of metrics" style="border: 1px solid black">
-      <app-metric [metric]="metric" (onMetricRename)="renameMetric($event)"></app-metric>
+      <app-metric [immutable]="immutable" [metric]="metric" (onMetricRename)="renameMetric($event)"></app-metric>
       <button (click)="deleteMetric(metric)">Delete</button>
     </li>
   </ul>

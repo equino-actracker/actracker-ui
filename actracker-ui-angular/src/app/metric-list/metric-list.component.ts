@@ -11,6 +11,8 @@ export class MetricListComponent implements OnInit {
 
   @Input()
   metrics!: Metric[];
+  @Input()
+  immutable?: boolean;
 
   @Output()
   onMetricAdd: EventEmitter<Metric> = new EventEmitter();
