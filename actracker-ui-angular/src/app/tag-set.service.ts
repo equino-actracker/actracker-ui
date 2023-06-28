@@ -90,8 +90,8 @@ export class TagSetService {
   }
 
   renameTagSet(tagSet: TagSet, newName: string): Observable<TagSet> {
-    let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}/renamed?name=${newName}`;
-    return this.http.patch(url, null).pipe(
+    let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}/name`;
+    return this.http.put(url, newName).pipe(
       map(response => this.toTagSet(response)),
       catchError(() => {
         console.error('Error occurred during renaming tag set');
@@ -101,8 +101,8 @@ export class TagSetService {
   }
 
   addTagToSet(tagSet: TagSet, tag: Tag): Observable<TagSet> {
-    let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}/withTagAssigned?tagId=${tag.id}`;
-    return this.http.patch(url, null).pipe(
+    let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}/tag`;
+    return this.http.post(url, tag).pipe(
       map(response => this.toTagSet(response)),
       catchError(() => {
         console.error('Error occurred during assigning tag to set');
@@ -112,8 +112,8 @@ export class TagSetService {
   }
 
   removeTagFromSet(tagSet: TagSet, tag: Tag): Observable<TagSet> {
-    let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}/withTagRemoved?tagId=${tag.id}`;
-    return this.http.patch(url, null).pipe(
+    let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}/tag/${tag.id}`;
+    return this.http.delete(url).pipe(
       map(response => this.toTagSet(response)),
       catchError(() => {
         console.error('Error occurred during removing tag from set');

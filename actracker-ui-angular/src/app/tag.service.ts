@@ -91,8 +91,8 @@ export class TagService {
   }
 
   renameTag(tag: Tag, newName: string): Observable<Tag> {
-    let url = `${environment.backendBaseUrl}/tag/${tag.id}/renamed?name=${newName}`;
-    return this.http.patch(url, null).pipe(
+    let url = `${environment.backendBaseUrl}/tag/${tag.id}/name`;
+    return this.http.put(url, newName).pipe(
       map(response => this.toTag(response)),
       catchError(() => {
         console.error('Error occurred during renaming tag');
@@ -127,8 +127,8 @@ export class TagService {
   }
 
   renameMetric(tag: Tag, metric: Metric, newName: string): Observable<Tag> {
-    let url = `${environment.backendBaseUrl}/tag/${tag.id}/metric/${metric.id}/renamed?name=${newName}`;
-    return this.http.patch(url, null).pipe(
+    let url = `${environment.backendBaseUrl}/tag/${tag.id}/metric/${metric.id}/name`;
+    return this.http.put(url, newName).pipe(
       map(response => this.toTag(response)),
       catchError(() => {
         console.error('Error occurred during renaming metric');
