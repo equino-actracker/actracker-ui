@@ -28,6 +28,7 @@ import { TagCreateComponent } from './tag-create/tag-create.component';
 import { ShareListComponent } from './share-list/share-list.component';
 import { ShareComponent } from './share/share.component';
 import { ShareCreateComponent } from './share-create/share-create.component';
+import { ActivityCreateComponent } from './activity-create/activity-create.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ShareCreateComponent } from './share-create/share-create.component';
     ShareListComponent,
     ShareComponent,
     ShareCreateComponent,
+    ActivityCreateComponent,
   ],
   imports: [
     BrowserModule,

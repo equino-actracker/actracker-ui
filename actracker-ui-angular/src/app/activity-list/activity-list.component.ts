@@ -21,6 +21,8 @@ export class ActivityListComponent implements OnInit {
   addedActivities: Activity[] = [];
   activityFilter: ActivityFilter = {tags: []};
 
+  activityToAdd?: Activity;
+
   constructor(
     private activityService: ActivityService,
     private tagService: TagService,
@@ -52,10 +54,14 @@ export class ActivityListComponent implements OnInit {
           });
   }
 
-  addActivity(): void {
-    let newActivity: Activity = {tags: [], metricValues: []};
-    this.activities.unshift(newActivity);
-    this.addedActivities.unshift(newActivity);
+  initActivityCreate() {
+    this.activityToAdd = {tags:[], metricValues:[]};
+  }
+
+  addActivity(activity: Activity) {
+    this.activities.unshift(activity);
+    this.addedActivities.unshift(activity);
+    this.activityToAdd = undefined;
   }
 
   deleteActivity(activity: Activity): void {
