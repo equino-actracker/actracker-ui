@@ -42,16 +42,16 @@ export class TagSetComponent implements OnInit {
   addNewTag(tag: Tag): void {
     this.tagSetService.addTagToSet(this.tagSet, tag)
       .subscribe(updatedTagSet => {
-        this.tagSet = updatedTagSet
-        this.tagSetService.resolveTagDetails([this.tagSet])
+        this.tagSet = updatedTagSet;
+        this.tagSetService.resolveTagDetails([this.tagSet]);
       });
   }
 
   deleteTag(tag: Tag): void {
     this.tagSetService.removeTagFromSet(this.tagSet, tag)
       .subscribe(updatedTagSet => {
-        this.tagSet = updatedTagSet
-        this.tagSetService.resolveTagDetails([this.tagSet])
+        this.tagSet = updatedTagSet;
+        this.tagSetService.resolveTagDetails([this.tagSet]);
       });
   }
 

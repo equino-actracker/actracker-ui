@@ -98,7 +98,73 @@ export class ActivityService {
         console.error(error);
         return [];
       })
-    )
+    );
+  }
+
+  renameActivity(activity: Activity, newTitle: string): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}/title`;
+    return this.http.put(url, newTitle).pipe(
+      map(response => this.toActivity(response)),
+      catchError(() => {
+        console.error('Error occurred during renaming activity');
+        return [];
+      })
+    );
+  }
+
+  startActivity(activity: Activity, newStartTime: Date): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}/startTime`;
+    return this.http.put(url, newStartTime?.getTime()).pipe(
+      map(response => this.toActivity(response)),
+      catchError(() => {
+        console.error('Error occurred during updating activity');
+        return [];
+      })
+    );
+  }
+
+  finishActivity(activity: Activity, newEndTime: Date): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}/endTime`;
+    return this.http.put(url, newEndTime?.getTime()).pipe(
+      map(response => this.toActivity(response)),
+      catchError(() => {
+        console.error('Error occurred during updating activity');
+        return [];
+      })
+    );
+  }
+
+  addTagToActivity(activity: Activity, tag: Tag): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}/tag`;
+    return this.http.post(url, tag).pipe(
+      map(response => this.toActivity(response)),
+      catchError(() => {
+        console.error('Error occurred during assigning tag to activity');
+        return [];
+      })
+    );
+  }
+
+  updateActivityComment(activity: Activity, newComment: string): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}/comment`;
+    return this.http.put(url, newComment).pipe(
+      map(response => this.toActivity(response)),
+      catchError(() => {
+        console.error('Error occurred during updating activity');
+        return [];
+      })
+    );
+  }
+
+  removeTagFromActivity(activity: Activity, tag: Tag): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}/tag/${tag.id}`;
+    return this.http.delete(url).pipe(
+      map(response => this.toActivity(response)),
+      catchError(() => {
+        console.error('Error occurred during removing tag from activity');
+        return [];
+      })
+    );
   }
 
   switchToActivity(activity: Activity): Observable<Activity> {
@@ -167,7 +233,7 @@ export class ActivityService {
     };
   }
 
-  private resolveTagDetails(activities: Activity[]) {
+  resolveTagDetails(activities: Activity[]) {
     var tags: Tag[] = activities.flatMap(activity => activity.tags);
     var tagIds: string[] = tags
       .filter(tag => !!tag.id)

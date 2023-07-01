@@ -1,25 +1,52 @@
-<div *ngIf="activity">
-  <div *ngIf="!editMode">
-    <span>{{ activity.title }}</span>
-    <span>Start: {{activity.startTime | date: 'medium'}} End: {{activity.endTime | date: 'medium'}}</span>
-    <span>Comment: {{activity.comment}}</span>
-    <button (click)="edit()">Edit</button>
+<div>
+  <label>Title:</label>
+  <div *ngIf="!renameMode">
+    <span>{{activity.title}}</span>
+    <button (click)="initRename()">Edit</button>
   </div>
-  <div *ngIf="editMode">
-    <label>Title: </label>
-    <input type="text" [(ngModel)]="activity.title">
-    <label>Start: </label>
-    <input type="datetime-local" [ngModel]="activity.startTime | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="activity.startTime=toDate($event)">
-    <label>End: </label>
-    <input type="datetime-local" [ngModel]="activity.endTime | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="activity.endTime=toDate($event)">
-    <label>Comment: </label>
-    <input type="text" [(ngModel)]="activity.comment">
-    <button (click)="save()">Save</button>
+  <div *ngIf="renameMode">
+    <input type="text" [(ngModel)]="newTitle"/>
+    <button (click)="rename()">Save</button>
   </div>
-
-  <app-tags-selector [editMode]="editMode" [tags]="activity.tags" (onTagAdd)="addNewTag($event)" (onTagDelete)="deleteTag($event)"></app-tags-selector>
-
+  <label>Start time:</label>
+  <div *ngIf="!changeStartTimeMode">
+    <span>{{activity.startTime | date: 'medium'}}</span>
+    <button (click)="initChangeStartTime()">Edit</button>
+  </div>
+  <div *ngIf="changeStartTimeMode">
+    <input type="datetime-local" [ngModel]="activity.startTime | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="newStartTime=conversionService.toDate($event)">
+    <button (click)="changeStartTime()">Save</button>
+  </div>
+  <label>End time:</label>
+  <div *ngIf="!changeEndTimeMode">
+    <span>{{activity.endTime | date: 'medium'}}</span>
+    <button (click)="initChangeEndTime()">Edit</button>
+  </div>
+  <div *ngIf="changeEndTimeMode">
+    <input type="datetime-local" [ngModel]="activity.endTime | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="newEndTime=conversionService.toDate($event)">
+    <button (click)="changeEndTime()">Save</button>
+  </div>
+  <label>Comment:</label>
+  <div *ngIf="!updateCommentMode">
+    <span>{{activity.title}}</span>
+    <button (click)="initUpdateComment()">Edit</button>
+  </div>
+  <div *ngIf="updateCommentMode">
+    <input type="text" [(ngModel)]="newComment"/>
+    <button (click)="updateComment()">Save</button>
+  </div>
   <div>
+    <label>Tags:</label>
+    <app-tags-selector [editMode]="true" [tags]="activity.tags" (onTagAdd)="addNewTag($event)"
+                       (onTagDelete)="deleteTag($event)"></app-tags-selector>
+  </div>
+
+
+
+<!--  DELETE -->
+  <div>
+    <button *ngIf="!editMode" (click)="edit()">EDIT</button>
+    <button *ngIf="editMode" (click)="save()">SAVE</button>
     <h5>Metrics</h5>
     <ul>
       <li *ngFor="let metricValue of activity.metricValues">
