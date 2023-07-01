@@ -85,7 +85,9 @@ export class ActivityComponent implements OnInit {
   }
 
   updateComment() {
-//     this.activityService.
+    this.activityService.updateActivityComment(this.activity, this.newComment!)
+      .subscribe(updatedActivity => this.activity = updatedActivity);
+    this.updateCommentMode = false;
   }
 
   // DELETE

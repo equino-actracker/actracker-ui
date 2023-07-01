@@ -28,7 +28,7 @@
   </div>
   <label>Comment:</label>
   <div *ngIf="!updateCommentMode">
-    <span>{{activity.title}}</span>
+    <span>{{activity.comment}}</span>
     <button (click)="initUpdateComment()">Edit</button>
   </div>
   <div *ngIf="updateCommentMode">
