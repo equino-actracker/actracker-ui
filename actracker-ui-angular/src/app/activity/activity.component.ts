@@ -68,25 +68,37 @@ export class ActivityComponent implements OnInit {
 
   rename() {
     this.activityService.renameActivity(this.activity, this.newTitle!)
-      .subscribe(updatedActivity => this.activity = updatedActivity);
+      .subscribe(updatedActivity => {
+        this.activity = updatedActivity;
+        this.activityService.resolveTagDetails([this.activity]);
+      });
     this.renameMode = false;
   }
 
   changeStartTime() {
     this.activityService.startActivity(this.activity, this.newStartTime!)
-      .subscribe(updatedActivity => this.activity = updatedActivity);
+      .subscribe(updatedActivity => {
+        this.activity = updatedActivity;
+        this.activityService.resolveTagDetails([this.activity]);
+      });
     this.changeStartTimeMode = false;
   }
 
   changeEndTime() {
     this.activityService.finishActivity(this.activity, this.newEndTime!)
-      .subscribe(updatedActivity => this.activity = updatedActivity);
+      .subscribe(updatedActivity => {
+        this.activity = updatedActivity;
+        this.activityService.resolveTagDetails([this.activity]);
+      });
     this.changeEndTimeMode = false;
   }
 
   updateComment() {
     this.activityService.updateActivityComment(this.activity, this.newComment!)
-      .subscribe(updatedActivity => this.activity = updatedActivity);
+      .subscribe(updatedActivity => {
+        this.activity = updatedActivity;
+        this.activityService.resolveTagDetails([this.activity]);
+      });
     this.updateCommentMode = false;
   }
 
