@@ -1,7 +1,12 @@
 <div>
+  <button *ngIf="!activityToAdd" (click)="initActivityCreate()">Add activity</button>
+  <app-activity-create
+    *ngIf="activityToAdd"
+    [activity]="activityToAdd"
+    (onActivityCreate)="createAndAddActivity($event)">
+  </app-activity-create>
   <app-activity-filter [activityFilter]="activityFilter" (onFiltersApplied)="reload()"></app-activity-filter>
   <div>
-    <button (click)="addActivity()">Add</button>
     <ul>
       <li *ngFor="let activity of activities" style="border: 1px solid black">
         <app-activity

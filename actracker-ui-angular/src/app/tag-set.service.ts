@@ -119,7 +119,7 @@ export class TagSetService {
         console.error('Error occurred during removing tag from set');
         return [];
       })
-    )
+    );
   }
 
   toTagSetPayload(tagSet: TagSet): TagSetPayload {

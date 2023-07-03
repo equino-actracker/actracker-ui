@@ -1,17 +1,16 @@
-<div *ngIf="tagSet">
-  <div>
-    <label>Name:</label>
-    <div *ngIf="!renameMode">
-      <span>{{tagSet.name}}</span>
-      <button (click)="initRename()">Edit</button>
-    </div>
-    <div *ngIf="renameMode">
-      <input type="text" [(ngModel)]="newName">
-      <button (click)="rename()">Save</button>
-    </div>
+<div>
+  <label>Name:</label>
+  <div *ngIf="!renameMode">
+    <span>{{tagSet.name}}</span>
+    <button (click)="initRename()">Edit</button>
+  </div>
+  <div *ngIf="renameMode">
+    <input type="text" [(ngModel)]="newName">
+    <button (click)="rename()">Save</button>
   </div>
   <div>
     <label>Tags:</label>
-    <app-tags-selector [editMode]="true" [tags]="tagSet.tags" (onTagAdd)="addNewTag($event)" (onTagDelete)="deleteTag($event)"></app-tags-selector>
+    <app-tags-selector [editMode]="true" [tags]="tagSet.tags" (onTagAdd)="addNewTag($event)"
+                       (onTagDelete)="deleteTag($event)"></app-tags-selector>
   </div>
 </div>

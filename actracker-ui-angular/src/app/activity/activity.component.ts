@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { ActivityService } from '../activity.service';
+import { ConversionService } from '../conversion.service';
 
 import { Activity, MetricValue } from '../activity';
 import { Tag } from '../tag';
@@ -14,19 +15,82 @@ export class ActivityComponent implements OnInit {
 
   @Input()
   activity!: Activity;
-  @Input()
-  editMode?: boolean;
 
+  @Input()
+  renameMode?: boolean;
+  @Input()
+  changeStartTimeMode?: boolean;
+  @Input()
+  changeEndTimeMode?: boolean;
+  @Input()
+  updateCommentMode?: boolean;
+
+  @Input()
+  newTitle?: string;
+  newStartTime?: Date;
+  newEndTime?: Date;
+  newComment?: string;
+
+  @Input()
+  editMode?: boolean; // DELETE
+
+  // DELETE
   @Output()
   public onActivitySave: EventEmitter<Activity> = new EventEmitter();
 
   constructor(
+    public conversionService: ConversionService,
     private activityService: ActivityService
   ) {}
 
   ngOnInit(): void {
   }
 
+  initRename() {
+    this.renameMode = true;
+    this.newTitle = this.activity.title;
+  }
+
+  initChangeStartTime() {
+    this.changeStartTimeMode = true;
+    this.newStartTime = this.activity.startTime;
+  }
+
+  initChangeEndTime() {
+    this.changeEndTimeMode = true;
+    this.newEndTime = this.activity.endTime;
+  }
+
+  initUpdateComment() {
+    this.updateCommentMode = true;
+    this.newComment = this.activity.comment;
+  }
+
+  rename() {
+    this.activityService.renameActivity(this.activity, this.newTitle!)
+      .subscribe(updatedActivity => this.activity = updatedActivity);
+    this.renameMode = false;
+  }
+
+  changeStartTime() {
+    this.activityService.startActivity(this.activity, this.newStartTime!)
+      .subscribe(updatedActivity => this.activity = updatedActivity);
+    this.changeStartTimeMode = false;
+  }
+
+  changeEndTime() {
+    this.activityService.finishActivity(this.activity, this.newEndTime!)
+      .subscribe(updatedActivity => this.activity = updatedActivity);
+    this.changeEndTimeMode = false;
+  }
+
+  updateComment() {
+    this.activityService.updateActivityComment(this.activity, this.newComment!)
+      .subscribe(updatedActivity => this.activity = updatedActivity);
+    this.updateCommentMode = false;
+  }
+
+  // DELETE
   save() {
     if(!this.activity) {
       return;
@@ -48,21 +112,19 @@ export class ActivityComponent implements OnInit {
   }
 
   addNewTag(tag: Tag): void {
-    this.activity.tags.unshift(tag);
-    var newMetrics: MetricValue[] = tag.metrics
-      .filter(metric => !!metric?.id)
-      .map(metric => this.activityService.metricToValue(metric));
-    this.activity.metricValues = this.activity.metricValues.concat(newMetrics);
+    this.activityService.addTagToActivity(this.activity, tag)
+      .subscribe(updatedActivity => {
+        this.activity = updatedActivity;
+        this.activityService.resolveTagDetails([this.activity]);
+      });
   }
 
   deleteTag(tag: Tag): void {
-    this.activity.tags = this.activity.tags.filter(t => t !== tag);
-    var metricsToRemove: string[] = tag.metrics
-      .filter(metric => !!metric?.id)
-      .map(metric => metric.id!);
-    this.activity.metricValues = this.activity.metricValues
-      .filter(metric => !!metric.metricId)
-      .filter(metric => !metricsToRemove.includes(metric.metricId));
+    this.activityService.removeTagFromActivity(this.activity, tag)
+      .subscribe(updatedActivity => {
+        this.activity = updatedActivity
+        this.activityService.resolveTagDetails([this.activity]);
+      });
   }
 
 }
