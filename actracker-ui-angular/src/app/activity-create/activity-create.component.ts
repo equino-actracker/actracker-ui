@@ -17,7 +17,7 @@ export class ActivityCreateComponent implements OnInit {
   activity!: Activity;
 
   @Output()
-  onActivityCreated: EventEmitter<Activity> = new EventEmitter();
+  onActivityCreate: EventEmitter<Activity> = new EventEmitter();
 
   constructor(
     public conversionService: ConversionService,
@@ -28,10 +28,7 @@ export class ActivityCreateComponent implements OnInit {
   }
 
   create() {
-    this.activityService.createActivity(this.activity)
-      .subscribe(activity => {
-        this.onActivityCreated.emit(activity);
-      });
+    this.onActivityCreate.emit(this.activity);
   }
 
   addNewTag(tag: Tag): void {

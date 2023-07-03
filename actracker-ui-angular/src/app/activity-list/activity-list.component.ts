@@ -58,10 +58,13 @@ export class ActivityListComponent implements OnInit {
     this.activityToAdd = {tags:[], metricValues:[]};
   }
 
-  addActivity(activity: Activity) {
-    this.activities.unshift(activity);
-    this.addedActivities.unshift(activity);
-    this.activityToAdd = undefined;
+  createAndAddActivity(activity: Activity) {
+    this.activityService.createActivity(activity)
+      .subscribe(createdActivity => {
+        this.activities.unshift(activity);
+        this.addedActivities.unshift(activity);
+        this.activityToAdd = undefined;
+      });
   }
 
   deleteActivity(activity: Activity): void {

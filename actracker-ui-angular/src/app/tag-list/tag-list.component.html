@@ -1,10 +1,9 @@
 <div>
-  <app-activity
+  <app-activity-create
     *ngIf="activityToSwitch"
     [activity]="activityToSwitch"
-    [editMode]="true"
-    (onActivitySave)="switchToActivity($event)">
-  </app-activity>
+    (onActivityCreate)="switchToActivity($event)">
+  </app-activity-create>
   <button *ngIf="!tagToAdd" (click)="initTagCreate()">Add tag</button>
   <app-tag-create *ngIf="tagToAdd" [tag]="tagToAdd" (onTagCreated)="addTag($event)"></app-tag-create>
   <ul>

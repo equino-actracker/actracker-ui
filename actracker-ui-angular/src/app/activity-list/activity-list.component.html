@@ -3,7 +3,7 @@
   <app-activity-create
     *ngIf="activityToAdd"
     [activity]="activityToAdd"
-    (onActivityCreated)="addActivity($event)">
+    (onActivityCreate)="createAndAddActivity($event)">
   </app-activity-create>
   <app-activity-filter [activityFilter]="activityFilter" (onFiltersApplied)="reload()"></app-activity-filter>
   <div>
