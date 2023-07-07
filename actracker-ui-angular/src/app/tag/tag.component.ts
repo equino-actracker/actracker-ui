@@ -68,4 +68,11 @@ export class TagComponent implements OnInit {
       });
   }
 
+  removeShare(share: Share) {
+    this.tagService.unshareTag(this.tag, share)
+      .subscribe(tag => {
+        this.tag = tag;
+      });
+  }
+
 }
