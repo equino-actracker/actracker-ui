@@ -13,12 +13,13 @@
     </app-metric-list>
   </div>
   <div>
-<!--    <h4>Shares</h4>-->
-<!--    <ul>-->
-<!--      <li *ngFor="let share of tag.shares">{{ share.granteeName }}</li>-->
-<!--    </ul>-->
-<!--    <input type="text" [(ngModel)]="newShare" placeholder="User name">-->
-<!--    <button (click)="share()">Share</button>-->
+    <h4>Shares</h4>
+    <app-share-list
+      *ngIf="tag.shares"
+      [shares]="tag.shares"
+      (onShareAdd)="addShare($event)"
+      (onShareRemove)="removeShare($event)">
+    </app-share-list>
   </div>
   <button (click)="create()">Create</button>
 </div>

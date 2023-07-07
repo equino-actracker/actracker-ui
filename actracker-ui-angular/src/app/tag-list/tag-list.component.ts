@@ -41,7 +41,7 @@ export class TagListComponent implements OnInit {
   }
 
   initTagCreate() {
-    this.tagToAdd = {metrics: []};
+    this.tagToAdd = {metrics: [], shares: []};
   }
 
   initActivitySwitch(tag: Tag): void {

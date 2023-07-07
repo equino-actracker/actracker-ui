@@ -198,7 +198,8 @@ export class TagService {
     return {
       id: tag.id,
       name: tag.name,
-      metrics: tag.metrics.map(metric => <MetricPayload>this.toMetricPayload(metric))
+      metrics: tag.metrics.map(metric => <MetricPayload>this.toMetricPayload(metric)),
+      shares: tag.shares.map(share => <SharePayload>this.toSharePayload(share))
     }
   }
 
