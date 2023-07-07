@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TagService } from '../tag.service';
 
 import { Tag, Metric } from '../tag';
+import { Share } from '../share';
 
 @Component({
   selector: 'app-tag-create',
@@ -37,6 +38,14 @@ export class TagCreateComponent implements OnInit {
 
   deleteMetric(metric: Metric) {
     this.tag.metrics = this.tag.metrics.filter(m => m != metric);
+  }
+
+  addShare(share: Share) {
+    this.tag.shares.unshift(share);
+  }
+
+  removeShare(share: Share) {
+    this.tag.shares = this.tag.shares.filter(sh => sh != share);
   }
 
 }

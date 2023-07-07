@@ -19,6 +19,11 @@
   </div>
   <div>
     <h4>Shares</h4>
-    <app-share-list *ngIf="tag.shares" [shares]="tag.shares" (onShareAdd)="addShare($event)"></app-share-list>
+    <app-share-list
+      *ngIf="tag.shares"
+      [shares]="tag.shares"
+      (onShareAdd)="addShare($event)"
+      (onShareRemove)="removeShare($event)">
+    </app-share-list>
   </div>
 </div>

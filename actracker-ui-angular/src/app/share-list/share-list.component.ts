@@ -14,6 +14,8 @@ export class ShareListComponent implements OnInit {
 
   @Output()
   onShareAdd: EventEmitter<Share> = new EventEmitter();
+  @Output()
+  onShareRemove: EventEmitter<Share> = new EventEmitter();
 
   shareToAdd?: Share;
 
@@ -31,4 +33,7 @@ export class ShareListComponent implements OnInit {
     this.shareToAdd = undefined;
   }
 
+  removeShare(share: Share) {
+    this.onShareRemove.emit(share);
+  }
 }

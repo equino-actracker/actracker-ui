@@ -8,6 +8,7 @@
   <ul>
     <li *ngFor="let share of shares" style="border: 1px solid black">
       <app-share [share]="share"></app-share>
+      <button (click)="removeShare(share)">X</button>
     </li>
   </ul>
 </div>

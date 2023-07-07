@@ -116,6 +116,20 @@ export class TagService {
       );
   }
 
+  unshareTag(tag: Tag, share: Share): Observable<Tag> {
+    let url = `${environment.backendBaseUrl}/tag/${tag.id}/share/${share.granteeName}`;
+
+    return this.http.delete(url)
+      .pipe(
+        map(response => this.toTag(response)),
+        catchError((error) => {
+          console.error("Error occurred during unsharing tag");
+          console.error(error);
+          return []; // TODO [mc] What should I return here?
+        })
+      );
+  }
+
   deleteTag(tag: Tag): Observable<any> {
     let url = `${environment.backendBaseUrl}/tag/${tag.id}`;
     return this.http.delete(url).pipe(
@@ -184,7 +198,8 @@ export class TagService {
     return {
       id: tag.id,
       name: tag.name,
-      metrics: tag.metrics.map(metric => <MetricPayload>this.toMetricPayload(metric))
+      metrics: tag.metrics.map(metric => <MetricPayload>this.toMetricPayload(metric)),
+      shares: tag.shares.map(share => <SharePayload>this.toSharePayload(share))
     }
   }
 

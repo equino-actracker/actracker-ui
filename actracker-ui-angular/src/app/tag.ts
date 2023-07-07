@@ -4,7 +4,7 @@ export interface Tag {
   id?: string;
   name?: string;
   metrics: Metric[];
-  shares?: Share[];
+  shares: Share[];
 }
 
 export interface Metric {
