@@ -1,0 +1,23 @@
+<div>
+  <div>
+    <label>Name: </label>
+    <input type="text" [(ngModel)]="dashboard.name">
+  </div>
+  <div>
+    <h4>Charts</h4>
+    <app-chart-list
+      [charts]="dashboard.charts"
+      (onChartAdd)="addChart($event)"
+      (onChartDelete)="removeChart($event)"
+    ></app-chart-list>
+  </div>
+  <div>
+    <h4>Shares</h4>
+    <app-share-list
+      [shares]="dashboard.shares"
+      (onShareAdd)="addShare($event)"
+      (onShareRemove)="removeShare($event)">
+    </app-share-list>
+  </div>
+  <button (click)="create()">Create</button>
+</div>

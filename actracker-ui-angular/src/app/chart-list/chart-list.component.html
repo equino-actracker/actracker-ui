@@ -1,0 +1,14 @@
+<div>
+  <button *ngIf="!chartToAdd" (click)="initChartAdd()">Add chart</button>
+  <app-chart-create
+    *ngIf="chartToAdd"
+    [chart]="chartToAdd"
+    (onChartAdd)="addChart($event)">
+  </app-chart-create>
+  <ul>
+    <li *ngFor="let chart of charts" style="border: 1px solid black">
+      <app-chart [chart]="chart"></app-chart>
+      <button (click)="removeChart(chart)">Delete</button>
+    </li>
+  </ul>
+</div>

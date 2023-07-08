@@ -1,0 +1,20 @@
+<div>
+  <label>Name:</label>
+  <div>
+    <span>{{chart.name}}</span>
+  </div>
+  <label>Analysis metric:</label>
+  <div>
+    <span>{{chart.metric}}</span>
+  </div>
+  <label>Group by:</label>
+  <div>
+    <span>{{chart.groupBy}}</span>
+  </div>
+  <label>Included tags:</label>
+  <div>
+    <ul>
+      <li *ngFor="let tag of chart.includedTags">{{tag.name}}</li>
+    </ul>
+  </div>
+</div>

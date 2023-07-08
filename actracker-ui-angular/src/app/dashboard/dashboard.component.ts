@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { DashboardService } from '../dashboard.service';
-import { TagService } from '../tag.service';
 
 import { Dashboard } from '../dashboard';
-import { Chart } from '../dashboard';
+import { Share } from '../share';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,32 +12,47 @@ import { Chart } from '../dashboard';
 })
 export class DashboardComponent implements OnInit {
 
-  editMode: boolean = false;
-  dashboard?: Dashboard;
+  @Input()
+  dashboard!: Dashboard;
+  @Input()
+  renameMode?: boolean;
+  @Input()
+  newName?: string;
 
   constructor(
-    private dashboardService: DashboardService,
-    private tagService: TagService,
-    private route: ActivatedRoute
+    private dashboardService: DashboardService
   ) { }
 
   ngOnInit(): void {
-    let id: string | null = this.route.snapshot.queryParamMap.get('id');
-    if(id) {
-      this.dashboardService.getDashboard(id)
-        .subscribe(d => {
-          this.resolveTagNames(d.charts);
-          this.dashboard = d;
-        });
-    } else {
-      this.editMode = true;
-      this.dashboard = {charts: []};
-    }
   }
 
-  resolveTagNames(charts: Chart[]) {
-    let allTags = charts.flatMap(chart => chart.includedTags);
-    this.tagService.resolveTagNames(allTags);
+  initRename() {
+    this.newName = this.dashboard.name;
+    this.renameMode = true;
   }
 
+  rename() {
+    this.dashboardService.renameDashboard(this.dashboard, this.newName!)
+      .subscribe(updatedDashboard => {
+        this.dashboard = updatedDashboard;
+        this.dashboardService.resolveTagDetails([this.dashboard]);
+      });
+    this.renameMode = false;
+  }
+
+  addShare(share: Share) {
+    this.dashboardService.shareDashboard(this.dashboard, share)
+      .subscribe(dashboard => {
+        this.dashboard = dashboard;
+        this.dashboardService.resolveTagDetails([this.dashboard]);
+      });
+  }
+
+  removeShare(share: Share) {
+    this.dashboardService.unshareDashboard(this.dashboard, share)
+      .subscribe(dashboard => {
+        this.dashboard = dashboard;
+        this.dashboardService.resolveTagDetails([this.dashboard]);
+      });
+  }
 }

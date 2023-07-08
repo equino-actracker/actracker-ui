@@ -15,7 +15,6 @@
   <div>
     <h4>Shares</h4>
     <app-share-list
-      *ngIf="tag.shares"
       [shares]="tag.shares"
       (onShareAdd)="addShare($event)"
       (onShareRemove)="removeShare($event)">

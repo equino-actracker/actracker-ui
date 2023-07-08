@@ -1,5 +1,28 @@
-<div *ngIf="dashboard">
-  <button *ngIf="!editMode" (click)="editMode=true">Edit</button>
-  <app-dashboard-edit *ngIf="editMode" [dashboard]="dashboard" (onDashboardSaved)="editMode=false"></app-dashboard-edit>
-  <app-dashboard-data *ngIf="!editMode" [dashboard]="dashboard"></app-dashboard-data>
+<div>
+  <label>Name:</label>
+  <div *ngIf="!renameMode">
+    <span>{{dashboard.name}}</span>
+    <button (click)="initRename()">Edit</button>
+  </div>
+  <div *ngIf="renameMode">
+    <input type="text" [(ngModel)]="newName">
+    <button (click)="rename()">Save</button>
+  </div>
+  <div>
+    <h4>Charts</h4>
+    <app-chart-list
+      [charts]="dashboard.charts">
+<!--      (onMetricRename)="renameMetric($event)"-->
+<!--      (onMetricAdd)="addMetric($event)"-->
+<!--      (onMetricDelete)="deleteMetric($event)">-->
+    </app-chart-list>
+  </div>
+  <div>
+    <h4>Shares</h4>
+    <app-share-list
+      [shares]="dashboard.shares"
+      (onShareAdd)="addShare($event)"
+      (onShareRemove)="removeShare($event)">
+    </app-share-list>
+  </div>
 </div>

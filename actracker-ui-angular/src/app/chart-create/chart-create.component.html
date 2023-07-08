@@ -1,0 +1,29 @@
+<div>
+  <div>
+    <label>Name: </label>
+    <input
+      placeholder="Name"
+      [(ngModel)]="chart.name"
+    />
+  </div>
+  <div>
+    <label>Analysis metric: </label>
+    <select [(ngModel)]="chart.metric">
+      <option *ngFor="let metric of chartMetrics" [ngValue]="metric.id">{{ metric.name }}</option>
+    </select>
+  </div>
+  <div>
+    <label>Group by: </label>
+    <select [(ngModel)]="chart.groupBy">
+      <option *ngFor="let groupByType of chartGroupByTypes" [ngValue]="groupByType.id">{{ groupByType.name }}
+      </option>
+    </select>
+  </div>
+  <app-tags-selector
+    [editMode]="true"
+    [tags]="chart.includedTags"
+    (onTagAdd)="addTagToChart($event)"
+    (onTagDelete)="removeTagFromChart($event)"
+  ></app-tags-selector>
+  <button (click)="createChart()">Create</button>
+</div>
