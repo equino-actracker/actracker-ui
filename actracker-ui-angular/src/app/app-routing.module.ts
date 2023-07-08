@@ -4,7 +4,7 @@ import { ActivityListComponent } from './activity-list/activity-list.component';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { TagSetListComponent } from './tag-set-list/tag-set-list.component';
 import { DashboardListComponent } from './dashboard-list/dashboard-list.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardXXXComponent } from './dashboard-xxx/dashboard-xxx.component';
 import { LoginComponent } from './login/login.component';
 
 
@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'tags', component: TagListComponent },
   { path: 'tag-sets', component: TagSetListComponent },
   { path: 'dashboards', component: DashboardListComponent },
-  { path: 'dashboards/data', component: DashboardComponent },
+  { path: 'dashboards/data', component: DashboardXXXComponent },
   { path: 'login', component: LoginComponent },
 ];
 

@@ -8,11 +8,11 @@ import { Dashboard } from '../dashboard';
 import { Chart } from '../dashboard';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-dashboard-xxx',
+  templateUrl: './dashboard-xxx.component.html',
+  styleUrls: ['./dashboard-xxx.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardXXXComponent implements OnInit {
 
   editMode: boolean = false;
   dashboard?: Dashboard;
