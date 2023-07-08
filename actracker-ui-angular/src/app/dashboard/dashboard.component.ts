@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
         });
     } else {
       this.editMode = true;
-      this.dashboard = {charts: []};
+      this.dashboard = {charts: [], shares: []};
     }
   }
 

@@ -29,6 +29,7 @@ import { ShareListComponent } from './share-list/share-list.component';
 import { ShareComponent } from './share/share.component';
 import { ShareCreateComponent } from './share-create/share-create.component';
 import { ActivityCreateComponent } from './activity-create/activity-create.component';
+import { DashboardCreateComponent } from './dashboard-create/dashboard-create.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { ActivityCreateComponent } from './activity-create/activity-create.compo
     ShareComponent,
     ShareCreateComponent,
     ActivityCreateComponent,
+    DashboardCreateComponent,
   ],
   imports: [
     BrowserModule,

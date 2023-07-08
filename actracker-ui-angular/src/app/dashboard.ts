@@ -5,7 +5,7 @@ export interface Dashboard {
   id?: string,
   name?: string,
   charts: Chart[],
-  shares?: Share[]
+  shares: Share[]
 }
 
 export interface Chart {
