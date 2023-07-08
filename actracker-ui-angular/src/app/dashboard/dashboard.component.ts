@@ -33,9 +33,10 @@ export class DashboardComponent implements OnInit {
 
   rename() {
     this.dashboardService.renameDashboard(this.dashboard, this.newName!)
-      .subscribe(updatedDashboard =>
-        this.dashboard = updatedDashboard
-      );
+      .subscribe(updatedDashboard => {
+        this.dashboard = updatedDashboard;
+        this.dashboardService.resolveTagDetails([this.dashboard]);
+      });
     this.renameMode = false;
   }
 
@@ -43,6 +44,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.shareDashboard(this.dashboard, share)
       .subscribe(dashboard => {
         this.dashboard = dashboard;
+        this.dashboardService.resolveTagDetails([this.dashboard]);
       });
   }
 
@@ -50,6 +52,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.unshareDashboard(this.dashboard, share)
       .subscribe(dashboard => {
         this.dashboard = dashboard;
+        this.dashboardService.resolveTagDetails([this.dashboard]);
       });
   }
 }

@@ -6,6 +6,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 
+import { TagService } from './tag.service';
+
 import { Dashboard, Chart } from './dashboard';
 import { DashboardsResult } from './dashboardsResult';
 import { Tag } from './tag';
@@ -18,6 +20,7 @@ export class DashboardService {
 
   constructor(
     private http: HttpClient,
+    private tagService: TagService
   ) {}
 
   searchDashboards(term?: String, pageId?: String, pageSize?: number, excludedDashboards?: Dashboard[]): Observable<DashboardsResult> {
@@ -169,10 +172,23 @@ export class DashboardService {
   }
 
   toDashboardsSearchResult(searchResult: DashboardsSearchResultPayload): DashboardsResult {
-    return {
+    let dashboardsResult: DashboardsResult = {
       nextPageId: searchResult.nextPageId,
       dashboards: searchResult.results.map(result => <Dashboard>this.toDashboard(result))
     }
+    this.resolveTagDetails(dashboardsResult.dashboards);
+    return dashboardsResult;
+  }
+
+  resolveTagDetails(dashboards: Dashboard[]) {
+    var charts: Chart[] = dashboards.flatMap(dashboard => dashboard.charts);
+    var tags: Tag[] = charts.flatMap(chart => chart.includedTags);
+    var tagIds: string[] = tags
+      .filter(tag => !!tag.id)
+      .map(tag => tag.id!);
+    this.tagService.resolveTags(tagIds).subscribe(tagResults => {
+      charts.forEach(chart => this.tagService.updateTagDetails(chart.includedTags, tagResults));
+    });
   }
 
   toDashboard(dashboardPayload: DashboardPayload): Dashboard {
