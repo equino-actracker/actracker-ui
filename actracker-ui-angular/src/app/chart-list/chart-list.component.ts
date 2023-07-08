@@ -16,8 +16,6 @@ export class ChartListComponent implements OnInit {
   onChartAdd: EventEmitter<Chart> = new EventEmitter();
   @Output()
   onChartDelete: EventEmitter<Chart> = new EventEmitter();
-  @Output()
-  onChartRename: EventEmitter<Chart> = new EventEmitter();
 
   chartToAdd?: Chart;
 
@@ -33,6 +31,10 @@ export class ChartListComponent implements OnInit {
   addChart(chart: Chart) {
     this.onChartAdd.emit(chart);
     this.chartToAdd = undefined;
+  }
+
+  removeChart(chart: Chart) {
+    this.onChartDelete.emit(chart);
   }
 
 }

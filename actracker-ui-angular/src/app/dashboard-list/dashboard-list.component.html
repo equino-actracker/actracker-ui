@@ -1,7 +1,7 @@
 <div>
   <button *ngIf="!dashboardToAdd" (click)="initDashboardCreate()">Add dashboard</button>
   <app-dashboard-create *ngIf="dashboardToAdd" [dashboard]="dashboardToAdd" (onDashboardCreated)="addDashboard($event)"></app-dashboard-create>
-  <button [routerLink]="['/dashboards/data']">Add</button>
+<!--  <button [routerLink]="['/dashboards/data']">Add</button>-->
   <ul>
     <li *ngFor="let dashboard of dashboards" style="border: 1px solid black">
       <div>
