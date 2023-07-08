@@ -123,7 +123,8 @@ export class DashboardService {
     return {
       id: dashboard.id,
       name: dashboard.name,
-      charts: dashboard.charts.map(this.toChartPayload)
+      charts: dashboard.charts.map(this.toChartPayload),
+      shares: dashboard.shares.map(this.toSharePayload)
     }
   }
 

@@ -8,6 +8,11 @@
   </div>
   <div>
     <h4>Shares</h4>
+    <app-share-list
+      [shares]="dashboard.shares"
+      (onShareAdd)="addShare($event)"
+      (onShareRemove)="removeShare($event)">
+    </app-share-list>
   </div>
   <button (click)="create()">Create</button>
 </div>

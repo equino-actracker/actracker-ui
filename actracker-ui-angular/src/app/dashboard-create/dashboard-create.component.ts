@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
 
 import { Dashboard } from '../dashboard';
+import { Share } from '../share';
 
 @Component({
   selector: 'app-dashboard-create',
@@ -29,5 +30,13 @@ export class DashboardCreateComponent implements OnInit {
       .subscribe(dashboard =>
         this.onDashboardCreated.emit(dashboard)
       );
+  }
+
+  addShare(share: Share) {
+    this.dashboard.shares.unshift(share);
+  }
+
+  removeShare(share: Share) {
+    this.dashboard.shares = this.dashboard.shares.filter(sh => sh != share);
   }
 }
