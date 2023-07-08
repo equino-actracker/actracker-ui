@@ -1,26 +1,26 @@
 <div>
   <label>Name:</label>
   <div *ngIf="!renameMode">
-    <span>{{tag.name}}</span>
+    <span>{{dashboard.name}}</span>
     <button (click)="initRename()">Edit</button>
   </div>
   <div *ngIf="renameMode">
     <input type="text" [(ngModel)]="newName">
     <button (click)="rename()">Save</button>
   </div>
-  <div>
-    <h4>Metrics</h4>
-    <app-metric-list
-      [metrics]="tag.metrics"
-      (onMetricRename)="renameMetric($event)"
-      (onMetricAdd)="addMetric($event)"
-      (onMetricDelete)="deleteMetric($event)">
-    </app-metric-list>
-  </div>
+<!--  <div>-->
+<!--    <h4>Metrics</h4>-->
+<!--    <app-metric-list-->
+<!--      [metrics]="tag.metrics"-->
+<!--      (onMetricRename)="renameMetric($event)"-->
+<!--      (onMetricAdd)="addMetric($event)"-->
+<!--      (onMetricDelete)="deleteMetric($event)">-->
+<!--    </app-metric-list>-->
+<!--  </div>-->
   <div>
     <h4>Shares</h4>
     <app-share-list
-      [shares]="tag.shares"
+      [shares]="dashboard.shares"
       (onShareAdd)="addShare($event)"
       (onShareRemove)="removeShare($event)">
     </app-share-list>

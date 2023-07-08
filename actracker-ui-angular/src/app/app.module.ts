@@ -33,6 +33,7 @@ import { DashboardXXXComponent } from './dashboard-xxx/dashboard-xxx.component';
 import { ChartCreateComponent } from './chart-create/chart-create.component';
 import { ChartListComponent } from './chart-list/chart-list.component';
 import { ChartComponent } from './chart/chart.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ChartComponent } from './chart/chart.component';
     ChartCreateComponent,
     ChartListComponent,
     ChartComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

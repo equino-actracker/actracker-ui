@@ -1,12 +1,10 @@
 <div>
   <button *ngIf="!dashboardToAdd" (click)="initDashboardCreate()">Add dashboard</button>
   <app-dashboard-create *ngIf="dashboardToAdd" [dashboard]="dashboardToAdd" (onDashboardCreated)="addDashboard($event)"></app-dashboard-create>
-<!--  <button [routerLink]="['/dashboards/data']">Add</button>-->
   <ul>
     <li *ngFor="let dashboard of dashboards" style="border: 1px solid black">
-      <div>
-        <a [routerLink]="['/dashboards/data']" [queryParams]="{id: dashboard.id}">{{dashboard.name}}</a>
-      </div>
+      <app-dashboard [dashboard]="dashboard"></app-dashboard>
+      <button [routerLink]="['/dashboards/data']" [queryParams]="{id: dashboard.id}">Show</button>
       <button (click)="deleteDashboard(dashboard)">Delete</button>
     </li>
   </ul>

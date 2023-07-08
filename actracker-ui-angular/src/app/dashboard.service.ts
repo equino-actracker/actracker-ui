@@ -93,6 +93,17 @@ export class DashboardService {
     )
   }
 
+  renameDashboard(dashboard: Dashboard, newName: string): Observable<Dashboard> {
+    let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}/name`;
+    return this.http.put(url, newName).pipe(
+      map(response => this.toDashboard(response)),
+      catchError(() => {
+        console.error('Error occurred during renaming dashboard');
+        return [];
+      })
+    );
+  }
+
   shareDashboard(dashboard: Dashboard, share: Share): Observable<Dashboard> {
     let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}/share`;
     let sharePayload = this.toSharePayload(share);
@@ -102,6 +113,20 @@ export class DashboardService {
         map(response => this.toDashboard(response)),
         catchError((error) => {
           console.error("Error occurred during sharing dashboard");
+          console.error(error);
+          return []; // TODO [mc] What should I return here?
+        })
+      );
+  }
+
+  unshareDashboard(dashboard: Dashboard, share: Share): Observable<Dashboard> {
+    let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}/share/${share.granteeName}`;
+
+    return this.http.delete(url)
+      .pipe(
+        map(response => this.toDashboard(response)),
+        catchError((error) => {
+          console.error("Error occurred during unsharing dashboard");
           console.error(error);
           return []; // TODO [mc] What should I return here?
         })
