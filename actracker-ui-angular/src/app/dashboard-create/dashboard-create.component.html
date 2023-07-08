@@ -5,6 +5,11 @@
   </div>
   <div>
     <h4>Charts</h4>
+    <app-chart-list
+      [charts]="dashboard.charts"
+      (onChartAdd)="addChart($event)"
+      (onChartDelete)="removeChart($event)"
+    ></app-chart-list>
   </div>
   <div>
     <h4>Shares</h4>

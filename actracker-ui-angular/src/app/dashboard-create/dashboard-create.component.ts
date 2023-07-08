@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { DashboardService } from '../dashboard.service';
 
-import { Dashboard } from '../dashboard';
+import { Dashboard, Chart } from '../dashboard';
 import { Share } from '../share';
 
 @Component({
@@ -38,5 +38,13 @@ export class DashboardCreateComponent implements OnInit {
 
   removeShare(share: Share) {
     this.dashboard.shares = this.dashboard.shares.filter(sh => sh != share);
+  }
+
+  addChart(chart: Chart) {
+    this.dashboard.charts.unshift(chart);
+  }
+
+  removeChart(chart: Chart) {
+    this.dashboard.charts = this.dashboard.charts.filter(ch => ch != chart);
   }
 }
