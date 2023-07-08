@@ -8,15 +8,15 @@
     <input type="text" [(ngModel)]="newName">
     <button (click)="rename()">Save</button>
   </div>
-<!--  <div>-->
-<!--    <h4>Metrics</h4>-->
-<!--    <app-metric-list-->
-<!--      [metrics]="tag.metrics"-->
+  <div>
+    <h4>Charts</h4>
+    <app-chart-list
+      [charts]="dashboard.charts">
 <!--      (onMetricRename)="renameMetric($event)"-->
 <!--      (onMetricAdd)="addMetric($event)"-->
 <!--      (onMetricDelete)="deleteMetric($event)">-->
-<!--    </app-metric-list>-->
-<!--  </div>-->
+    </app-chart-list>
+  </div>
   <div>
     <h4>Shares</h4>
     <app-share-list
