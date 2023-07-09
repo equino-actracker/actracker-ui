@@ -107,6 +107,35 @@ export class DashboardService {
     );
   }
 
+  addChart(dashboard: Dashboard, chart: Chart): Observable<Dashboard> {
+    let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}/chart`;
+    let chartPayload = this.toChartPayload(chart);
+
+    return this.http.post(url, chartPayload)
+      .pipe(
+        map(response => this.toDashboard(response)),
+        catchError((error) => {
+          console.error("Error occurred during adding chart");
+          console.error(error);
+          return []; // TODO [mc] What should I return here?
+        })
+      );
+  }
+
+  deleteChart(dashboard: Dashboard, chart: Chart) {
+    let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}/chart/${chart.id}`;
+
+    return this.http.delete(url)
+      .pipe(
+        map(response => this.toDashboard(response)),
+        catchError((error) => {
+          console.error("Error occurred during deleting chart");
+          console.error(error);
+          return []; // TODO [mc] What should I return here?
+        })
+      );
+  }
+
   shareDashboard(dashboard: Dashboard, share: Share): Observable<Dashboard> {
     let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}/share`;
     let sharePayload = this.toSharePayload(share);
@@ -158,6 +187,7 @@ export class DashboardService {
 
   toChartPayload(chart: Chart): ChartPayload {
     return {
+      id: chart.id,
       name: chart.name,
       groupBy: chart.groupBy,
       metric: chart.metric,
@@ -202,6 +232,7 @@ export class DashboardService {
 
   toChart(chartPayload: ChartPayload): Chart {
     return {
+      id: chartPayload.id,
       name: chartPayload.name,
       groupBy: chartPayload.groupBy ?? '',
       metric: chartPayload.metric ?? '',
@@ -233,6 +264,7 @@ interface DashboardsSearchResultPayload {
 }
 
 interface ChartPayload {
+  id?: string,
   name?: string,
   groupBy?: string,
   metric?: string,
