@@ -11,10 +11,9 @@
   <div>
     <h4>Charts</h4>
     <app-chart-list
-      [charts]="dashboard.charts">
-<!--      (onMetricRename)="renameMetric($event)"-->
-<!--      (onMetricAdd)="addMetric($event)"-->
-<!--      (onMetricDelete)="deleteMetric($event)">-->
+      [charts]="dashboard.charts"
+      (onChartAdd)="addChart($event)"
+      (onChartDelete)="deleteChart($event)">
     </app-chart-list>
   </div>
   <div>

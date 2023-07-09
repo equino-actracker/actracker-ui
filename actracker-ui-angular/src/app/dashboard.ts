@@ -9,6 +9,7 @@ export interface Dashboard {
 }
 
 export interface Chart {
+  id?: string,
   name?: string,
   groupBy: string,
   metric: string,

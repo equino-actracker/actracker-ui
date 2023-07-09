@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { DashboardService } from '../dashboard.service';
 
-import { Dashboard } from '../dashboard';
+import { Dashboard, Chart } from '../dashboard';
 import { Share } from '../share';
 
 @Component({
@@ -38,6 +38,22 @@ export class DashboardComponent implements OnInit {
         this.dashboardService.resolveTagDetails([this.dashboard]);
       });
     this.renameMode = false;
+  }
+
+  addChart(chart: Chart) {
+    this.dashboardService.addChart(this.dashboard, chart)
+      .subscribe(dashboard => {
+        this.dashboard = dashboard;
+        this.dashboardService.resolveTagDetails([this.dashboard]);
+      });
+  }
+
+  deleteChart(chart: Chart) {
+    this.dashboardService.deleteChart(this.dashboard, chart)
+      .subscribe(dashboard => {
+        this.dashboard = dashboard;
+        this.dashboardService.resolveTagDetails([this.dashboard]);
+      });
   }
 
   addShare(share: Share) {
