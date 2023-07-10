@@ -14,7 +14,6 @@ import { Chart } from '../dashboard';
 })
 export class DashboardXXXComponent implements OnInit {
 
-  editMode: boolean = false;
   dashboard?: Dashboard;
 
   constructor(
@@ -32,8 +31,7 @@ export class DashboardXXXComponent implements OnInit {
           this.dashboard = d;
         });
     } else {
-      this.editMode = true;
-      this.dashboard = {charts: [], shares: []};
+      console.error('Dashboard not found');
     }
   }
 

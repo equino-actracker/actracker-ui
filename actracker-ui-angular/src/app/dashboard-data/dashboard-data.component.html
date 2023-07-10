@@ -5,7 +5,6 @@
   <app-activity-filter [activityFilter]="activityFilter" (onFiltersApplied)="reload()"></app-activity-filter>
 
   <h4>Charts</h4>
-
   <div *ngFor="let chartData of dashboardData.charts" style="border: 1px solid black" style="border: 1px solid black">
     <h4>{{ chartData.name }}</h4>
     <table>
