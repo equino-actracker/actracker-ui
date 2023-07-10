@@ -49,11 +49,13 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteChart(chart: Chart) {
-    this.dashboardService.deleteChart(this.dashboard, chart)
-      .subscribe(dashboard => {
-        this.dashboard = dashboard;
-        this.dashboardService.resolveTagDetails([this.dashboard]);
-      });
+    if(confirm('Delete chart?')) {
+      this.dashboardService.deleteChart(this.dashboard, chart)
+        .subscribe(dashboard => {
+          this.dashboard = dashboard;
+          this.dashboardService.resolveTagDetails([this.dashboard]);
+        });
+    }
   }
 
   addShare(share: Share) {
@@ -65,10 +67,12 @@ export class DashboardComponent implements OnInit {
   }
 
   removeShare(share: Share) {
-    this.dashboardService.unshareDashboard(this.dashboard, share)
-      .subscribe(dashboard => {
-        this.dashboard = dashboard;
-        this.dashboardService.resolveTagDetails([this.dashboard]);
-      });
+    if(confirm('Delete share?')) {
+      this.dashboardService.unshareDashboard(this.dashboard, share)
+        .subscribe(dashboard => {
+          this.dashboard = dashboard;
+          this.dashboardService.resolveTagDetails([this.dashboard]);
+        });
+    }
   }
 }
