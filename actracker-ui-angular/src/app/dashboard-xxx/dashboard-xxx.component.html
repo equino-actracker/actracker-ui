@@ -1,5 +1,0 @@
-<div *ngIf="dashboard">
-  <button *ngIf="!editMode" (click)="editMode=true">Edit</button>
-  <app-dashboard-edit *ngIf="editMode" [dashboard]="dashboard" (onDashboardSaved)="editMode=false"></app-dashboard-edit>
-  <app-dashboard-data *ngIf="!editMode" [dashboard]="dashboard"></app-dashboard-data>
-</div>

@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 import { DashboardDataService } from '../dashboard-data.service';
+import { DashboardService } from '../dashboard.service';
 import { TagService } from '../tag.service';
 
 import { Dashboard } from '../dashboard';
@@ -16,25 +18,35 @@ import { ActivityFilter } from '../activityFilter';
 })
 export class DashboardDataComponent implements OnInit {
 
-  @Input()
-  dashboard!: Dashboard;
+  dashboard?: Dashboard;
 
   dashboardData?: DashboardData;
 
   activityFilter: ActivityFilter = {tags: []};
 
   constructor(
+    private dashboardService: DashboardService,
     private dashboardDataService: DashboardDataService,
     private tagService: TagService,
+    private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.reload();
+    let id: string | null = this.route.snapshot.queryParamMap.get('id');
+    if(id) {
+      this.dashboardService.getDashboard(id)
+        .subscribe(d => {
+          this.dashboard = d;
+          this.reload();
+        });
+    } else {
+      console.error('Dashboard ID must be provided as query param');
+    }
   }
 
   reload(): void {
-    this.dashboardDataService.getDashboardData(this.dashboard, this.activityFilter.dateRangeStart, this.activityFilter.dateRangeEnd, this.activityFilter.tags)
+    this.dashboardDataService.getDashboardData(this.dashboard!, this.activityFilter.dateRangeStart, this.activityFilter.dateRangeEnd, this.activityFilter.tags)
       .subscribe(data => {
         this.dashboardData = data;
         this.resolveBucketNames();

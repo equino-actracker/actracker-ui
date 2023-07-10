@@ -17,7 +17,6 @@ import { TagSetListComponent } from './tag-set-list/tag-set-list.component';
 import { TagSetComponent } from './tag-set/tag-set.component';
 import { DashboardListComponent } from './dashboard-list/dashboard-list.component';
 import { DashboardDataComponent } from './dashboard-data/dashboard-data.component';
-import { DashboardEditComponent } from './dashboard-edit/dashboard-edit.component';
 import { ActivityFilterComponent } from './activity-filter/activity-filter.component';
 import { TagSetCreateComponent } from './tag-set-create/tag-set-create.component';
 import { MetricListComponent } from './metric-list/metric-list.component';
@@ -29,7 +28,6 @@ import { ShareComponent } from './share/share.component';
 import { ShareCreateComponent } from './share-create/share-create.component';
 import { ActivityCreateComponent } from './activity-create/activity-create.component';
 import { DashboardCreateComponent } from './dashboard-create/dashboard-create.component';
-import { DashboardXXXComponent } from './dashboard-xxx/dashboard-xxx.component';
 import { ChartCreateComponent } from './chart-create/chart-create.component';
 import { ChartListComponent } from './chart-list/chart-list.component';
 import { ChartComponent } from './chart/chart.component';
@@ -48,7 +46,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     TagSetComponent,
     DashboardListComponent,
     DashboardDataComponent,
-    DashboardEditComponent,
     ActivityFilterComponent,
     TagSetCreateComponent,
     MetricListComponent,
@@ -60,7 +57,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ShareCreateComponent,
     ActivityCreateComponent,
     DashboardCreateComponent,
-    DashboardXXXComponent,
     ChartCreateComponent,
     ChartListComponent,
     ChartComponent,
