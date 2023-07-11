@@ -14,6 +14,8 @@ export class MetricValueComponent implements OnInit {
 
   @Output()
   onMetricValueSet: EventEmitter<MetricValue> = new EventEmitter();
+  @Output()
+  onMetricValueUnset: EventEmitter<MetricValue> = new EventEmitter();
 
   newValue?: number;
 
@@ -32,7 +34,9 @@ export class MetricValueComponent implements OnInit {
   setValue() {
     let newMetricValue: MetricValue = {metricId: this.metricValue.metricId, value: this.newValue};
     this.onMetricValueSet.emit(newMetricValue);
-    this.newValue = undefined;
-    this.updateValueMode = false;
+  }
+
+  unsetValue() {
+    this.onMetricValueUnset.emit(this.metricValue);
   }
 }

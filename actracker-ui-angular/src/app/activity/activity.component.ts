@@ -147,4 +147,11 @@ export class ActivityComponent implements OnInit {
       });
   }
 
+  unsetMetricValue(metricValue: MetricValue) {
+    this.activityService.unsetActivityMetricValue(this.activity, metricValue)
+      .subscribe(updatedActivity => {
+        this.activity = updatedActivity;
+        this.activityService.resolveTagDetails([this.activity]);
+      });
+  }
 }

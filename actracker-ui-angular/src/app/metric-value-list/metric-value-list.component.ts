@@ -14,6 +14,8 @@ export class MetricValueListComponent implements OnInit {
 
   @Output()
   onMetricValueSet: EventEmitter<MetricValue> = new EventEmitter();
+  @Output()
+  onMetricValueUnset: EventEmitter<MetricValue> = new EventEmitter();
 
   constructor() { }
 
@@ -22,6 +24,10 @@ export class MetricValueListComponent implements OnInit {
 
   setMetricValue(metricValue: MetricValue) {
     this.onMetricValueSet.emit(metricValue);
+  }
+
+  unsetMetricValue(metricValue: MetricValue) {
+    this.onMetricValueUnset.emit(metricValue);
   }
 
 }
