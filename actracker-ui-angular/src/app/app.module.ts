@@ -32,6 +32,8 @@ import { ChartCreateComponent } from './chart-create/chart-create.component';
 import { ChartListComponent } from './chart-list/chart-list.component';
 import { ChartComponent } from './chart/chart.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MetricValueListComponent } from './metric-value-list/metric-value-list.component';
+import { MetricValueComponent } from './metric-value/metric-value.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ChartListComponent,
     ChartComponent,
     DashboardComponent,
+    MetricValueListComponent,
+    MetricValueComponent,
   ],
   imports: [
     BrowserModule,

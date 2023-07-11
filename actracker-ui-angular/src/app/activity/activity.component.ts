@@ -134,7 +134,15 @@ export class ActivityComponent implements OnInit {
   deleteTag(tag: Tag): void {
     this.activityService.removeTagFromActivity(this.activity, tag)
       .subscribe(updatedActivity => {
-        this.activity = updatedActivity
+        this.activity = updatedActivity;
+        this.activityService.resolveTagDetails([this.activity]);
+      });
+  }
+
+  setMetricValue(metricValue: MetricValue) {
+    this.activityService.setActivityMetricValue(this.activity, metricValue)
+      .subscribe(updatedActivity => {
+        this.activity = updatedActivity;
         this.activityService.resolveTagDetails([this.activity]);
       });
   }

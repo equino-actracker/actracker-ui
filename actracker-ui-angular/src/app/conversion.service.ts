@@ -10,4 +10,8 @@ export class ConversionService {
   toDate(time: string): Date | undefined {
     return !!time ? new Date(time) : undefined;
   }
+
+  toNumber(value: string): number | undefined {
+    return !isNaN(+value) && !isNaN(parseFloat(value)) ? +value : undefined;
+  }
 }

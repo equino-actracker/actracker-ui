@@ -40,6 +40,10 @@
     <app-tags-selector [editMode]="true" [tags]="activity.tags" (onTagAdd)="addNewTag($event)"
                        (onTagDelete)="deleteTag($event)"></app-tags-selector>
   </div>
+  <div>
+    <label>Metric values:</label>
+    <app-metric-value-list [metricValues]="activity.metricValues" (onMetricValueSet)="setMetricValue($event)"></app-metric-value-list>
+  </div>
 
 
 

@@ -1,0 +1,8 @@
+<div>
+  <label>{{ metricValue.name }}: </label>
+  <span *ngIf="!updateValueMode && metricValue.value">{{ metricValue.value }}</span>
+  <input *ngIf="updateValueMode" type="number" [(ngModel)]="newValue"/>
+  <button *ngIf="!updateValueMode" (click)="initValueUpdate()">Set</button>
+  <button *ngIf="!updateValueMode && metricValue.value">Clear</button>
+  <button *ngIf="updateValueMode" (click)="setValue()">Save</button>
+</div>
