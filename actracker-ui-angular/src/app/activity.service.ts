@@ -51,14 +51,14 @@ export class ActivityService {
     }
 
     return this.http.get<ActivitiesSearchResultPayload>(url)
-    .pipe(
-      map(response => this.toActivitiesSearchResult(response)),
-      catchError((error) => {
-        console.error('Error occurred during searching activities');
-        console.error(error);
-        return []; // TODO [mc] What should I return here?
-      })
-    );
+      .pipe(
+        map(response => this.toActivitiesSearchResult(response)),
+        catchError((error) => {
+          console.error('Error occurred during searching activities');
+          console.error(error);
+          return []; // TODO [mc] What should I return here?
+        })
+      );
   }
 
   createActivity(activity: Activity): Observable<Activity> {
@@ -66,118 +66,151 @@ export class ActivityService {
     let activityPayload = this.toActivityPayload(activity);
 
     return this.http.post<ActivityPayload>(url, activityPayload)
-    .pipe(
-      map(response => this.toActivity(response)),
-      catchError((error) => {
-        console.error('Error occurred during activity creation');
-        console.error(error);
-        return []; // TODO [mc] What should I return here?
-      })
-    );
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError((error) => {
+          console.error('Error occurred during activity creation');
+          console.error(error);
+          return []; // TODO [mc] What should I return here?
+        })
+      );
   }
 
   updateActivity(activity: Activity): Observable<Activity> {
     let url = `${environment.backendBaseUrl}/activity/${activity.id}`;
     let activityPayload = this.toActivityPayload(activity);
 
-    return this.http.put(url, activityPayload).pipe(
-      map(response => this.toActivity(response)),
-      catchError((error) => {
-        console.error('Error occurred during updating activity');
-        console.error(error);
-        return [];
-      })
-    )
+    return this.http.put(url, activityPayload)
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError((error) => {
+          console.error('Error occurred during updating activity');
+          console.error(error);
+          return [];
+        })
+      )
   }
 
   deleteActivity(activity: Activity): Observable<any> {
     let url = `${environment.backendBaseUrl}/activity/${activity.id}`;
-    return this.http.delete(url).pipe(
-      catchError((error) => {
-        console.error('Error occurred during deleting activity');
-        console.error(error);
-        return [];
-      })
-    );
+    return this.http.delete(url)
+      .pipe(
+        catchError((error) => {
+          console.error('Error occurred during deleting activity');
+          console.error(error);
+          return [];
+        })
+      );
   }
 
   renameActivity(activity: Activity, newTitle: string): Observable<Activity> {
     let url = `${environment.backendBaseUrl}/activity/${activity.id}/title`;
-    return this.http.put(url, newTitle).pipe(
-      map(response => this.toActivity(response)),
-      catchError(() => {
-        console.error('Error occurred during renaming activity');
-        return [];
-      })
-    );
+    return this.http.put(url, newTitle)
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError(() => {
+          console.error('Error occurred during renaming activity');
+          return [];
+        })
+      );
   }
 
   startActivity(activity: Activity, newStartTime: Date): Observable<Activity> {
     let url = `${environment.backendBaseUrl}/activity/${activity.id}/startTime`;
-    return this.http.put(url, newStartTime?.getTime()).pipe(
-      map(response => this.toActivity(response)),
-      catchError(() => {
-        console.error('Error occurred during updating activity');
-        return [];
-      })
-    );
+    return this.http.put(url, newStartTime?.getTime())
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError(() => {
+          console.error('Error occurred during updating activity');
+          return [];
+        })
+      );
   }
 
   finishActivity(activity: Activity, newEndTime: Date): Observable<Activity> {
     let url = `${environment.backendBaseUrl}/activity/${activity.id}/endTime`;
-    return this.http.put(url, newEndTime?.getTime()).pipe(
-      map(response => this.toActivity(response)),
-      catchError(() => {
-        console.error('Error occurred during updating activity');
-        return [];
-      })
-    );
-  }
-
-  addTagToActivity(activity: Activity, tag: Tag): Observable<Activity> {
-    let url = `${environment.backendBaseUrl}/activity/${activity.id}/tag`;
-    return this.http.post(url, tag).pipe(
-      map(response => this.toActivity(response)),
-      catchError(() => {
-        console.error('Error occurred during assigning tag to activity');
-        return [];
-      })
-    );
+    return this.http.put(url, newEndTime?.getTime())
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError(() => {
+          console.error('Error occurred during updating activity');
+          return [];
+        })
+      );
   }
 
   updateActivityComment(activity: Activity, newComment: string): Observable<Activity> {
     let url = `${environment.backendBaseUrl}/activity/${activity.id}/comment`;
-    return this.http.put(url, newComment).pipe(
-      map(response => this.toActivity(response)),
-      catchError(() => {
-        console.error('Error occurred during updating activity');
-        return [];
-      })
-    );
+    return this.http.put(url, newComment)
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError(() => {
+          console.error('Error occurred during updating activity');
+          return [];
+        })
+      );
+  }
+
+  addTagToActivity(activity: Activity, tag: Tag): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}/tag`;
+    return this.http.post(url, tag)
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError(() => {
+          console.error('Error occurred during assigning tag to activity');
+          return [];
+        })
+      );
   }
 
   removeTagFromActivity(activity: Activity, tag: Tag): Observable<Activity> {
     let url = `${environment.backendBaseUrl}/activity/${activity.id}/tag/${tag.id}`;
-    return this.http.delete(url).pipe(
-      map(response => this.toActivity(response)),
-      catchError(() => {
-        console.error('Error occurred during removing tag from activity');
-        return [];
-      })
-    );
+    return this.http.delete(url)
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError(() => {
+          console.error('Error occurred during removing tag from activity');
+          return [];
+        })
+      );
+  }
+
+  setActivityMetricValue(activity: Activity, metricValue: MetricValue): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}/metric/${metricValue.metricId}/value`;
+    return this.http.put(url, metricValue.value)
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError(() => {
+          console.error('Error occurred during setting metric value for activity');
+          return [];
+        })
+      );
+  }
+
+  unsetActivityMetricValue(activity: Activity, metricValue: MetricValue): Observable<Activity> {
+    let url = `${environment.backendBaseUrl}/activity/${activity.id}/metric/${metricValue.metricId}/value`;
+    return this.http.delete(url)
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError(() => {
+          console.error('Error occurred during unsetting metric value for activity');
+          return [];
+        })
+      );
   }
 
   switchToActivity(activity: Activity): Observable<Activity> {
     let url = `${environment.backendBaseUrl}/activity/switched`;
     let activityPayload = this.toActivityPayload(activity);
-    return this.http.post(url, activityPayload).pipe(
-      map(response => this.toActivity(response)),
-      catchError((error) => {
-        console.error("Error occurred during switching to activity");
-        console.error(error);
-        return [];
-      })
-    );
+    return this.http.post(url, activityPayload)
+      .pipe(
+        map(response => this.toActivity(response)),
+        catchError((error) => {
+          console.error("Error occurred during switching to activity");
+          console.error(error);
+          return [];
+        })
+      );
   }
 
   toActivityPayload(activity: Activity): ActivityPayload {

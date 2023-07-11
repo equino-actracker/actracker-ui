@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ActivityService } from '../activity.service';
 import { TagService } from '../tag.service';
+import { ConversionService } from '../conversion.service';
 
 import { Activity } from '../activity';
 import { Tag } from '../tag';
@@ -25,6 +26,7 @@ export class ActivityListComponent implements OnInit {
 
   constructor(
     private activityService: ActivityService,
+    private conversionService: ConversionService,
     private tagService: TagService,
     private route: ActivatedRoute
   ) {}
@@ -34,8 +36,12 @@ export class ActivityListComponent implements OnInit {
     let rangeStartParam = this.route.snapshot.paramMap.get('rangeStart');
     let rangeEndParam = this.route.snapshot.paramMap.get('rangeEnd');
 
-    this.activityFilter.dateRangeStart = this.toDate(rangeStartParam);
-    this.activityFilter.dateRangeEnd = this.toDate(rangeEndParam);
+    this.activityFilter.dateRangeStart = rangeStartParam
+      ? this.conversionService.toDate(rangeStartParam)
+      : undefined;
+    this.activityFilter.dateRangeEnd = rangeEndParam
+      ? this.conversionService.toDate(rangeEndParam)
+      : undefined;
     this.activityFilter.tags = this.toTags(tagsParam);
 
     this.tagService.resolveTagNames(this.activityFilter.tags)
@@ -80,19 +86,6 @@ export class ActivityListComponent implements OnInit {
     }
   }
 
-  saveActivity(activity: Activity): void {
-    if(activity.id) {
-      this.activityService.updateActivity(activity)
-        .subscribe(a => {
-        });
-    } else {
-      this.activityService.createActivity(activity)
-        .subscribe(a => {
-          activity.id = a.id
-        });
-    }
-  }
-
   reload() {
     this.nextPageId = undefined;
     this.activities = [];
@@ -104,9 +97,5 @@ export class ActivityListComponent implements OnInit {
     return !jointTagIds ? [] : jointTagIds
       .split(',')
       .map(tagId => <Tag>{id: tagId});
-  }
-
-  private toDate(timestamp: string | null): Date | undefined {
-    return !!timestamp ? new Date(+timestamp) : undefined;
   }
 }

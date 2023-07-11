@@ -1,0 +1,11 @@
+<div>
+  <ul>
+    <li *ngFor="let metricValue of metricValues">
+      <app-metric-value
+        [metricValue]="metricValue"
+        (onMetricValueSet)="setMetricValue($event)"
+        (onMetricValueUnset)="unsetMetricValue($event)"
+      ></app-metric-value>
+    </li>
+  </ul>
+</div>

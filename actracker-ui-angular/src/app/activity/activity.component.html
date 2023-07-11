@@ -14,7 +14,8 @@
     <button (click)="initChangeStartTime()">Edit</button>
   </div>
   <div *ngIf="changeStartTimeMode">
-    <input type="datetime-local" [ngModel]="activity.startTime | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="newStartTime=conversionService.toDate($event)">
+    <input type="datetime-local" [ngModel]="activity.startTime | date: 'yyyy-MM-ddTHH:mm'"
+           (ngModelChange)="newStartTime=conversionService.toDate($event)">
     <button (click)="changeStartTime()">Save</button>
   </div>
   <label>End time:</label>
@@ -23,7 +24,8 @@
     <button (click)="initChangeEndTime()">Edit</button>
   </div>
   <div *ngIf="changeEndTimeMode">
-    <input type="datetime-local" [ngModel]="activity.endTime | date: 'yyyy-MM-ddTHH:mm'" (ngModelChange)="newEndTime=conversionService.toDate($event)">
+    <input type="datetime-local" [ngModel]="activity.endTime | date: 'yyyy-MM-ddTHH:mm'"
+           (ngModelChange)="newEndTime=conversionService.toDate($event)">
     <button (click)="changeEndTime()">Save</button>
   </div>
   <label>Comment:</label>
@@ -37,24 +39,19 @@
   </div>
   <div>
     <label>Tags:</label>
-    <app-tags-selector [editMode]="true" [tags]="activity.tags" (onTagAdd)="addNewTag($event)"
-                       (onTagDelete)="deleteTag($event)"></app-tags-selector>
+    <app-tags-selector
+      [editMode]="true"
+      [tags]="activity.tags"
+      (onTagAdd)="addNewTag($event)"
+      (onTagDelete)="deleteTag($event)"
+    ></app-tags-selector>
   </div>
-
-
-
-<!--  DELETE -->
   <div>
-    <button *ngIf="!editMode" (click)="edit()">EDIT</button>
-    <button *ngIf="editMode" (click)="save()">SAVE</button>
-    <h5>Metrics</h5>
-    <ul>
-      <li *ngFor="let metricValue of activity.metricValues">
-        <label>{{ metricValue.name }}</label>
-        <input *ngIf="editMode" type="text" [ngModel]="metricValue.value" (ngModelChange)="metricValue.value=toNumber($event)">
-        <span *ngIf="!editMode">{{ metricValue.value }}</span>
-      </li>
-    </ul>
+    <label>Metric values:</label>
+    <app-metric-value-list
+      [metricValues]="activity.metricValues"
+      (onMetricValueSet)="setMetricValue($event)"
+      (onMetricValueUnset)="unsetMetricValue($event)"
+    ></app-metric-value-list>
   </div>
-
 </div>
