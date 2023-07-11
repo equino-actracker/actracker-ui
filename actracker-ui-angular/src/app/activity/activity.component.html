@@ -54,21 +54,4 @@
       (onMetricValueUnset)="unsetMetricValue($event)"
     ></app-metric-value-list>
   </div>
-
-
-  <!--  DELETE -->
-  <div>
-    <button *ngIf="!editMode" (click)="edit()">EDIT</button>
-    <button *ngIf="editMode" (click)="save()">SAVE</button>
-    <h5>Metrics</h5>
-    <ul>
-      <li *ngFor="let metricValue of activity.metricValues">
-        <label>{{ metricValue.name }}</label>
-        <input *ngIf="editMode" type="text" [ngModel]="metricValue.value"
-               (ngModelChange)="metricValue.value=toNumber($event)">
-        <span *ngIf="!editMode">{{ metricValue.value }}</span>
-      </li>
-    </ul>
-  </div>
-
 </div>
