@@ -66,19 +66,6 @@ export class TagSetService {
     );
   }
 
-  updateTagSet(tagSet: TagSet): Observable<TagSet> {
-    let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}`;
-    let tagSetPayload = this.toTagSetPayload(tagSet);
-
-    return this.http.put(url, tagSetPayload).pipe(
-      map(response => this.toTagSet(response)),
-      catchError(() => {
-        console.error('Error occurred during updating tag set');
-        return [];
-      })
-    )
-  }
-
   deleteTagSet(tagSet: TagSet): Observable<any> {
     let url = `${environment.backendBaseUrl}/tag-set/${tagSet.id}`;
     return this.http.delete(url).pipe(

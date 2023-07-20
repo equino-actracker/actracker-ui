@@ -4,7 +4,7 @@
     [activity]="activityToSwitch"
     (onActivityCreate)="switchToActivity($event)">
   </app-activity-create>
-  <button *ngIf="!tagSetToAdd" (click)="initTagSetCreate()">Add tag set</button>
+  <button *ngIf="!tagSetToAdd" (click)="initTagSetCreate()">Create tag set</button>
   <app-tag-set-create
     *ngIf="tagSetToAdd"
     [tagSet]="tagSetToAdd"
