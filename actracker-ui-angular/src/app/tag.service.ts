@@ -77,19 +77,6 @@ export class TagService {
     );
   }
 
-  updateTag(tag: Tag): Observable<Tag> {
-    let url = `${environment.backendBaseUrl}/tag/${tag.id}`;
-    let tagPayload = this.toTagPayload(tag);
-
-    return this.http.put(url, tagPayload).pipe(
-      map(response => this.toTag(response)),
-      catchError(() => {
-        console.error('Error occurred during updating tag');
-        return [];
-      })
-    )
-  }
-
   renameTag(tag: Tag, newName: string): Observable<Tag> {
     let url = `${environment.backendBaseUrl}/tag/${tag.id}/name`;
     return this.http.put(url, newName).pipe(
