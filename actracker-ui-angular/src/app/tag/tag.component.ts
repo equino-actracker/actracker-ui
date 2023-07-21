@@ -48,10 +48,12 @@ export class TagComponent implements OnInit {
   }
 
   deleteMetric(metric: Metric): void {
-    this.tagService.deleteMetric(this.tag, metric)
-      .subscribe(tag => {
-        this.tag = tag;
-      });
+    if(confirm('Delete metric?')) {
+      this.tagService.deleteMetric(this.tag, metric)
+        .subscribe(tag => {
+          this.tag = tag;
+        });
+    }
   }
 
   renameMetric(metric: Metric): void {
@@ -69,10 +71,12 @@ export class TagComponent implements OnInit {
   }
 
   removeShare(share: Share) {
-    this.tagService.unshareTag(this.tag, share)
-      .subscribe(tag => {
-        this.tag = tag;
-      });
+    if(confirm('Remove tag share?')) {
+      this.tagService.unshareTag(this.tag, share)
+        .subscribe(tag => {
+          this.tag = tag;
+        });
+    }
   }
 
 }

@@ -8,5 +8,5 @@
   <select [(ngModel)]="metric.type">
     <option *ngFor="let metricType of metricTypes" [ngValue]="metricType.id">{{ metricType.name }}</option>
   </select>
-  <button (click)="createMetric()">Create</button>
+  <button (click)="createMetric()">Add</button>
 </div>

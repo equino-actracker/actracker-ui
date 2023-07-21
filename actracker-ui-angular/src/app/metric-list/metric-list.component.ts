@@ -38,9 +38,7 @@ export class MetricListComponent implements OnInit {
   }
 
   deleteMetric(metric: Metric): void {
-    if(confirm('Delete metric?')) {
-      this.onMetricDelete.emit(metric);
-    }
+    this.onMetricDelete.emit(metric);
   }
 
   renameMetric(metric: Metric): void {
