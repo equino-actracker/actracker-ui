@@ -4,7 +4,7 @@
     [activity]="activityToSwitch"
     (onActivityCreate)="switchToActivity($event)">
   </app-activity-create>
-  <button *ngIf="!tagToAdd" (click)="initTagCreate()">Add tag</button>
+  <button *ngIf="!tagToAdd" (click)="initTagCreate()">Create tag</button>
   <app-tag-create *ngIf="tagToAdd" [tag]="tagToAdd" (onTagCreated)="addTag($event)"></app-tag-create>
   <ul>
     <li *ngFor="let tag of tags" style="border: 1px solid black">
