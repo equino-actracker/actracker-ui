@@ -67,8 +67,8 @@ export class ActivityListComponent implements OnInit {
   createAndAddActivity(activity: Activity) {
     this.activityService.createActivity(activity)
       .subscribe(createdActivity => {
-        this.activities.unshift(activity);
-        this.addedActivities.unshift(activity);
+        this.activities.unshift(createdActivity);
+        this.addedActivities.unshift(createdActivity);
         this.activityToAdd = undefined;
       });
   }
