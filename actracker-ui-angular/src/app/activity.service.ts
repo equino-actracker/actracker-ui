@@ -76,21 +76,6 @@ export class ActivityService {
       );
   }
 
-  updateActivity(activity: Activity): Observable<Activity> {
-    let url = `${environment.backendBaseUrl}/activity/${activity.id}`;
-    let activityPayload = this.toActivityPayload(activity);
-
-    return this.http.put(url, activityPayload)
-      .pipe(
-        map(response => this.toActivity(response)),
-        catchError((error) => {
-          console.error('Error occurred during updating activity');
-          console.error(error);
-          return [];
-        })
-      )
-  }
-
   deleteActivity(activity: Activity): Observable<any> {
     let url = `${environment.backendBaseUrl}/activity/${activity.id}`;
     return this.http.delete(url)
