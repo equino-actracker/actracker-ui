@@ -1,5 +1,5 @@
 <div>
-  <button *ngIf="!activityToAdd" (click)="initActivityCreate()">Add activity</button>
+  <button *ngIf="!activityToAdd" (click)="initActivityCreate()">Create activity</button>
   <app-activity-create
     *ngIf="activityToAdd"
     [activity]="activityToAdd"
