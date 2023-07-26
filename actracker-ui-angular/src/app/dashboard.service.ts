@@ -82,20 +82,6 @@ export class DashboardService {
       );
   }
 
-  updateDashboard(dashboard: Dashboard): Observable<Dashboard> {
-    let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}`;
-    let dashboardPayload = this.toDashboardPayload(dashboard);
-
-    return this.http.put(url, dashboardPayload).pipe(
-      map(response => this.toDashboard(<DashboardPayload>response)),
-      catchError((error) => {
-        console.error('Error occurred during updating dashboard');
-        console.error(error);
-        return [];
-      })
-    )
-  }
-
   renameDashboard(dashboard: Dashboard, newName: string): Observable<Dashboard> {
     let url = `${environment.backendBaseUrl}/dashboard/${dashboard.id}/name`;
     return this.http.put(url, newName).pipe(

@@ -1,5 +1,5 @@
 <div>
-  <button *ngIf="!dashboardToAdd" (click)="initDashboardCreate()">Add dashboard</button>
+  <button *ngIf="!dashboardToAdd" (click)="initDashboardCreate()">Create dashboard</button>
   <app-dashboard-create *ngIf="dashboardToAdd" [dashboard]="dashboardToAdd" (onDashboardCreated)="addDashboard($event)"></app-dashboard-create>
   <ul>
     <li *ngFor="let dashboard of dashboards" style="border: 1px solid black">
