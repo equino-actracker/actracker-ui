@@ -4,7 +4,7 @@ plugins {
 }
 
 sourceCompatibility = 19
-targetCompatibility = 17
+targetCompatibility = 19
 
 node {
   download = true
