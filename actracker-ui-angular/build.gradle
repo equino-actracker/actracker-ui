@@ -3,8 +3,8 @@ plugins {
   id 'com.palawanframe.node' version '0.2.4'
 }
 
-targetCompatibility = 21
-sourceCompatibility = 21
+targetCompatibility = 17
+sourceCompatibility = 17
 
 node {
   download = true
