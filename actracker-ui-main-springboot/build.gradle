@@ -6,6 +6,6 @@ sourceCompatibility = 21
 targetCompatibility = 21
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web:3.2.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.0.0'
     runtimeOnly project(':actracker-ui-angular')
 }
