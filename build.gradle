@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.eclipse.jkube.kubernetes' version '1.15.0'
+    id 'org.eclipse.jkube.kubernetes' version '1.11.0'
     id 'org.springframework.boot' version '3.2.0'
     id 'ovh.equino.version' version '0.1.1'
 }
