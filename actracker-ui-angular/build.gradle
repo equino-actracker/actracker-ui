@@ -3,6 +3,9 @@ plugins {
   id 'com.palawanframe.node' version '0.2.4'
 }
 
+targetCompatibility = 21
+sourceCompatibility = 21
+
 node {
   download = true
   version = '18.12.0'

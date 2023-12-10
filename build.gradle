@@ -5,6 +5,9 @@ plugins {
     id 'ovh.equino.version' version '0.1.1'
 }
 
+sourceCompatibility = 21
+targetCompatibility = 21
+
 allprojects {
     repositories {
         mavenCentral()
