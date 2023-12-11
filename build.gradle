@@ -5,8 +5,8 @@ plugins {
     id 'ovh.equino.version' version '0.1.1'
 }
 
-sourceCompatibility = 19
-targetCompatibility = 19
+sourceCompatibility = 17
+targetCompatibility = 17
 
 allprojects {
     repositories {
