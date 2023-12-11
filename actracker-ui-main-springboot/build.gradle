@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'org.eclipse.jkube.kubernetes' version '1.15.0'
+    id 'org.springframework.boot' version '3.2.0'
 }
 
 sourceCompatibility = 19
@@ -8,4 +10,8 @@ targetCompatibility = 19
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:3.2.0'
     runtimeOnly project(':actracker-ui-angular')
+}
+
+springBoot {
+    mainClass = 'ovh.equino.actracker.ui.main.springboot.ActrackerUi'
 }

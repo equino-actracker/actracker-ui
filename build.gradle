@@ -1,7 +1,5 @@
 plugins {
     id 'java'
-    id 'org.eclipse.jkube.kubernetes' version '1.15.0'
-    id 'org.springframework.boot' version '3.2.0'
     id 'ovh.equino.version' version '0.1.1'
 }
 
@@ -13,12 +11,4 @@ allprojects {
         mavenCentral()
     }
     group = 'ovh.equino.actracker-ui'
-}
-
-dependencies {
-    runtimeOnly project(':actracker-ui-main-springboot')
-}
-
-springBoot {
-    mainClass = 'ovh.equino.actracker.ui.main.springboot.ActrackerUi'
 }
