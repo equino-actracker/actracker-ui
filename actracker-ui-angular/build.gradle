@@ -8,10 +8,10 @@ targetCompatibility = 17
 
 node {
   download = true
-  version = '18.12.0'
+  version = '20.10.0'
 
   npm {
-    version = '8.19.2'
+    version = '10.2.5'
   }
 }
 
