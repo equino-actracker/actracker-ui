@@ -124,16 +124,16 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "prod": {
-              "browserTarget": "actracker-ui-angular:build:prod"
+              "buildTarget": "actracker-ui-angular:build:prod"
             },
             "int": {
-              "browserTarget": "actracker-ui-angular:build:int"
+              "buildTarget": "actracker-ui-angular:build:int"
             },
             "dev": {
-              "browserTarget": "actracker-ui-angular:build:dev"
+              "buildTarget": "actracker-ui-angular:build:dev"
             },
             "local": {
-              "browserTarget": "actracker-ui-angular:build:local"
+              "buildTarget": "actracker-ui-angular:build:local"
             }
           },
           "defaultConfiguration": "local"
@@ -141,7 +141,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "actracker-ui-angular:build"
+            "buildTarget": "actracker-ui-angular:build"
           }
         },
         "test": {
