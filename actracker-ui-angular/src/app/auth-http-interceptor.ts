@@ -5,12 +5,12 @@ import {
   HttpEvent,
   HttpResponse,
   HttpErrorResponse,
-} from '@angular/common/http';
+} from '@angular/common/http'
 
-import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs'
+import { Injectable } from '@angular/core'
 
-import { SessionService } from './session.service';
+import { SessionService } from './session.service'
 
 @Injectable()
 export class AuthHttpInterceptor implements HttpInterceptor {
@@ -20,12 +20,13 @@ export class AuthHttpInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let authHeader = this.sessionService.getAuthHeader();
+    this.sessionService.keepSessionAlive()
+    let authHeader = this.sessionService.getAuthHeader()
     let authorizedRequest = request.clone({
       headers: request.headers
         .set('Content-Type', 'application/json')
         .set('Authorization', authHeader)
-    });
-    return next.handle(authorizedRequest);
+    })
+    return next.handle(authorizedRequest)
   }
 }
