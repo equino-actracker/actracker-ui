@@ -9,7 +9,7 @@ export class SessionService {
 
   private sessionTokenKey = `ovh.equino.actracker-ui.${environment.environment}.sessionTokenKey`
   private sessionExpireTimeKey = `ovh.equino.actracker-ui.${environment.environment}.sessionExpireTimeKey`
-  private sessionDuration = 12/*hours*/ * 60/*minutes*/ * 60/*seconds*/
+  private sessionDuration = 24/*hours*/ * 60/*minutes*/ * 60/*seconds*/
 
   constructor() { }
 
