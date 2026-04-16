@@ -24,7 +24,7 @@ export class ActivityService {
 
   searchActivities(term?: String, pageId?: String, pageSize?: number, excludedActivities?: Activity[], dateRangeStart?: Date, dateRangeEnd?: Date, tags?: Tag[]): Observable<ActivitiesResult> {
     let url: string = `${environment.backendBaseUrl}/activity/matching`;
-    let requestParams = ['orderBy=START_TIME.DESC'];
+    let requestParams = [];
     if(!!term) {
       requestParams.unshift(`term=${term}`)
     }
