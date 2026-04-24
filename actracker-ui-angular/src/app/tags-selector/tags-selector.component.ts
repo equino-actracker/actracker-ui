@@ -40,7 +40,7 @@ export class TagsSelectorComponent implements OnInit {
         .pipe(
           debounceTime(500),
 //           distinctUntilChanged(),
-          switchMap((term: string) => this.tagService.searchTags(term, undefined, 5, this.tags))
+          switchMap((term: string) => this.tagService.searchTags(term, undefined, 6, this.tags))
         );
       this.tagSearchResult$.subscribe(
         searchResult => {
