@@ -36,7 +36,7 @@ export class TagService {
 
   searchTags(term?: String, pageId?: String, pageSize?: number, excludedTags?: Tag[]): Observable<TagsResult> {
     let url: string = `${environment.backendBaseUrl}/tag/matching`;
-    let requestParams = [];
+    let requestParams = ['orderBy=NAME.ASC'];
     if(!!term) {
       requestParams.unshift(`term=${term}`)
     }
