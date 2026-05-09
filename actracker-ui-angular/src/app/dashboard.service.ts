@@ -25,7 +25,7 @@ export class DashboardService {
 
   searchDashboards(term?: String, pageId?: String, pageSize?: number, excludedDashboards?: Dashboard[]): Observable<DashboardsResult> {
     let url: string = `${environment.backendBaseUrl}/dashboard/matching`;
-    let requestParams = [];
+    let requestParams = ['orderBy=NAME.ASC'];
     if(!!term) {
       requestParams.unshift(`term=${term}`)
     }
