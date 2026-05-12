@@ -25,7 +25,7 @@ export class TagSetService {
 
   searchTagSets(term?: String, pageId?: String, pageSize?: number, excludedTagSets?: TagSet[]): Observable<TagSetsResult> {
     let url: string = `${environment.backendBaseUrl}/tag-set/matching`;
-    let requestParams = [];
+    let requestParams = ['orderBy=NAME.ASC'];
     if(!!term) {
       requestParams.unshift(`term=${term}`)
     }
